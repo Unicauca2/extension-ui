@@ -4,5 +4,7 @@ export interface Guardian {
   identification: string,
   address: string,
   cellPhone: string,
-  telePhone: string
+  telePhone: string,
+  email: string,
+  relationship: string,
 }

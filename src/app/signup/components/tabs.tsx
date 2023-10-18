@@ -13,15 +13,14 @@ const styles = {
 };
 
 interface tabsSelectionProps {
-  value: string,
-  handleChange: (event: React.SyntheticEvent, newValue: string) => void
+  value: string;
+  handleChange: (event: React.SyntheticEvent, newValue: string) => void;
 }
 
 export default function TabsSelection({
   value,
   handleChange,
 }: tabsSelectionProps) {
-
   return (
     <TabList
       onChange={handleChange}
@@ -34,58 +33,26 @@ export default function TabsSelection({
       <Tab
         key={"1"}
         value="1"
-        icon={
-          value > "1" ? (
-            <CheckBoxIcon />
-          ) : (
-            <CheckBoxOutlineBlankIcon />
-          )
-        }
+        icon={value > "1" ? <CheckBoxIcon /> : <CheckBoxOutlineBlankIcon />}
         style={value == "1" ? styles : {}}
         iconPosition="start"
-        label={<div className="text-md">Información personal</div>}
+        label={<div className="text-md">Información Personal</div>}
       />
       <Tab
         key={"2"}
         value="2"
-        icon={
-          value > "2" ? (
-            <CheckBoxIcon />
-          ) : (
-            <CheckBoxOutlineBlankIcon />
-          )
-        }
+        icon={value > "2" ? <CheckBoxIcon /> : <CheckBoxOutlineBlankIcon />}
         style={value == "2" ? styles : {}}
         iconPosition="start"
-        label={<p className="text-md">Información personal</p>}
+        label={<p className="text-md">Información residencia</p>}
       />
       <Tab
         key={"3"}
         value="3"
-        icon={
-          value > "3" ? (
-            <CheckBoxIcon />
-          ) : (
-            <CheckBoxOutlineBlankIcon />
-          )
-        }
+        icon={value > "3" ? <CheckBoxIcon /> : <CheckBoxOutlineBlankIcon />}
         style={value == "3" ? styles : {}}
         iconPosition="start"
-        label={<p className="text-md">Información personal</p>}
-      />
-      <Tab
-        key={"4"}
-        value="4"
-        icon={
-          value > "4" ? (
-            <CheckBoxIcon />
-          ) : (
-            <CheckBoxOutlineBlankIcon />
-          )
-        }
-        style={value == "4" ? styles : {}}
-        iconPosition="start"
-        label={<p className="text-md">Información académica</p>}
+        label={<p className="text-md">Información Acudientes</p>}
       />
     </TabList>
   );
