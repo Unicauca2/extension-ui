@@ -11,7 +11,7 @@ export interface ApplicantRegistry {
   document: File;
   scholarship: Scholarship;
   residency: Residency;
-  guardians: Array<Guardian>;
+  guardian: Guardian;
 }
 
 export const personInitialValues = {
@@ -21,39 +21,41 @@ export const personInitialValues = {
     firstLastName: "",
     secondLastName: "",
     identification: "",
-    birthDate: dayjs('2022-04-17', { format: 'YYYY-MM-DD' }),
-    expeditionDate: dayjs('2022-04-17', { format: 'YYYY-MM-DD' }),
+    birthDate: dayjs(dayjs().subtract(12, "year"), { format: "YYYY-MM-DD" }),
+    expeditionDate: dayjs(dayjs().subtract(12, "year"), {
+      format: "YYYY-MM-DD",
+    }),
     identificationDocumentType: "",
     cellPhone: "",
     bloodType: "",
     email: "",
     gender: "",
     eps: "",
+    stratum: 0,
   } as Applicant,
   credentials: {
     username: "",
-    password: ""
+    password: "",
   } as Credential,
   scholarship: {
     scholarshipType: 0,
     institution: "",
     description: "",
     semester: "",
-    graduateType: ""
+    graduateType: "",
   } as Scholarship,
   residency: {
-    country: 0,
-    state: 0,
-    city: 0,
+    country: "",
+    state: "",
+    city: "",
     residenceAddress: "",
-    stratum: 0,
   } as Residency,
-  guardians: [{
-    names: "",
-    lastNames: "",
+  guardian: {
+    fullName: "",
     identification: "",
-    address: "",
+    email: "",
     cellPhone: "",
-    telePhone: ""
-  }] as Guardian[]
+    telePhone: "",
+    relationship: "",
+  } as Guardian,
 } as ApplicantRegistry;

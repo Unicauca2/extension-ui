@@ -1,12 +1,13 @@
-import React from "react";
 import Tab from "@mui/material/Tab";
 import TabList from "@mui/lab/TabList";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
+import isObjectWithDefaultValues from "@/utils/ObjectComparer";
+import { personInitialValues } from "../models/ApplicantRegistry";
 
 const styles = {
   color: "white",
-  backgroundColor: "green",
+  backgroundColor: "#092167",
   borderTopLeftRadius: "10px",
   borderTopRightRadius: "10px",
   transition: ".3s linear",
@@ -14,13 +15,39 @@ const styles = {
 
 interface tabsSelectionProps {
   value: string;
+  object: any;
   handleChange: (event: React.SyntheticEvent, newValue: string) => void;
+  handleComplete: (flag: boolean) => void;
 }
 
 export default function TabsSelection({
   value,
+  object,
   handleChange,
+  handleComplete,
 }: tabsSelectionProps) {
+  console.log(object);
+  console.log(personInitialValues);
+  const step1Check =
+    !isObjectWithDefaultValues(
+      object.applicant,
+      personInitialValues.applicant
+    ) &&
+    object.credentials.password &&
+    object.applicant.document;
+  const step2Check =
+    !isObjectWithDefaultValues(
+      object.residency,
+      personInitialValues.residency
+    ) ||
+    (object.residency.country &&
+      object.residency.country !== 170 &&
+      object.residency.residenceAddress?.length > 0);
+  const step3Check = !isObjectWithDefaultValues(
+    object.guardian,
+    personInitialValues.guardian
+  );
+  handleComplete(step1Check && step2Check && step3Check);
   return (
     <TabList
       onChange={handleChange}
@@ -31,29 +58,30 @@ export default function TabsSelection({
       sx={{ "& .MuiTabs-indicator": { backgroundColor: "inherit" } }}
     >
       <Tab
-        key={"1"}
         value="1"
-        icon={value > "1" ? <CheckBoxIcon /> : <CheckBoxOutlineBlankIcon />}
+        icon={step1Check ? <CheckBoxIcon /> : <CheckBoxOutlineBlankIcon />}
         style={value == "1" ? styles : {}}
         iconPosition="start"
-        label={<div className="text-md">Información Personal</div>}
+        label={<div className="text-md">Información Personale</div>}
       />
-      <Tab
-        key={"2"}
-        value="2"
-        icon={value > "2" ? <CheckBoxIcon /> : <CheckBoxOutlineBlankIcon />}
-        style={value == "2" ? styles : {}}
-        iconPosition="start"
-        label={<p className="text-md">Información residencia</p>}
-      />
-      <Tab
-        key={"3"}
-        value="3"
-        icon={value > "3" ? <CheckBoxIcon /> : <CheckBoxOutlineBlankIcon />}
-        style={value == "3" ? styles : {}}
-        iconPosition="start"
-        label={<p className="text-md">Información Acudientes</p>}
-      />
+      {step1Check && (
+        <Tab
+          value="2"
+          icon={step2Check ? <CheckBoxIcon /> : <CheckBoxOutlineBlankIcon />}
+          style={value == "2" ? styles : {}}
+          iconPosition="start"
+          label={<p className="text-md">Información residencia</p>}
+        />
+      )}
+      {step1Check && step2Check && (
+        <Tab
+          value="3"
+          icon={step3Check ? <CheckBoxIcon /> : <CheckBoxOutlineBlankIcon />}
+          style={value == "3" ? styles : {}}
+          iconPosition="start"
+          label={<p className="text-md">Información Acudiente</p>}
+        />
+      )}
     </TabList>
   );
 }

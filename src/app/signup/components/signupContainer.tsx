@@ -1,7 +1,12 @@
-import React from "react";
+import { getAddaptedTypes } from "../adapters/TypesAddapter";
 import TabContext from "./tabContext";
 
-const InfoPrograma = () => {
+async function getData() {
+  return getAddaptedTypes();
+}
+
+async function InfoPrograma() {
+  const data = await getData();
   return (
     <div className=" bg-[#ffffff] rounded-3xl text-[#092167] px-10 mt-8 mx-4  h-auto">
       <p className="pt-6  text-3xl  font-bold">Registro Aspirante</p>
@@ -12,7 +17,7 @@ const InfoPrograma = () => {
         Lenguas Extranjeras de la Universidad del Cauca que están disponibles en
         el actual periodo académico.
       </p>
-      <TabContext />
+      <TabContext types={data} />
       <p className="pb-6">
         La Unidad de servicios en lenguas extranjeras, es un proyecto académico
         administrativo adscrito al Departamento de Lenguas Extranjeras y a la
@@ -20,6 +25,6 @@ const InfoPrograma = () => {
       </p>
     </div>
   );
-};
+}
 
 export default InfoPrograma;

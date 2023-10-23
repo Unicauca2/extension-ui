@@ -7,7 +7,6 @@ import {
   OutlinedInput,
   Select,
   MenuItem,
-  SelectChangeEvent,
   Box,
 } from "@mui/material";
 import { LocalizationProvider } from "@mui/x-date-pickers";
@@ -21,21 +20,21 @@ type FormBuilderProps = {
   boxType: "div" | "form";
   boxStyles: object;
   elements: FormElement[];
+  handleInputChange: ({ target }: any, name?: string | undefined) => void;
 };
 
-function FormBuilder({ boxType, boxStyles, elements }: FormBuilderProps) {
-  const renderFormElement = (element: FormElement): ReactNode => {
-    const {
-      type,
-      name,
-      value,
-      options,
-      multiple,
-      label,
-      className,
-      styles,
-      onChange,
-    } = element;
+function FormBuilder({
+  boxType,
+  boxStyles,
+  elements,
+  handleInputChange,
+}: FormBuilderProps) {
+  const renderFormElement = (
+    element: FormElement,
+    handleInputChange: ({ target }: any, name?: string | undefined) => void
+  ): ReactNode => {
+    const { type, name, value, options, multiple, label, className, styles } =
+      element;
 
     switch (type) {
       case "label":
@@ -60,7 +59,7 @@ function FormBuilder({ boxType, boxStyles, elements }: FormBuilderProps) {
             label={label}
             value={value}
             onChange={({ target: { value } }) =>
-              onChange(name?.split(".") as string[], value)
+              handleInputChange(name?.split(".") as string[], value)
             }
             name={name}
           />
@@ -73,7 +72,7 @@ function FormBuilder({ boxType, boxStyles, elements }: FormBuilderProps) {
             name={name as string}
             value={value as string}
             onChange={({ target: { value } }) =>
-              onChange(name?.split(".") as string[], value)
+              handleInputChange(name?.split(".") as string[], value)
             }
           />
         );
@@ -89,12 +88,15 @@ function FormBuilder({ boxType, boxStyles, elements }: FormBuilderProps) {
                 multiple={multiple}
                 value={value as string[]}
                 onChange={({ target: { value } }) => {
-                  onChange(name?.split(".") as string[], value);
+                  handleInputChange(
+                    name?.split(".") as string[],
+                    value as string
+                  );
                 }}
                 input={<OutlinedInput label="Name" />}
               >
-                {options.map((item) => (
-                  <MenuItem key={item.value} value={item.value}>
+                {options.map((item, itemIndex) => (
+                  <MenuItem key={itemIndex} value={item.value}>
                     {item.label}
                   </MenuItem>
                 ))}
@@ -113,7 +115,7 @@ function FormBuilder({ boxType, boxStyles, elements }: FormBuilderProps) {
               value={dayjs(value as string)}
               views={["year", "month", "day"]}
               onAccept={(value) =>
-                onChange(
+                handleInputChange(
                   name?.split(".") as string[],
                   dayjs(value as Dayjs).format("YYYY-MM-DD")
                 )
@@ -130,7 +132,9 @@ function FormBuilder({ boxType, boxStyles, elements }: FormBuilderProps) {
   return (
     <Box component={boxType} sx={boxStyles}>
       {elements.map((element, index) => (
-        <Fragment key={index}>{renderFormElement(element)}</Fragment>
+        <Fragment key={index}>
+          {renderFormElement(element, handleInputChange)}
+        </Fragment>
       ))}
     </Box>
   );

@@ -1,15 +1,17 @@
 import Header from "../login/components/Header";
-import SignUpContainer from "./components/signupContainer"
-import FooterHome from "@/components/Footer"
+import SignUpContainer from "./components/signupContainer";
+import FooterHome from "@/components/Footer";
 
 export default function Home() {
   return (
-    <body className="bg-image bg-center min-h-screen w-full flex flex-col"
+    <body
+      className="bg-image bg-center min-h-screen w-full flex flex-col"
       style={{
         backgroundImage: `url("./app/login.png")`,
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
-      }}>
+      }}
+    >
       <Header
         src_universidad={"./unicauca/logo_negro.png"}
         width={110}
@@ -26,6 +28,6 @@ export default function Home() {
           version={"Versión: v1.0"}
         />
       </div>
-    </body >
-  )
+    </body>
+  );
 }
