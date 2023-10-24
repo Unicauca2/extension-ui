@@ -1,6 +1,7 @@
 import { FormElement } from "@/models/FormElement";
 
 export interface Residency {
+  nationality: number | string;
   country: number | string;
   state: number | string;
   city: number | string;
@@ -19,13 +20,18 @@ interface Props {
 }
 
 export function getResidencyElements({ residency, types }: Props) {
-  const states = types.states.filter(
-    (item) => item.parent === residency.country
-  );
   let cities: any[] = [];
-  if (states.length !== 0)
+  if (residency.state)
     cities = types.cities.filter((item) => item.parent === residency.state);
   return [
+    {
+      type: "select",
+      label: "Nacionalidad",
+      name: "residency.nationality",
+      value: residency.nationality,
+      options: types.countries,
+      styles: { my: 1, width: "100%" },
+    },
     {
       type: "text",
       label: "Dirección de residencia",
@@ -35,19 +41,11 @@ export function getResidencyElements({ residency, types }: Props) {
     },
     {
       type: "select",
-      label: "Nacionalidad",
-      name: "residency.country",
-      value: residency.country,
-      options: types.countries,
-      styles: { m: 1, width: "23%" },
-    },
-    {
-      type: "select",
       label: "Departamento de residencia",
       name: "residency.state",
       value: residency.state,
-      options: states,
-      styles: { m: 1, width: "23%" },
+      options: types.states,
+      styles: { my: 1, width: "100%" },
     },
     {
       type: "select",
@@ -55,7 +53,7 @@ export function getResidencyElements({ residency, types }: Props) {
       name: "residency.city",
       value: residency.city,
       options: cities,
-      styles: { m: 1, width: "23%" },
+      styles: { my: 1, width: "100%" },
     },
   ] as FormElement[];
 }

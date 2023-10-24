@@ -1,8 +1,6 @@
-"use client"
+"use client";
 
 import { useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser, faKey } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 
@@ -15,12 +13,9 @@ const Login = () => {
   const handleSubmit = (e: any) => {
     e.preventDefault();
 
-    // Validate the username and password
     if (!username || !password) {
       return;
     }
-
-    // Authenticate the user
     const data = {
       username,
       password,
@@ -35,40 +30,44 @@ const Login = () => {
         if (data.error) {
           alert(data.error);
         } else {
-
         }
       });
   };
 
   return (
-    <div className=" bg-[#ffffff] rounded-3xl text-center text-[#092167] h-full">
-      <p className="pt-5  text-3xl text-[#092167] font-bold">Iniciar Sesión</p>
-      <form className="mt-4 sm:mt-14">
-        <div className="flex mx-2 sm:mx-10  pb-5 items-center">
-          <FontAwesomeIcon className="w-14 pl-0" icon={faUser} color="black" />
-          <label className="block w-full">
+    <div className="bg-[#F6F6F6] rounded-3xl text-center text-[#000066] h-full">
+      <p className="pt-5  text-2xl font-bold">Iniciar Sesión en</p>
+      <p className="text-2xl font-bold">{program}</p>
+      <form className="mt-4">
+        <div className="flex mx-2 sm:mx-10  pb-5 ">
+          <label className="w-full flex flex-col">
+            <p className="text-left ml-4 text-base font-sans font-semibold mb-2">
+              Usuario
+            </p>
             <input
-              type="email"
-              name="email"
-              className=" mt-1 px-3 py-2 w-11/12 text-black bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none  block sm:w-full rounded-md sm:text-sm "
-              placeholder="Usuario o identificación"
+              type="text"
+              name="text"
+              className="mx-4 px-4 py-4 w-11/12 text-[#000066] bg-[#ffffff] rounded-3xl focus:text-[#454444] outline-[#000066]"
+              placeholder="usuario"
             />
           </label>
         </div>
-        <div className="flex mx-2 sm:mx-10 pb-10 items-center ">
-          <FontAwesomeIcon className="w-14" icon={faKey} color="black" />
-          <label className="block w-full">
+        <div className="flex mx-2 sm:mx-10 pb-10  ">
+          <label className="w-full flex flex-col">
+            <p className="text-left ml-4 text-base font-sans font-semibold mb-2">
+              Contraseña
+            </p>
             <input
-              type="email"
-              name="email"
-              className=" mt-1 px-3 py-2 w-11/12 text-black bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none  block sm:w-full rounded-md sm:text-sm "
-              placeholder="Contraseña"
+              type="password"
+              name="password"
+              className="mx-4 px-4 py-4 w-11/12 text-[#000066] bg-[#ffffff] rounded-3xl focus:text-[#454444] outline-[#000066]"
+              placeholder="********"
             />
           </label>
         </div>
         <div>
           <input
-            className="w-1/2 rounded-2xl bg-[#092167] hover:bg-pink-700 text-[#ffffff] font-bold py-2 px-4 mb-2"
+            className="w-1/2 rounded-2xl bg-[#000066] hover:bg-[#FFFFFF] text-[#ffffff] hover:text-[#000066] hover:border-[#000066] border font-bold py-2 px-4 mb-2"
             type="submit"
             value={"Ingresar"}
           />
@@ -77,13 +76,15 @@ const Login = () => {
 
       <p className="font-medium underline">¿Olvidaste tu contraseña?</p>
 
-      <p className="mt-10 sm:mt-16">
+      <p className="mt-10 sm:mt-16 mx-4">
         ¿No tienes cuenta? Puedes registrarte utilizando el siguiente botón
       </p>
 
-      <div className="my-6 pb-5">
-        <Link className="w-1/2 rounded-2xl bg-[#092167] hover:bg-pink-700 text-[#ffffff] font-bold py-2 px-4 mb-2"
-          href={{ pathname: `/signup`, query: { program: program } }}>
+      <div className="mb-6 py-5">
+        <Link
+          href={{ pathname: `/signup`, query: { program: program } }}
+          className="w-1/2 rounded-2xl bg-[#ffffff] hover:bg-[#000066] hover:text-[#ffffff] border border-[#000066] font-bold py-2 px-4 mb-2"
+        >
           Registrar
         </Link>
       </div>

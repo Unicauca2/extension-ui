@@ -8,22 +8,32 @@ interface Props {
   name: string;
   document: File;
   className: string;
-  handleInputChange: ({ target }: any, name?: string | undefined) => void;
+  multiple: boolean;
+  accepts: string;
+  handleInputChange: (propsPath: string[], value: any) => void;
 }
 
 const FileUploadField: FC<Props> = memo(
-  ({ name, label, document, className, handleInputChange }) => {
+  ({
+    name,
+    label,
+    document,
+    className,
+    multiple,
+    accepts,
+    handleInputChange,
+  }) => {
     const fileUrl = document ? URL.createObjectURL(document) : null;
     return (
       <Fragment>
-        <div className={"border-b border-r shadow-md " + className}>
-          <div className="text-center py-4 flex justify-center">
+        <div className={"border-b border-r shadow-md  " + className}>
+          <div className="text-center py-4 flex justify-center bg-[#ffffff]">
             <InputFileUpload
-              handleInputChange={({ target: { files } }) => {
-                handleInputChange(name.split("."), files[0]);
-              }}
-              label={label}
+              handleInputChange={handleInputChange}
+              label={document ? "cambiar" : label}
               name={name}
+              accepts={accepts}
+              multiple={multiple}
             />
             {document && (
               <Button

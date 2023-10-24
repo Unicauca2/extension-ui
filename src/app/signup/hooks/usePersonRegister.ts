@@ -9,9 +9,7 @@ export const usePersonRegister = () => {
     setPerson(modifyObject(propsPath, value, person));
   };
 
-  const handleSubmit = (e: any) => {
-    // e.preventDefault();
-  };
+  const handleSubmit = (e: any) => {};
 
   return {
     person,

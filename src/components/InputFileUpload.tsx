@@ -14,12 +14,20 @@ const VisuallyHiddenInput = styled("input")`
 `;
 
 interface InputFileUploadProps {
-  handleInputChange: (e: any, name?: string) => any;
+  handleInputChange: (propsPath: string[], value: any) => void;
   label: string;
   name: string;
+  multiple: boolean;
+  accepts: string;
 }
 
-export default function InputFileUpload({ handleInputChange, label, name }: InputFileUploadProps) {
+export default function InputFileUpload({
+  handleInputChange,
+  label,
+  name,
+  multiple,
+  accepts,
+}: InputFileUploadProps) {
   return (
     <Button
       component="label"
@@ -44,7 +52,14 @@ export default function InputFileUpload({ handleInputChange, label, name }: Inpu
       }
     >
       {label}
-      <VisuallyHiddenInput type="file" accept=".pdf, .jpg, .jpeg, .png" onChange={(e) => handleInputChange(e, name)} />
+      <VisuallyHiddenInput
+        type="file"
+        accept={accepts}
+        multiple={multiple}
+        onChange={({ target: { files } }) =>
+          handleInputChange(name.split("."), files ? files[0] : undefined)
+        }
+      />
     </Button>
   );
 }

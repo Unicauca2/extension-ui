@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { useSearchParams } from "next/navigation";
 import Image from "next/image";
@@ -6,7 +6,7 @@ import Image from "next/image";
 interface programImageProps {
   width: number;
   height: number;
-  fileName: string
+  fileName: string;
 }
 
 const ProgramImage = ({ width, height, fileName }: programImageProps) => {
@@ -14,13 +14,12 @@ const ProgramImage = ({ width, height, fileName }: programImageProps) => {
   const program = router.get("program");
   return (
     <Image
-      height={height}
-      className="h-full w-full"
+      height={height - 10}
+      className="w-full"
       src={"/" + program?.toLowerCase() + "/" + fileName}
       alt="Image"
-      width={width}
+      width={width - 10}
     />
-
   );
 };
 

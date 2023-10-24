@@ -26,8 +26,6 @@ export default function TabsSelection({
   handleChange,
   handleComplete,
 }: tabsSelectionProps) {
-  console.log(object);
-  console.log(personInitialValues);
   const step1Check =
     !isObjectWithDefaultValues(
       object.applicant,
@@ -62,7 +60,7 @@ export default function TabsSelection({
         icon={step1Check ? <CheckBoxIcon /> : <CheckBoxOutlineBlankIcon />}
         style={value == "1" ? styles : {}}
         iconPosition="start"
-        label={<div className="text-md">Información Personale</div>}
+        label={<div className="text-md">Información Personal</div>}
       />
       {step1Check && (
         <Tab

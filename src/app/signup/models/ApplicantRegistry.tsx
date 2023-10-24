@@ -31,7 +31,7 @@ export const personInitialValues = {
     email: "",
     gender: "",
     eps: "",
-    stratum: 0,
+    stratum: "",
   } as Applicant,
   credentials: {
     username: "",
@@ -45,7 +45,7 @@ export const personInitialValues = {
     graduateType: "",
   } as Scholarship,
   residency: {
-    country: "",
+    nationality: "",
     state: "",
     city: "",
     residenceAddress: "",

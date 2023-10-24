@@ -3,7 +3,7 @@ import LinearProgress from "@mui/joy/LinearProgress";
 import Typography from "@mui/joy/Typography";
 import Key from "@mui/icons-material/RemoveRedEye";
 import { Button, TextField } from "@mui/material";
-import { ChangeEvent, useState } from "react";
+import { useState } from "react";
 
 interface Props {
   label: string;
@@ -23,14 +23,8 @@ export default function PasswordMeterInput({
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   return (
     <Stack
-      spacing={0}
       sx={{
         "--hue": Math.min(value.length * 10, 120),
-        "& .css-1e6y48t-MuiButtonBase-root-MuiButton-root": {
-          margin: 4,
-          borderRadius: "50%",
-          minWidth: "auto",
-        },
         display: "inline-flex",
       }}
     >
@@ -41,13 +35,14 @@ export default function PasswordMeterInput({
           label={label}
           name={name}
           value={value}
-          style={{ width: "100%" }}
+          style={{ width: "100%", marginTop: 0, marginBottom: 4 }}
           onChange={onChange}
+          size="small"
         />
         <Button
-          className="m-0 border absolute right-[9px]"
+          className="m-0 p-0 border absolute right-0"
           onClick={handleClickShowPassword}
-          style={{ margin: 0 }}
+          style={{ margin: 0, padding: 0 }}
         >
           <Key style={{ color: "gray", margin: 0, padding: 0 }} />
         </Button>

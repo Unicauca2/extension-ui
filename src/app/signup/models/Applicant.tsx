@@ -16,8 +16,9 @@ export interface Applicant {
   email: string;
   gender: string;
   eps: string;
-  stratum: number;
+  stratum: number | string;
   document: File;
+  photo: File;
 }
 
 interface Props {
@@ -73,7 +74,7 @@ export function getApplicantElements({ applicant, credentials, types }: Props) {
       value: applicant.identificationDocumentType,
       name: "applicant.identificationDocumentType",
       options: types.documentTypes,
-      styles: { m: 1, width: "23%" },
+      styles: { my: 1, width: "100%" },
     },
     {
       type: "text",
@@ -93,7 +94,7 @@ export function getApplicantElements({ applicant, credentials, types }: Props) {
       value: applicant.gender,
       name: "applicant.gender",
       options: types.genderTypes,
-      styles: { m: 1, width: "23%" },
+      styles: { my: 1, width: "100%" },
     },
     {
       type: "text",
@@ -113,7 +114,7 @@ export function getApplicantElements({ applicant, credentials, types }: Props) {
       value: applicant.bloodType,
       name: "applicant.bloodType",
       options: types.bloodTypes,
-      styles: { m: 1, width: "23%" },
+      styles: { my: 1, width: "100%" },
     },
     {
       type: "select",
@@ -121,7 +122,7 @@ export function getApplicantElements({ applicant, credentials, types }: Props) {
       value: applicant.stratum,
       name: "applicant.stratum",
       options: stratums,
-      styles: { m: 1, width: "23%" },
+      styles: { my: 1, width: "100%" },
     },
     {
       type: "text",

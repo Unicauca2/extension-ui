@@ -15,12 +15,13 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { FormElement } from "../models/FormElement";
 import dayjs, { Dayjs } from "dayjs";
 import PasswordMeterInput from "@/components/PasswordMeter";
+import FileUploadField from "@/components/FileUploadField";
 
 type FormBuilderProps = {
   boxType: "div" | "form";
   boxStyles: object;
   elements: FormElement[];
-  handleInputChange: ({ target }: any, name?: string | undefined) => void;
+  handleInputChange: (propsPath: string[], value: any) => void;
 };
 
 function FormBuilder({
@@ -31,7 +32,7 @@ function FormBuilder({
 }: FormBuilderProps) {
   const renderFormElement = (
     element: FormElement,
-    handleInputChange: ({ target }: any, name?: string | undefined) => void
+    handleInputChange: (propsPath: string[], value: any) => void
   ): ReactNode => {
     const { type, name, value, options, multiple, label, className, styles } =
       element;
@@ -62,6 +63,7 @@ function FormBuilder({
               handleInputChange(name?.split(".") as string[], value)
             }
             name={name}
+            size="small"
           />
         );
 
@@ -80,7 +82,7 @@ function FormBuilder({
       case "select":
         if (options?.length && options.length > 0) {
           return (
-            <FormControl sx={styles}>
+            <FormControl sx={styles} size="small">
               <InputLabel className={className + " bg-white pr-2"}>
                 {label}
               </InputLabel>
@@ -120,8 +122,28 @@ function FormBuilder({
                   dayjs(value as Dayjs).format("YYYY-MM-DD")
                 )
               }
+              sx={{
+                "& .MuiInputBase-root > input": {
+                  paddingY: 1.064,
+                  paddingX: "1rem",
+                },
+              }}
             />
           </LocalizationProvider>
+        );
+
+      case "file":
+        const { accepts } = element;
+        return (
+          <FileUploadField
+            document={value as File}
+            name={name as string}
+            multiple={multiple as boolean}
+            label={label as string}
+            accepts={accepts as string}
+            handleInputChange={handleInputChange}
+            className={className as string}
+          />
         );
 
       default:

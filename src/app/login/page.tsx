@@ -1,6 +1,5 @@
 import Header from "./components/Header";
 import Footer from "@/components/Footer";
-import ProgramInfo from "./components/ProgramInfo";
 import Login from "./components/Login";
 
 export default function Home() {
@@ -19,11 +18,8 @@ export default function Home() {
           width={110}
           height={110}
         />
-        <div className="flex-1 mx-auto flex flex-col-reverse xl:flex-row items-center pt-10">
-          <div className="lg:w-3/5 w-3/4 xl:mx-5 2xl:mx-10">
-            <ProgramInfo />
-          </div>
-          <div className="lg:w-2/5 w-3/4 sm:w-3/5 xl:mx-5 2xl:mx-10">
+        <div className="flex-1 mx-auto flex">
+          <div className="my-auto">
             <Login />
           </div>
         </div>
@@ -37,5 +33,5 @@ export default function Home() {
         </div>
       </div>
     </body>
-  )
+  );
 }

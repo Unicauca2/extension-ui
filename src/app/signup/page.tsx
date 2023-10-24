@@ -1,5 +1,5 @@
 import Header from "../login/components/Header";
-import SignUpContainer from "./components/signupContainer";
+import Main from "./components/Main";
 import FooterHome from "@/components/Footer";
 
 export default function Home() {
@@ -14,11 +14,11 @@ export default function Home() {
     >
       <Header
         src_universidad={"./unicauca/logo_negro.png"}
-        width={110}
-        height={110}
+        width={100}
+        height={100}
       />
       <div className="items-center flex-1 mx-auto">
-        <SignUpContainer />
+        <Main />
       </div>
       <div>
         <FooterHome

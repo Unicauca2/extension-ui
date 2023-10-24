@@ -40,7 +40,7 @@ export function getGuardianElements({ guardian, types }: Props) {
       value: guardian.relationship,
       name: "guardian.relationship",
       options: types.relationships,
-      styles: { m: 1, width: "23%" },
+      styles: { my: 1, width: "100%" },
     },
     {
       type: "text",
