@@ -82,20 +82,26 @@ function FormBuilder({
       case "select":
         if (options?.length && options.length > 0) {
           return (
-            <FormControl sx={styles} size="small">
-              <InputLabel className={className + " bg-white pr-2"}>
-                {label}
-              </InputLabel>
+            <FormControl
+              sx={{
+                ...styles,
+              }}
+              size="small"
+              fullWidth
+            >
+              <InputLabel id="de">{label}</InputLabel>
               <Select
+                labelId="de"
                 multiple={multiple}
                 value={value as string[]}
+                label={label}
                 onChange={({ target: { value } }) => {
                   handleInputChange(
                     name?.split(".") as string[],
                     value as string
                   );
                 }}
-                input={<OutlinedInput label="Name" />}
+                input={<OutlinedInput label={label} />}
               >
                 {options.map((item, itemIndex) => (
                   <MenuItem key={itemIndex} value={item.value}>

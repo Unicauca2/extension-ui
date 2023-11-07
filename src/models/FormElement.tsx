@@ -19,7 +19,7 @@ export type FormElement = {
   label?: string;
   value?: string | number | boolean | string[] | Dayjs | File | File[];
   accepts?: string;
-  options?: { value: string; label: string }[];
+  options?: { value: number | string; label: string }[];
   multiple?: boolean;
   checked?: boolean;
   placeholder?: string;

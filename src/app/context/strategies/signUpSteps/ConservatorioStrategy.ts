@@ -5,7 +5,7 @@ import {
   ApplicantRegistry,
   personInitialValues,
 } from "@/app/signup/models/ApplicantRegistry";
-import { getGuardianElements } from "@/app/signup/models/Guardian";
+import { getGuardianConservatorioElements } from "@/app/signup/models/Guardian";
 import { getResidencyElements } from "@/app/signup/models/Residency";
 import { TypeProps } from "@/app/signup/models/TypeProps";
 import { IStrategy, Steps } from "./IStrategy";
@@ -84,7 +84,7 @@ export class ConservatorioStrategy implements IStrategy {
       {
         label: "Información Acudiente",
         content: (person: ApplicantRegistry, { types }: TypeProps) =>
-          getGuardianElements({
+          getGuardianConservatorioElements({
             guardian: person.guardian,
             types: types,
           }),

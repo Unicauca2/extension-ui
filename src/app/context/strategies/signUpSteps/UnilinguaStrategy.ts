@@ -9,6 +9,7 @@ import { getGuardianUnilinguaElements } from "@/app/signup/models/Guardian";
 import { getResidencyElements } from "@/app/signup/models/Residency";
 import { TypeProps } from "@/app/signup/models/TypeProps";
 import { IStrategy, Steps } from "./IStrategy";
+import { getScholarShipElements } from "@/app/signup/models/Scholarship";
 
 export class UnilinguaStrategy implements IStrategy {
   getSignUpSteps(): Steps {
@@ -80,6 +81,15 @@ export class UnilinguaStrategy implements IStrategy {
             person.residency,
             personInitialValues.residency
           ),
+      },
+      {
+        label: "Información escolar",
+        content: (person: ApplicantRegistry, { types }: TypeProps) =>
+          getScholarShipElements({
+            birthDate: person.applicant.birthDate,
+            scholarship: person.scholarship,
+          }),
+        checker: (person: ApplicantRegistry) => true,
       },
       {
         label: "Información Acudiente",
