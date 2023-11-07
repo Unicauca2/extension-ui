@@ -7,6 +7,7 @@ export interface Guardian {
   telePhone: string;
   email: string;
   relationship: number | string;
+  whatsapp: string;
 }
 
 interface Props {
@@ -19,8 +20,36 @@ interface Props {
   };
 }
 
-export function getGuardianElements({ guardian, types }: Props) {
+function getGuardianBaseElements({ guardian }: Props) {
   return [
+    {
+      type: "text",
+      label: "Teléfono celular",
+      name: "guardian.cellPhone",
+      value: guardian.cellPhone,
+    },
+    {
+      type: "text",
+      label: "Correo electrónico",
+      name: "guardian.email",
+      value: guardian.email,
+    },
+  ] as FormElement[];
+}
+
+export function getGuardianUnilinguaElements({ guardian, types }: Props) {
+  const unilinguaElements = getGuardianBaseElements({ guardian, types });
+  unilinguaElements.push({
+    type: "text",
+    label: "Número de Whatsapp",
+    name: "guardian.whatsapp",
+    value: guardian.whatsapp,
+  });
+  return unilinguaElements;
+}
+
+export function getGuardianConservatorioElements({ guardian, types }: Props) {
+  const auxAdditionalElements = [
     {
       type: "text",
       label: "Nombre completo",
@@ -42,23 +71,14 @@ export function getGuardianElements({ guardian, types }: Props) {
       options: types.relationships,
       styles: { my: 1, width: "100%" },
     },
-    {
-      type: "text",
-      label: "Teléfono celular",
-      name: "guardian.cellPhone",
-      value: guardian.cellPhone,
-    },
-    {
-      type: "text",
-      label: "Correo electrónico",
-      name: "guardian.email",
-      value: guardian.email,
-    },
-    {
-      type: "text",
-      label: "Teléfono alternativo",
-      name: "guardian.telePhone",
-      value: guardian.telePhone,
-    },
   ] as FormElement[];
+  const conservatorioElements = getGuardianBaseElements({ guardian, types });
+  conservatorioElements.splice(0, 0, ...auxAdditionalElements);
+  conservatorioElements.push({
+    type: "text",
+    label: "Teléfono alternativo",
+    name: "guardian.telePhone",
+    value: guardian.telePhone,
+  });
+  return conservatorioElements;
 }

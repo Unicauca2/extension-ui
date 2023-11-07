@@ -1,5 +1,4 @@
 import { Dayjs } from "dayjs";
-import { Credential } from "@/app/login/models/Credential";
 import { FormElement } from "@/models/FormElement";
 
 export interface Applicant {
@@ -23,7 +22,6 @@ export interface Applicant {
 
 interface Props {
   applicant: Applicant;
-  credentials: Credential;
   types: {
     [key: string]: {
       value: number | string;
@@ -32,7 +30,7 @@ interface Props {
   };
 }
 
-export function getApplicantElements({ applicant, credentials, types }: Props) {
+function getApplicantBaseElements({ applicant, types }: Props) {
   const stratums = [1, 2, 3, 4, 5, 6].map((value) => {
     return { value: value, label: value };
   });
@@ -67,14 +65,6 @@ export function getApplicantElements({ applicant, credentials, types }: Props) {
       label: "Fecha de nacimiento",
       value: applicant.birthDate,
       name: "applicant.birthDate",
-    },
-    {
-      type: "select",
-      label: "Tipo de documento",
-      value: applicant.identificationDocumentType,
-      name: "applicant.identificationDocumentType",
-      options: types.documentTypes,
-      styles: { my: 1, width: "100%" },
     },
     {
       type: "text",
@@ -130,11 +120,67 @@ export function getApplicantElements({ applicant, credentials, types }: Props) {
       name: "applicant.email",
       value: applicant.email,
     },
-    {
-      type: "password",
-      label: "Contraseña",
-      name: "credentials.password",
-      value: credentials.password,
-    },
   ] as FormElement[];
+}
+
+export function getApplicantConservatorioElements({ applicant, types }: Props) {
+  const identityDocuments = [
+    {
+      value: 1,
+      label: "Registro Civil",
+    },
+    {
+      value: 2,
+      label: "Tarjeta de Identidad",
+    },
+  ];
+
+  const conservatorioElements = getApplicantBaseElements({ applicant, types });
+  conservatorioElements.splice(5, 0, {
+    type: "select",
+    label: "Tipo de documento",
+    value: applicant.identificationDocumentType,
+    name: "applicant.identificationDocumentType",
+    options: identityDocuments,
+    styles: { my: 1, width: "100%" },
+  } as unknown as FormElement);
+
+  return conservatorioElements;
+}
+
+export function getApplicantUnilinguaElements({ applicant, types }: Props) {
+  const identityDocuments = [
+    {
+      value: 1,
+      label: "Registro Civil",
+    },
+    {
+      value: 2,
+      label: "Tarjeta de Identidad",
+    },
+    {
+      value: 3,
+      label: "Cédula de ciudadanía",
+    },
+    {
+      value: 4,
+      label: "Cédula de extranjería",
+    },
+    {
+      value: 5,
+      label: "Pasaporte",
+    },
+  ];
+
+  const unilinguaElements = getApplicantBaseElements({ applicant, types });
+  unilinguaElements.splice(5, 0, {
+    type: "select",
+    label: "Tipo de documento",
+    value: applicant.identificationDocumentType,
+    name: "applicant.identificationDocumentType",
+    options: identityDocuments,
+    styles: { my: 1, width: "100%" },
+  } as unknown as FormElement);
+
+  return unilinguaElements;
 }

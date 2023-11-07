@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
+import { Button } from "@mui/material";
 
 const Login = () => {
   const router = useSearchParams();
@@ -46,7 +47,7 @@ const Login = () => {
             </p>
             <input
               type="text"
-              name="text"
+              name="user"
               className="mx-4 px-4 py-4 w-11/12 text-[#000066] bg-[#ffffff] rounded-3xl focus:text-[#454444] outline-[#000066]"
               placeholder="usuario"
             />
@@ -66,11 +67,31 @@ const Login = () => {
           </label>
         </div>
         <div>
-          <input
-            className="w-1/2 rounded-2xl bg-[#000066] hover:bg-[#FFFFFF] text-[#ffffff] hover:text-[#000066] hover:border-[#000066] border font-bold py-2 px-4 mb-2"
-            type="submit"
-            value={"Ingresar"}
-          />
+          <Button
+            onClick={() => {
+              return;
+            }}
+            sx={{
+              width: "40%",
+              borderRadius: "24px",
+              backgroundColor: "#000066 !important",
+              color: "#ffffff",
+              border: "1px",
+              borderColor: "#F6F6F6",
+              borderStyle: "solid",
+              fontWeight: "700",
+              py: "2",
+              px: "4",
+              mb: "2",
+              "&:hover": {
+                backgroundColor: "#ffffff !important",
+                color: "#000066",
+                borderColor: "#000066",
+              },
+            }}
+          >
+            Ingresar
+          </Button>
         </div>
       </form>
 
@@ -82,7 +103,7 @@ const Login = () => {
 
       <div className="mb-6 py-5">
         <Link
-          href={{ pathname: `/signup`, query: { program: program } }}
+          href={{ pathname: `/signup` }}
           className="w-1/2 rounded-2xl bg-[#ffffff] hover:bg-[#000066] hover:text-[#ffffff] border border-[#000066] font-bold py-2 px-4 mb-2"
         >
           Registrar

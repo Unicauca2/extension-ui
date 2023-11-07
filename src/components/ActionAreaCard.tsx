@@ -6,14 +6,19 @@ import Typography from "@mui/material/Typography";
 import { CardActionArea } from "@mui/material";
 
 interface cardProps {
-  title: string,
-  src: string
+  title: string;
+  src: string;
+  onClick: () => void;
 }
 
-export default function ActionAreaCard({ title, src }: cardProps) {
+export default function ActionAreaCard({ title, src, onClick }: cardProps) {
   return (
-    <Link href={{ pathname: `/login`, query: { program: title } }}>
-      <Card className="mx-0 w-auto sm:w-96" sx={{ maxWidth: 345 }}>
+    <Link href={{ pathname: `/login` }}>
+      <Card
+        className="mx-0 w-auto sm:w-96"
+        sx={{ maxWidth: 345 }}
+        onClick={() => onClick()}
+      >
         <CardActionArea className="pt-10 pb-4">
           <CardMedia
             className="mx-auto"
