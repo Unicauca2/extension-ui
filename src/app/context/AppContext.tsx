@@ -11,6 +11,7 @@ interface ProgramData {
   id: number;
   name: string;
   logo: string;
+  record: string;
 }
 
 const programList = {
@@ -18,11 +19,13 @@ const programList = {
     id: 10,
     name: "Conservatorio",
     logo: "./conservatorio/logo.png",
+    record: "/v1/applicant/conservatorio/record",
   },
   "85": {
     id: 85,
     name: "Unilingua",
     logo: "./unilingua/logo.png",
+    record: "/v1/applicant/unilingua/record",
   },
 } as { [key: string]: ProgramData };
 

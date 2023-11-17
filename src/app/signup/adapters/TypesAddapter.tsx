@@ -13,21 +13,6 @@ interface typeObject {
   label: string;
 }
 
-function orderByLabel(list: typeObject[]) {
-  list.sort((a, b) => {
-    const labelA = a.label.toUpperCase();
-    const labelB = b.label.toUpperCase();
-    if (labelA < labelB) {
-      return -1;
-    }
-    if (labelA > labelB) {
-      return 1;
-    }
-    return 0;
-  });
-  return list;
-}
-
 export async function getAddaptedTypes() {
   const typesResponse = await getTypes();
 
@@ -43,7 +28,6 @@ export async function getAddaptedTypes() {
         parent: item.parent,
       };
     });
-    response[key] = orderByLabel(response[key]);
   }
 
   return response;

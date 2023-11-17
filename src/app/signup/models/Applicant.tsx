@@ -7,8 +7,8 @@ export interface Applicant {
   firstLastName: string;
   secondLastName: string;
   identification: string;
-  expeditionDate: Dayjs;
-  birthDate: Dayjs;
+  expeditionDate: Dayjs | undefined;
+  birthDate: Dayjs | undefined;
   identificationDocumentType: string;
   cellPhone: string;
   bloodType: string;
@@ -88,12 +88,6 @@ function getApplicantBaseElements({ applicant, types }: Props) {
     },
     {
       type: "text",
-      label: "Celular",
-      name: "applicant.cellPhone",
-      value: applicant.cellPhone,
-    },
-    {
-      type: "text",
       label: "EPS",
       name: "applicant.eps",
       value: applicant.eps,
@@ -114,73 +108,49 @@ function getApplicantBaseElements({ applicant, types }: Props) {
       options: stratums,
       styles: { my: 1, width: "100%" },
     },
-    {
-      type: "text",
-      label: "Correo electrónico",
-      name: "applicant.email",
-      value: applicant.email,
-    },
   ] as FormElement[];
 }
 
 export function getApplicantConservatorioElements({ applicant, types }: Props) {
-  const identityDocuments = [
-    {
-      value: 1,
-      label: "Registro Civil",
-    },
-    {
-      value: 2,
-      label: "Tarjeta de Identidad",
-    },
-  ];
-
   const conservatorioElements = getApplicantBaseElements({ applicant, types });
   conservatorioElements.splice(5, 0, {
     type: "select",
     label: "Tipo de documento",
     value: applicant.identificationDocumentType,
     name: "applicant.identificationDocumentType",
-    options: identityDocuments,
+    options: types.conservatorioDocumentTypes,
     styles: { my: 1, width: "100%" },
-  } as unknown as FormElement);
+  } as FormElement);
 
   return conservatorioElements;
 }
 
 export function getApplicantUnilinguaElements({ applicant, types }: Props) {
-  const identityDocuments = [
-    {
-      value: 1,
-      label: "Registro Civil",
-    },
-    {
-      value: 2,
-      label: "Tarjeta de Identidad",
-    },
-    {
-      value: 3,
-      label: "Cédula de ciudadanía",
-    },
-    {
-      value: 4,
-      label: "Cédula de extranjería",
-    },
-    {
-      value: 5,
-      label: "Pasaporte",
-    },
-  ];
-
   const unilinguaElements = getApplicantBaseElements({ applicant, types });
   unilinguaElements.splice(5, 0, {
     type: "select",
     label: "Tipo de documento",
     value: applicant.identificationDocumentType,
     name: "applicant.identificationDocumentType",
-    options: identityDocuments,
+    options: types.unilinguaDocumentTypes,
     styles: { my: 1, width: "100%" },
-  } as unknown as FormElement);
+  } as FormElement);
+  unilinguaElements.push(
+    ...([
+      {
+        type: "text",
+        label: "Celular",
+        name: "applicant.cellPhone",
+        value: applicant.cellPhone,
+      },
+      {
+        type: "text",
+        label: "Correo electrónico",
+        name: "applicant.email",
+        value: applicant.email,
+      },
+    ] as FormElement[])
+  );
 
   return unilinguaElements;
 }

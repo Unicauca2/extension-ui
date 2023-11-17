@@ -21,11 +21,10 @@ export class ConservatorioStrategy implements IStrategy {
             types: types,
           }),
         checker: (person: ApplicantRegistry) => {
-          const check =
-            !isObjectWithDefaultValues(
-              person.applicant,
-              personInitialValues.applicant
-            ) && person.credentials.password;
+          const check = !isObjectWithDefaultValues(
+            person.applicant,
+            personInitialValues.applicant
+          );
           return check !== false || check;
         },
       },
@@ -85,13 +84,13 @@ export class ConservatorioStrategy implements IStrategy {
         label: "Información Acudiente",
         content: (person: ApplicantRegistry, { types }: TypeProps) =>
           getGuardianConservatorioElements({
-            guardian: person.guardian,
+            guardian: person.guardians[0],
             types: types,
           }),
         checker: (person: ApplicantRegistry) =>
           !isObjectWithDefaultValues(
-            person.guardian,
-            personInitialValues.guardian
+            person.guardians,
+            personInitialValues.guardians
           ),
       },
     ];

@@ -4,10 +4,7 @@ import { TypeProps } from "@/app/signup/models/TypeProps";
 
 export type Steps = {
   label: string;
-  content: (
-    person: ApplicantRegistry,
-    { types }: TypeProps
-  ) => FormElement[] | null;
+  content: (person: ApplicantRegistry, { types }: TypeProps) => FormElement[];
   checker: (person: ApplicantRegistry) => boolean;
 }[];
 

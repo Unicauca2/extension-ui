@@ -26,6 +26,8 @@ import { ConservatorioStrategy } from "@/app/context/strategies/signUpSteps/Cons
 import { UnilinguaStrategy } from "@/app/context/strategies/signUpSteps/UnilinguaStrategy";
 import { BoxStyles, FormBuilderStyles } from "./_MainClient.styles";
 import StepsComponent from "./_Steps";
+import { record } from "@/services/applicantService";
+import Snackbar from "@/components/Snackbar";
 
 const StrategyList = {
   "10": new ConservatorioStrategy(),
@@ -44,7 +46,10 @@ export default function _MainClient(types: TypeProps) {
     setFormSteps(context.getSignUpSteps());
   };
 
-  const handleSubmit = () => {};
+  const handleSubmit = async () => {
+    const aux = await record(person, program?.record as string);
+    console.log(aux);
+  };
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -59,6 +64,7 @@ export default function _MainClient(types: TypeProps) {
 
   return (
     <Box component="form" className="w-full pb-10" sx={BoxStyles}>
+      <Snackbar />
       {formSteps ? (
         <StepsComponent
           activeStep={activeStep}
