@@ -19,7 +19,9 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@unauthorized/*": ["./src/app/(app)/(unauthorized)/*"],
+      "@authorized/*": ["./src/app/(app)/(authorized)/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

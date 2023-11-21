@@ -1,30 +1,22 @@
 import { FormElement } from "@/models/FormElement";
 import isObjectWithDefaultValues from "@/utils/ObjectComparer";
-import { getApplicantUnilinguaElements } from "@/app/signup/models/Applicant";
 import {
   ApplicantRegistry,
   personInitialValues,
-} from "@/app/signup/models/ApplicantRegistry";
-import {
-  getGuardianUnilinguaChecker,
-  getGuardianUnilinguaElements,
-} from "@/app/signup/models/Guardian";
-import { getResidencyElements } from "@/app/signup/models/Residency";
-import { TypeProps } from "@/app/signup/models/TypeProps";
+} from "@unauthorized/signup/models/ApplicantRegistry";
+import { getGuardianConservatorioElements } from "@unauthorized/signup/models/Guardian";
+import { getResidencyElements } from "@unauthorized/signup/models/Residency";
+import { TypeProps } from "@unauthorized/signup/models/TypeProps";
 import { IStrategy, Steps } from "./IStrategy";
-import {
-  getScholarShipChecker,
-  getScholarShipElements,
-} from "@/app/signup/models/Scholarship";
-import dayjs from "dayjs";
+import { getApplicantConservatorioElements } from "@unauthorized/signup/models/Applicant";
 
-export class UnilinguaStrategy implements IStrategy {
+export class ConservatorioStrategy implements IStrategy {
   getSignUpSteps(): Steps {
     return [
       {
         label: "Información personal",
         content: (person: ApplicantRegistry, { types }: TypeProps) =>
-          getApplicantUnilinguaElements({
+          getApplicantConservatorioElements({
             applicant: person.applicant,
             types: types,
           }),
@@ -33,7 +25,7 @@ export class UnilinguaStrategy implements IStrategy {
             person.applicant,
             personInitialValues.applicant
           );
-          return check;
+          return check !== false || check;
         },
       },
       {
@@ -89,27 +81,17 @@ export class UnilinguaStrategy implements IStrategy {
           ),
       },
       {
-        label: "Información escolar",
-        content: (person: ApplicantRegistry, { types }: TypeProps) =>
-          getScholarShipElements({
-            birthDate: person.applicant.birthDate || dayjs(),
-            scholarship: person.scholarship,
-          }),
-        checker: (person: ApplicantRegistry) =>
-          getScholarShipChecker({
-            birthDate: person.applicant.birthDate || dayjs(),
-            scholarship: person.scholarship,
-          }),
-      },
-      {
         label: "Información Acudiente",
         content: (person: ApplicantRegistry, { types }: TypeProps) =>
-          getGuardianUnilinguaElements({
+          getGuardianConservatorioElements({
             guardian: person.guardians[0],
             types: types,
           }),
         checker: (person: ApplicantRegistry) =>
-          getGuardianUnilinguaChecker(person.guardians[0]),
+          !isObjectWithDefaultValues(
+            person.guardians,
+            personInitialValues.guardians
+          ),
       },
     ];
   }
