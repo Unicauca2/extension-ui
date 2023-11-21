@@ -20,7 +20,7 @@ interface Props {
   types: any;
 }
 
-export default function Steps({
+export default function RegistrySteps({
   formSteps,
   activeStep,
   handleInputChange,
@@ -33,7 +33,7 @@ export default function Steps({
     <>
       <Stepper activeStep={activeStep} orientation="vertical">
         {formSteps.map((step, index) => (
-          <Step key={step.label}>
+          <Step key={step.label} completed={step.checker(person)}>
             <StepLabel>{step.label}</StepLabel>
             <StepContent>
               <div className="bg-[#f6f6f6] shadow rounded-3xl p-4">

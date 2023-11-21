@@ -10,6 +10,7 @@ import {
   Box,
 } from "@mui/material";
 import { LocalizationProvider } from "@mui/x-date-pickers";
+import { esES } from "@mui/x-date-pickers/locales";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { FormElement } from "../models/FormElement";
@@ -82,20 +83,26 @@ function FormBuilder({
       case "select":
         if (options?.length && options.length > 0) {
           return (
-            <FormControl sx={styles} size="small">
-              <InputLabel className={className + " bg-white pr-2"}>
-                {label}
-              </InputLabel>
+            <FormControl
+              sx={{
+                ...styles,
+              }}
+              size="small"
+              fullWidth
+            >
+              <InputLabel id="de">{label}</InputLabel>
               <Select
+                labelId="de"
                 multiple={multiple}
                 value={value as string[]}
+                label={label}
                 onChange={({ target: { value } }) => {
                   handleInputChange(
                     name?.split(".") as string[],
                     value as string
                   );
                 }}
-                input={<OutlinedInput label="Name" />}
+                input={<OutlinedInput label={label} />}
               >
                 {options.map((item, itemIndex) => (
                   <MenuItem key={itemIndex} value={item.value}>
@@ -110,24 +117,24 @@ function FormBuilder({
 
       case "datePicker":
         return (
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <LocalizationProvider
+            dateAdapter={AdapterDayjs}
+            localeText={
+              esES.components.MuiLocalizationProvider.defaultProps.localeText
+            }
+          >
             <DatePicker
               className={className}
               label={label as string}
-              value={dayjs(value as string)}
+              value={value ? dayjs(value as string) : null}
               views={["year", "month", "day"]}
-              onAccept={(value) =>
+              onChange={(value) =>
                 handleInputChange(
                   name?.split(".") as string[],
-                  dayjs(value as Dayjs).format("YYYY-MM-DD")
+                  dayjs(value as Dayjs)
                 )
               }
-              sx={{
-                "& .MuiInputBase-root > input": {
-                  paddingY: 1.064,
-                  paddingX: "1rem",
-                },
-              }}
+              format="LL"
             />
           </LocalizationProvider>
         );

@@ -1,12 +1,29 @@
-import dayjs from 'dayjs';
-import 'dayjs/locale/es';
+import { ApplicantRegistry } from "@/app/signup/models/ApplicantRegistry";
 
-import { Applicant } from '@/app/signup/models/Applicant';
+export async function record(
+  applicantRegistry: ApplicantRegistry,
+  submitUrl: string
+) {
+  const formData = new FormData();
+  formData.append("applicantRegistry", JSON.stringify(applicantRegistry));
+  if (applicantRegistry.applicant.document) {
+    formData.append("document", applicantRegistry.applicant.document);
+  }
+  if (applicantRegistry.applicant.photo) {
+    formData.append("photo", applicantRegistry.applicant.photo);
+  }
 
-function validateApplicantRegistry(applicant: Applicant) {
-  const years = dayjs().locale('es').diff(dayjs(applicant.birthDate, { format: 'YYYY-MM-DD' }), 'year')
-}
-export function Record(applicant: Applicant) {
-  validateApplicantRegistry(applicant);
-  return <div>{applicant.birthDate.toString()}</div>
+  async function SubmitData(formData: FormData) {
+    const response = await fetch(process.env.NEXT_PUBLIC_API + submitUrl, {
+      method: "POST",
+      body: formData,
+    });
+    if (response.ok) {
+      const result = await response.json();
+      return { success: true, result };
+    }
+    return { success: false };
+  }
+  const result = await SubmitData(formData);
+  return result;
 }

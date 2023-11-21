@@ -17,7 +17,6 @@ export class SignUpStepsContext {
     if (this.steps) {
       return this.steps;
     }
-    console.log(this.strategy);
     return this.strategy.getSignUpSteps();
   }
 }

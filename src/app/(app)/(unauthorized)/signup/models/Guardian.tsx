@@ -24,14 +24,21 @@ function getGuardianBaseElements({ guardian }: Props) {
   return [
     {
       type: "text",
+      label: "Nombre completo",
+      name: "guardians.0.fullName",
+      value: guardian.fullName,
+      className: "w-full my-2",
+    },
+    {
+      type: "text",
       label: "Teléfono celular",
-      name: "guardian.cellPhone",
+      name: "guardians.0.cellPhone",
       value: guardian.cellPhone,
     },
     {
       type: "text",
       label: "Correo electrónico",
-      name: "guardian.email",
+      name: "guardians.0.email",
       value: guardian.email,
     },
   ] as FormElement[];
@@ -42,32 +49,33 @@ export function getGuardianUnilinguaElements({ guardian, types }: Props) {
   unilinguaElements.push({
     type: "text",
     label: "Número de Whatsapp",
-    name: "guardian.whatsapp",
+    name: "guardians.0.whatsapp",
     value: guardian.whatsapp,
   });
   return unilinguaElements;
+}
+export function getGuardianUnilinguaChecker(guardian: Guardian) {
+  if (guardian.cellPhone === undefined || guardian.cellPhone.length < 1)
+    return false;
+  if (guardian.email === undefined || guardian.email.length < 1) return false;
+  if (guardian.whatsapp === undefined || guardian.whatsapp.length < 1)
+    return false;
+  return true;
 }
 
 export function getGuardianConservatorioElements({ guardian, types }: Props) {
   const auxAdditionalElements = [
     {
       type: "text",
-      label: "Nombre completo",
-      name: "guardian.fullName",
-      value: guardian.fullName,
-      className: "w-full my-2",
-    },
-    {
-      type: "text",
       label: "Identificación",
-      name: "guardian.identification",
+      name: "guardians.0.identification",
       value: guardian.identification,
     },
     {
       type: "select",
       label: "Parentesco",
       value: guardian.relationship,
-      name: "guardian.relationship",
+      name: "guardians.0.relationship",
       options: types.relationships,
       styles: { my: 1, width: "100%" },
     },
@@ -77,7 +85,7 @@ export function getGuardianConservatorioElements({ guardian, types }: Props) {
   conservatorioElements.push({
     type: "text",
     label: "Teléfono alternativo",
-    name: "guardian.telePhone",
+    name: "guardians.0.telePhone",
     value: guardian.telePhone,
   });
   return conservatorioElements;

@@ -1,31 +1,23 @@
 "use client";
 
-import { Suspense, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import { usePersonRegister } from "../hooks/usePersonRegister";
-import FormBuilder from "@/utils/FormBuilder";
-import {
-  Button,
-  Paper,
-  Skeleton,
-  Step,
-  StepContent,
-  StepLabel,
-  Stepper,
-  Typography,
-} from "@mui/material";
+import { Button, Paper, Skeleton, Typography } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
 import { TypeProps } from "../models/TypeProps";
 import { useAppContext } from "@/app/context/AppContext";
-import { SignUpStepsContext } from "@/app/context/strategies/signUpSteps/SignUpStepsContext";
+import { SignUpStepsContext } from "@unauthorized/signup/strategies/signUpSteps/SignUpStepsContext";
 import {
   IStrategy,
   Steps,
-} from "@/app/context/strategies/signUpSteps/IStrategy";
-import { ConservatorioStrategy } from "@/app/context/strategies/signUpSteps/ConservatorioStrategy";
-import { UnilinguaStrategy } from "@/app/context/strategies/signUpSteps/UnilinguaStrategy";
-import { BoxStyles, FormBuilderStyles } from "./_MainClient.styles";
+} from "@unauthorized/signup/strategies/signUpSteps/IStrategy";
+import { ConservatorioStrategy } from "@unauthorized/signup/strategies/signUpSteps/ConservatorioStrategy";
+import { UnilinguaStrategy } from "@unauthorized/signup/strategies/signUpSteps/UnilinguaStrategy";
+import { BoxStyles } from "./_MainClient.styles";
 import StepsComponent from "./_Steps";
+import { record } from "@/services/applicantService";
+import Snackbar from "@/components/Snackbar";
 
 const StrategyList = {
   "10": new ConservatorioStrategy(),
@@ -44,7 +36,10 @@ export default function _MainClient(types: TypeProps) {
     setFormSteps(context.getSignUpSteps());
   };
 
-  const handleSubmit = () => {};
+  const handleSubmit = async () => {
+    const aux = await record(person, program?.record as string);
+    console.log(aux);
+  };
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -59,6 +54,7 @@ export default function _MainClient(types: TypeProps) {
 
   return (
     <Box component="form" className="w-full pb-10" sx={BoxStyles}>
+      <Snackbar />
       {formSteps ? (
         <StepsComponent
           activeStep={activeStep}

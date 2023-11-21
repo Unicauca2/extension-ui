@@ -1,6 +1,6 @@
 import { FormElement } from "@/models/FormElement";
-import { ApplicantRegistry } from "@/app/signup/models/ApplicantRegistry";
-import { TypeProps } from "@/app/signup/models/TypeProps";
+import { ApplicantRegistry } from "@unauthorized/signup/models/ApplicantRegistry";
+import { TypeProps } from "@unauthorized/signup/models/TypeProps";
 
 export type Steps = {
   label: string;
