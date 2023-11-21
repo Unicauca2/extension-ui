@@ -2,6 +2,8 @@ import "./globals.css";
 import { AppProvider } from "./context/AppContext";
 
 import type { Metadata } from "next";
+import { ReactNode } from "react";
+import React from "react";
 export const metadata: Metadata = {
   title: "Programas Extension Unicauca",
   description:
@@ -11,7 +13,7 @@ export const metadata: Metadata = {
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: ReactNode;
 }) {
   return (
     <html lang="es">
