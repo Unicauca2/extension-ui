@@ -1,17 +1,17 @@
 import { ListItemIcon } from "@mui/material";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
+import SchoolIcon from '@mui/icons-material/SchoolOutlined';
 
 interface Props {
-  key: string;
+  nameIcon: string
 }
 
-export default function GlobalIcon({ key }: Props) {
-  console.log(key);
-  switch (key) {
-    case "inboxIcon":
+export default function GlobalIcon({nameIcon}: Props) {
+  switch (nameIcon) {
+    case "studentIcon":
       return (
         <ListItemIcon>
-          <InboxIcon className="ml-2" />
+          <SchoolIcon className="text-[#000066]"/>
         </ListItemIcon>
       );
     default:
