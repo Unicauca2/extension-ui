@@ -9,11 +9,8 @@ interface headerProps {
 
 const HeaderLogin = ({ src_universidad, width, height }: headerProps) => {
   return (
-    <Link href={{ pathname: `/` }}>
+    <Link href={{ pathname: `/home` }}>
       <div className="flex items-center place-content-center py-3 h-32 bg-[#ffffff] rounded-b-3xl">
-        {/* <div>
-          <ProgramImage width={width} height={height} type="logo" />
-        </div> */}
         <img
           style={{
             height: height,

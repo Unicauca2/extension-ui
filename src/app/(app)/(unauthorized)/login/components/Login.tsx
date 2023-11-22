@@ -67,7 +67,7 @@ const Login = () => {
           </label>
         </div>
         <div>
-          <Button
+          {/* <Button
             onClick={() => {
               return;
             }}
@@ -91,11 +91,17 @@ const Login = () => {
             }}
           >
             Ingresar
-          </Button>
+          </Button> */}
+          <Link
+            href={{ pathname: `/functionary` }}
+            className="w-1/2 rounded-2xl hover:bg-[#ffffff] bg-[#000066] hover:text-[#000066] text-[#ffffff] border border-[#000066] font-bold py-2 px-4 mb-2"
+          >
+            Registrar
+          </Link>
         </div>
       </form>
 
-      <p className="font-medium underline">¿Olvidaste tu contraseña?</p>
+      <p className="font-medium underline mt-2">¿Olvidaste tu contraseña?</p>
 
       <p className="mt-10 sm:mt-16 mx-4">
         ¿No tienes cuenta? Puedes registrarte utilizando el siguiente botón
