@@ -23,13 +23,12 @@ const hours=[
   {id: 5, content: "11:00 am"},
   {id: 6, content: "12:00 am"},
   {id: 7, content: "1:00 pm"},
-  {id: 8, content: "break"},
-  {id: 9, content: "2:00 pm"},
-  {id: 10, content: "3:00 pm"},
-  {id: 11, content: "4:00 pm"},
-  {id: 12, content: "5:00 pm"},
-  {id: 13, content: "6:00 pm"},
-  {id: 14, content: "7:00 pm"},
+  {id: 10, content: "2:00 pm"},
+  {id: 11, content: "3:00 pm"},
+  {id: 12, content: "4:00 pm"},
+  {id: 13, content: "5:00 pm"},
+  {id: 14, content: "6:00 pm"},
+  {id: 15, content: "7:00 pm"},
   {id: 15, content: "8:00 pm"}
 ]
 
@@ -52,28 +51,28 @@ const subjectsEnable: subjectsObj[]=[
     id:1, name: "Flauta I", code:"FL2023I", classroom:"Sala 315 - Hum", color: "bg-[#c63d96]",
     slots:[
       {idDay: 1, idStart: 1, duration: 4},
-      {idDay: 2, idStart: 4, duration: 2}
+      {idDay: 2, idStart: 5, duration: 2}
     ]
   },
   {
     id:2, name: "Guitarra I", code:"GT2023I" , classroom:"Salón 124 - FIC", color: "bg-[#26c019]",
     slots:[
-      {idDay: 2, idStart: 2, duration: 2},
-      {idDay: 3, idStart: 4, duration: 2}
+      {idDay: 1, idStart: 13, duration: 2},
+      {idDay: 2, idStart: 1, duration: 4}
     ]
   },
   {
     id:3, name: "Clarinete I", code:"CR2023I" , classroom:"Sala 310 - FIET", color: "bg-[#ffb200]",
     slots:[
-      {idDay: 4, idStart: 9, duration: 2},
-      {idDay: 5, idStart: 5, duration: 2}
+      {idDay: 4, idStart: 12, duration: 4},
+      {idDay: 5, idStart: 12, duration: 3}
     ]
   },
   {
     id:4, name: "Violin I", code:"VL2023I", classroom:"Sala 220 - Hum", color: "bg-[#092167]",
     slots:[
-      {idDay: 1, idStart: 13, duration: 2},
-      {idDay: 6, idStart: 1, duration: 5}
+      {idDay: 6, idStart: 2, duration: 4},
+      {idDay: 3, idStart: 5, duration: 2}
     ]
   }  
 ]
@@ -85,7 +84,7 @@ export default function MainClient() {
   const dragSubject = useRef(0);
 
   return (
-    <main className="h-5/6 my-auto  mb-3 bg-[#ffffff] rounded-bl-3xl rounded-tr-3xl">
+    <main className="h-5/6 min-h-[400px] min-w-[860px] my-auto mb-3 bg-[#ffffff] rounded-bl-3xl rounded-tr-3xl">
       <div className="m-2">
         <p className="w-1/4 py-1 px-3 bg-[#85332A] text-[#ffffff] font-bold font-sans text-base rounded-xl">
           Matrícula Académica
@@ -115,7 +114,6 @@ export default function MainClient() {
               </div>
             </Box>
           </List>
-
         </div>
         <div className="w-3/4">
           <Schedule dragActive={dragActive} setDragActive={setDragActive} dragSubject={dragSubject} days={days} hours={hours} subjectsEnable={subjectsEnable}/>
