@@ -37,7 +37,7 @@ const Login = () => {
 
   return (
     <div className="bg-[#F6F6F6] rounded-3xl text-center text-[#000066] h-full">
-      <p className="pt-5  text-2xl font-bold">Iniciar Sesión en</p>
+      <p className="pt-5  text-2xl font-bold">Iniciar Sesión</p>
       <p className="text-2xl font-bold">{program}</p>
       <form className="mt-4">
         <div className="flex mx-2 sm:mx-10  pb-5 ">
@@ -90,6 +90,7 @@ const Login = () => {
               },
             }}
           >
+          <Button onClick={() => {return;}} href=" " className="w-2/5 rounded-2xl bg-[#000066] text-[#ffffff] border border-[#F6F6F6] border-solid font-bold py-2 px-4 mb-5 hover:border-b-2 hover:border-[#000066] hover:bg-[#ffffff] hover:text-[#000066]">
             Ingresar
           </Button> */}
           <Link
@@ -98,6 +99,14 @@ const Login = () => {
           >
             Registrar
           </Link>
+        </div>
+        <div>
+          <Button
+            href="/student"
+            className="w-2/5 rounded-2xl bg-[#000066] text-[#ffffff] border border-[#F6F6F6] border-solid font-bold py-2 px-4 mb-5 hover:border-b-2 hover:border-[#000066] hover:bg-[#ffffff] hover:text-[#000066]"
+          >
+            Student
+          </Button>
         </div>
       </form>
 
