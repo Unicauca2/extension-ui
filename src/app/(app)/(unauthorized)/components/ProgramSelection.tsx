@@ -2,7 +2,7 @@
 
 import { Fragment } from "react";
 import ActionAreaCard from "@/components/ActionAreaCard";
-import { useAppContext } from "../context/AppContext";
+import { useAppContext } from "../../../context/AppContext";
 
 export default function ProgramSelection() {
   const { programList, handleProgramSelected } = useAppContext();

@@ -1,4 +1,3 @@
-import { Steps } from "@/app/context/strategies/signUpSteps/IStrategy";
 import FormBuilder from "@/utils/FormBuilder";
 import {
   Step,
@@ -9,6 +8,7 @@ import {
   Stepper,
 } from "@mui/material";
 import { FormBuilderStyles } from "./_MainClient.styles";
+import { Steps } from "../strategies/signUpSteps/IStrategy";
 
 interface Props {
   formSteps: Steps;
@@ -61,7 +61,7 @@ export default function RegistrySteps({
                     onClick={handleBack}
                     sx={{ mt: 1, mr: 1 }}
                   >
-                    Back
+                    Atrás
                   </Button>
                 </div>
               </Box>

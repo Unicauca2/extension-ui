@@ -1,17 +1,10 @@
 import Footer from "@/components/Footer";
-import Header from "@/app/components/Header";
-import Main from "@/app/components/Main";
+import Header from "@/app/(app)/(unauthorized)/components/Header";
+import Main from "@/app/(app)/(unauthorized)/components/Main";
 
 export default function Home() {
   return (
-    <body
-      className="min-h-screen w-full flex flex-col text-[17px] bg-image bg-center"
-      style={{
-        backgroundImage: `url("./app/home.png")`,
-        backgroundRepeat: "no-repeat",
-        backgroundSize: "cover",
-      }}
-    >
+    <>
       <header>
         <Header
           src={"./unicauca/logo_blanco.png"}
@@ -30,6 +23,6 @@ export default function Home() {
           version={"Versión: v1.0"}
         />
       </footer>
-    </body>
+    </>
   );
 }

@@ -1,7 +1,7 @@
 interface headerProps {
-  src: string,
-  title: string,
-  label: string,
+  src: string;
+  title: string;
+  label: string;
 }
 
 const HeaderHome = ({ src, title, label }: headerProps) => {

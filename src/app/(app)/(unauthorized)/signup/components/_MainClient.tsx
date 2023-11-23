@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import { usePersonRegister } from "../hooks/usePersonRegister";
 import { Button, Paper, Skeleton, Typography } from "@mui/material";
-import SendIcon from "@mui/icons-material/Send";
 import { TypeProps } from "../models/TypeProps";
 import { useAppContext } from "@/app/context/AppContext";
 import { SignUpStepsContext } from "@unauthorized/signup/strategies/signUpSteps/SignUpStepsContext";
@@ -18,6 +17,7 @@ import { BoxStyles } from "./_MainClient.styles";
 import StepsComponent from "./_Steps";
 import { record } from "@/services/applicantService";
 import Snackbar from "@/components/Snackbar";
+import GlobalIcon from "@/components/GlobalIcon";
 
 const StrategyList = {
   "10": new ConservatorioStrategy(),
@@ -82,13 +82,13 @@ export default function _MainClient(types: TypeProps) {
           <Button
             className="rounded-3xl bg-[#000066] hover:bg-[#FFFFFF] text-[#ffffff] hover:text-[#000066] hover:border-[#000066] border font-semibold "
             variant="outlined"
-            endIcon={<SendIcon />}
+            endIcon={<GlobalIcon nameIcon="sendIcon" />}
             onClick={handleSubmit}
           >
             Completar registro
           </Button>
           <Button onClick={handleBack} sx={{ mt: 1, mr: 1 }}>
-            Back
+            Atrás
           </Button>
         </Paper>
       )}

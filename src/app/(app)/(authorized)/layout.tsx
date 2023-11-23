@@ -1,4 +1,5 @@
-import Footer from "@/components/Footer";
+import HorizontalCollapse from "./components/HorizontalCollapse";
+import TopNavBar from "./components/TopNavBar";
 
 export default function RootLayout({
   children,
@@ -6,19 +7,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="es">
-      <body className="min-h-screen w-full flex flex-col text-[17px] bg-[#edf3f5]">
-        <header>
-          <section className="border border-[#444] text-purple-900">
-            Header
-          </section>
-        </header>
-        <main className="flex-1 flex">
-          <section className="w-1/6">Nav Bar derecho</section>
-          {children}
-        </main>
-        <footer className="text-purple-700">Footer</footer>
-      </body>
-    </html>
+    <>
+      <div className="flex-1 flex">
+        <div className="bg-[#ffffff]">
+          <HorizontalCollapse />
+        </div>
+        <div className="w-full">
+          <TopNavBar />
+          <main className="flex mt-4">{children}</main>
+        </div>
+      </div>
+      <footer></footer>
+    </>
   );
 }

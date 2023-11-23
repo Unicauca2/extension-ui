@@ -15,7 +15,6 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { FormElement } from "../models/FormElement";
 import dayjs, { Dayjs } from "dayjs";
-import PasswordMeterInput from "@/components/PasswordMeter";
 import FileUploadField from "@/components/FileUploadField";
 
 type FormBuilderProps = {
@@ -65,18 +64,6 @@ function FormBuilder({
             }
             name={name}
             size="small"
-          />
-        );
-
-      case "password":
-        return (
-          <PasswordMeterInput
-            label={label as string}
-            name={name as string}
-            value={value as string}
-            onChange={({ target: { value } }) =>
-              handleInputChange(name?.split(".") as string[], value)
-            }
           />
         );
 
