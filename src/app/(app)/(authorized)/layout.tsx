@@ -14,7 +14,7 @@ export default function RootLayout({
         </div>
         <div className="w-full">
           <TopNavBar />
-          <main className="flex mt-4">{children}</main>
+          <main className="flex">{children}</main>
         </div>
       </div>
       <footer></footer>

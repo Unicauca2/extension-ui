@@ -98,7 +98,7 @@ export default function AcademicEnrollmentPage() {
   const dragSubject = useRef(0);
 
   return (
-    <main className="w-full m-4 h-5/6 min-h-[400px] min-w-[860px] my-auto mb-3 bg-[#ffffff] rounded-bl-3xl rounded-tr-3xl">
+    <div className="w-full m-4 h-5/6 min-h-[400px] min-w-[860px] mt-4 mb-3 bg-[#ffffff] rounded-bl-3xl rounded-tr-3xl">
       <div className="m-2">
         <p className="w-1/4 py-1 px-3 bg-[#85332A] text-[#ffffff] font-bold font-sans text-base rounded-xl">
           Matrícula Académica
@@ -163,6 +163,6 @@ export default function AcademicEnrollmentPage() {
           />
         </div>
       </Box>
-    </main>
+    </div>
   );
 }

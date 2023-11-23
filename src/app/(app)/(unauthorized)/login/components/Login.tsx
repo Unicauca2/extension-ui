@@ -66,46 +66,20 @@ const Login = () => {
             />
           </label>
         </div>
-        <div>
-          {/* <Button
-            onClick={() => {
-              return;
-            }}
-            sx={{
-              width: "40%",
-              borderRadius: "24px",
-              backgroundColor: "#000066 !important",
-              color: "#ffffff",
-              border: "1px",
-              borderColor: "#F6F6F6",
-              borderStyle: "solid",
-              fontWeight: "700",
-              py: "2",
-              px: "4",
-              mb: "2",
-              "&:hover": {
-                backgroundColor: "#ffffff !important",
-                color: "#000066",
-                borderColor: "#000066",
-              },
-            }}
-          >
-          <Button onClick={() => {return;}} href=" " className="w-2/5 rounded-2xl bg-[#000066] text-[#ffffff] border border-[#F6F6F6] border-solid font-bold py-2 px-4 mb-5 hover:border-b-2 hover:border-[#000066] hover:bg-[#ffffff] hover:text-[#000066]">
-            Ingresar
-          </Button> */}
+        <div className="m-2 p-4">
           <Link
-            href={{ pathname: `/functionary` }}
+            href="/functionary"
             className="w-1/2 rounded-2xl hover:bg-[#ffffff] bg-[#000066] hover:text-[#000066] text-[#ffffff] border border-[#000066] font-bold py-2 px-4 mb-2"
           >
-            Registrar
+            Funcionario
           </Link>
         </div>
-        <div>
+        <div className="m-2 p-4">
           <Link
             href="/student"
             className="w-2/5 rounded-2xl bg-[#000066] text-[#ffffff] border border-[#F6F6F6] border-solid font-bold py-2 px-4 mb-5 hover:border-b-2 hover:border-[#000066] hover:bg-[#ffffff] hover:text-[#000066]"
           >
-            Student
+            Estudiante
           </Link>
         </div>
       </form>

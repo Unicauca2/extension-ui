@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function StudentHome() {
   return (
-    <div className="mx-auto">
+    <div className="mx-auto mt-4">
       <Link href="/student/academicEnrollment">
         <div className="px-16 py-2 rounded-3xl bg-[#000066] text-[#ffffff] border font-bold  hover:border-[#000066] hover:bg-[#ffffff] hover:text-[#000066]">
           Student

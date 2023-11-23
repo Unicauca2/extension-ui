@@ -10,13 +10,9 @@ export const metadata: Metadata = {
     "Sistema academico de Unicauca, programas Unilingua - Conservatorio de musica",
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: ReactNode;
-}) {
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="es">
+    <html lang="es" className="text-[#092167]">
       <AppProvider>{children}</AppProvider>
     </html>
   );

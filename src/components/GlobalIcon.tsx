@@ -34,7 +34,11 @@ export default function GlobalIcon({ nameIcon, className }: Props) {
       return <ListOutlinedIcon className={className} />;
     case "sendIcon":
       return <SendIcon className={className} />;
+    case "people":
+      return <img src="/app/people.svg" alt="people" />;
+    case "sheetCheck":
+      return <img src="/app/sheetCheck.svg" alt="sheetCheck" />;
     default:
-      return <></>;
+      return <SendIcon className={className} />;
   }
 }

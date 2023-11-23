@@ -16,7 +16,7 @@ export default function TopNavBar() {
   let cummulativeCrumb = "";
 
   return (
-    <header className="w-full  bg-[#ffffff] px-4 py-2 ">
+    <header className="ml-4 bg-[#ffffff] px-4 py-2 ">
       <Stack direction="row" className="items-center justify-between">
         <div>
           {pathname.map((crumb, index) => {
