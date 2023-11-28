@@ -23,9 +23,9 @@ export default function DeleteAssignmentDialog({
         setOpenDialog(false);
         setDeleteActive("");
       }}
-      className="bg-[#ffffff] rounded-2xl border border-[#000066] top-4 justify-center"
+      className="bg-[#F6F6F6] rounded-xl shadow-2xl top-4 justify-center"
     >
-      <Box className="bg-[#ffffff] mx-5 my-2">
+      <Box className="bg-[#F6F6F6] mx-5 my-2">
         <GlobalIcon
           nameIcon="warningIcon"
           className="text-[#000066] text-7xl h-full"

@@ -95,6 +95,7 @@ const subjectsEnable: subjectsObj[] = [
 export default function AcademicEnrollmentPage() {
   const [dragActive, setDragActive] = useState<boolean>(false);
   const [subjectsAssigned, setSubjectsAssigned] = useState<number[]>([]);
+  const [deleteActive, setdeleteActive] = useState("");
   const dragSubject = useRef(0);
 
   return (
@@ -126,6 +127,7 @@ export default function AcademicEnrollmentPage() {
                   dragSubject={dragSubject}
                   hours={hours}
                   subjectsEnable={subjectsEnable}
+                  subjectsAssigned={subjectsAssigned}
                 />
               </div>
             </Box>
@@ -160,6 +162,8 @@ export default function AcademicEnrollmentPage() {
             subjectsEnable={subjectsEnable}
             subjectsAssigned={subjectsAssigned}
             setSubjectsAssigned={setSubjectsAssigned}
+            deleteActive={deleteActive}
+            setdeleteActive={setdeleteActive}
           />
         </div>
       </Box>

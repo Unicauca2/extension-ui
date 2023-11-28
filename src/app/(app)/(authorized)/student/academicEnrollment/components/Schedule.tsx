@@ -31,6 +31,8 @@ interface Props {
   }[];
   subjectsAssigned: number[];
   setSubjectsAssigned: Dispatch<SetStateAction<number[]>>;
+  deleteActive: string;
+  setdeleteActive: Dispatch<SetStateAction<string>>;
 }
 
 export default function Schedule({
@@ -41,12 +43,13 @@ export default function Schedule({
   hours,
   subjectsEnable,
   subjectsAssigned,
+  deleteActive,
+  setdeleteActive
 }: Props) {
   const dragMap = new Map();
   const spanDragMap = new Map();
   const selectMap = new Map();
   const spanSelectMap = new Map();
-  const [deleteActive, setdeleteActive] = useState("");
   const [openDialog, setopenDialog] = useState(false);
 
   subjectsEnable
@@ -99,7 +102,7 @@ export default function Schedule({
           {days.map((itemD, indexD) => (
             <th
               key={"d-" + indexD}
-              className="h-[30px] bg-[#0772B5] border border-white text-white font-semibold text-center"
+              className="w-[150px] h-[30px] bg-[#0772B5] border border-white text-white font-semibold text-center"
             >
               {itemD.name}
             </th>
@@ -159,7 +162,7 @@ export default function Schedule({
                           />
                         </div>
                       ) : (
-                        <p className="text-white">
+                        <p className="text-white break-words w-full">
                           {sub[1]}
                           <br></br>
                           {sub[2]}
