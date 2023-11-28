@@ -38,6 +38,8 @@ export default function GlobalIcon({ nameIcon, className }: Props) {
       return <img src="/app/people.svg" alt="people" />;
     case "sheetCheck":
       return <img src="/app/sheetCheck.svg" alt="sheetCheck" />;
+    case "back":
+      return <img src="/app/back.svg" alt="back" />;
     default:
       return <SendIcon className={className} />;
   }

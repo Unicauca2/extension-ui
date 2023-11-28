@@ -1,13 +1,35 @@
-import Link from "next/link";
+import IconActionCard from "../components/IconActionCard";
 
-export default function StudentHome() {
+const options = [
+  {
+    icon: "people",
+    label: "Matrícula Académica",
+    to: "/academicEnrollment",
+  },
+  {
+    icon: "sheetCheck",
+    label: "Historia Académica",
+    to: "/academicEnrollment",
+  },
+];
+
+export default function Home() {
   return (
-    <div className="mx-auto mt-4">
-      <Link href="/student/academicEnrollment">
-        <div className="px-16 py-2 rounded-3xl bg-[#000066] text-[#ffffff] border font-bold  hover:border-[#000066] hover:bg-[#ffffff] hover:text-[#000066]">
-          Student
-        </div>
-      </Link>
-    </div>
+    <section className="m-4 pb-10 bg-[#ffffff] w-full rounded-3xl ">
+      <div className="flex justify-center items-center mt-10 font-bold text-2xl">
+        Estudiante
+      </div>
+      <div className="m-4 flex flex-wrap justify-center">
+        {options.map((option, index) => (
+          <div key={index} className="m-4 shadow-2xl w-48">
+            <IconActionCard
+              icon={option.icon}
+              label={option.label}
+              to={`student/${option.to}`}
+            />
+          </div>
+        ))}
+      </div>
+    </section>
   );
 }

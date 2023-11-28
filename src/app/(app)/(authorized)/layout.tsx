@@ -14,7 +14,7 @@ export default function RootLayout({
         </div>
         <div className="w-full">
           <TopNavBar />
-          <main className="flex">{children}</main>
+          <main className="flex justify-center content-center">{children}</main>
         </div>
       </div>
       <footer></footer>
