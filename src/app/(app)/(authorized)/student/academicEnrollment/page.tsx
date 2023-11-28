@@ -98,7 +98,7 @@ export default function AcademicEnrollmentPage() {
   const dragSubject = useRef(0);
 
   return (
-    <div className="w-full m-4 h-5/6 min-h-[400px] min-w-[860px] mt-4 mb-3 bg-[#ffffff] rounded-bl-3xl rounded-tr-3xl">
+    <div className="w-full m-4 h-[85vh] min-h-[500px] min-w-[860px] mt-4 mb-3 bg-[#ffffff] rounded-bl-3xl rounded-tr-3xl">
       <div className="m-2">
         <p className="w-1/4 py-1 px-3 bg-[#85332A] text-[#ffffff] font-bold font-sans text-base rounded-xl">
           Matrícula Académica
@@ -110,7 +110,7 @@ export default function AcademicEnrollmentPage() {
             Aquí podras realizar tu matrícula académica
           </p>
 
-          <List className="h-[47vh] m-0 p-1 overflow-auto">
+          <List className="h-[55vh] min-h-[300px] m-0 p-1 overflow-auto">
             <Box className="w-full px-0 pt-0 pb-2 align-top flex">
               <div className="h-7 m-0 px-2 py-0 text-white bg-[#0772B5] rounded-3xl font-bold">
                 1

@@ -31,7 +31,6 @@ export default function ListSubjects({
 }: Props) {
   function handleOnDrag(id: number) {
     dragSubject.current = id;
-    console.log("Usando Drag. Selecciona el horario de " + dragSubject.current);
     setDragActive(true);
   }
   return (

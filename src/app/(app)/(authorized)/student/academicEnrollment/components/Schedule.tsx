@@ -87,20 +87,19 @@ export default function Schedule({
     e.preventDefault();
     setDragActive(false);
     subjectsAssigned.push(idS);
-    console.log(subjectsAssigned);
   }
 
   return (
-    <table className="w-full h-full rounded-tr-3xl">
+    <table className="w-full h-full rounded-tr-3xl border border-[#0000ff]">
       <tbody>
         <tr className="w-full">
-          <th className="w-[110px] bg-[#0772B5] text-white font-semibold text-center">
+          <th className="w-[110px] h-[30px] bg-[#0772B5] border border-white text-white font-semibold text-center">
             Hora
           </th>
           {days.map((itemD, indexD) => (
             <th
               key={"d-" + indexD}
-              className="bg-[#0772B5] text-white font-semibold text-center"
+              className="h-[30px] bg-[#0772B5] border border-white text-white font-semibold text-center"
             >
               {itemD.name}
             </th>
@@ -187,13 +186,13 @@ export default function Schedule({
                     ) : spanDragMap.has(itemD.id + "-" + itemH.id) ? null : (
                       <td
                         key={indexD + "-" + indexH}
-                        className="h-[29px] w-1/7 text-center border border-[#0772b567]"
+                        className="h-[30px] w-1/7 text-center border border-[#0772b567]"
                       ></td>
                     )
                   ) : (
                     <td
                       key={indexD + "-" + indexH}
-                      className="h-[29px] w-1/7 text-center border border-[#0772b567]"
+                      className="h-[30px] w-1/7 text-center border border-[#0772b567]"
                     ></td>
                   );
                 }
