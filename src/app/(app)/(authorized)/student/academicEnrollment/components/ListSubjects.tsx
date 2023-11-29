@@ -1,5 +1,5 @@
 import GlobalIcon from "@/components/GlobalIcon";
-import { Icon, List, ListItem, ListItemIcon, ListItemText } from "@mui/material";
+import {List, ListItem, ListItemIcon, ListItemText } from "@mui/material";
 import React from "react";
 
 interface Props {

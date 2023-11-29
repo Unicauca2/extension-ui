@@ -1,10 +1,12 @@
 "use client";
 
-import { Box, List, Button } from "@mui/material";
-import { useRef, useState } from "react";
+import { Box, List, Button, Alert} from "@mui/material";
+import { useRef, useState, useEffect} from "react";
 import Schedule from "./components/Schedule";
 import ListSubjects from "./components/ListSubjects";
 import GlobalIcon from "@/components/GlobalIcon";
+import { useSubjectsEnrollment } from "./hooks/useSubjectsEnrollment";
+import AcceptAssignmentDialog from "./components/_ScheduleAcceptAssignment";
 
 const days = [
   { id: 1, name: "Lunes" },
@@ -94,9 +96,18 @@ const subjectsEnable: subjectsObj[] = [
 
 export default function AcademicEnrollmentPage() {
   const [dragActive, setDragActive] = useState<boolean>(false);
-  const [subjectsAssigned, setSubjectsAssigned] = useState<number[]>([]);
-  const [deleteActive, setdeleteActive] = useState("");
+  const {subjectsAssigned, setSubjectsAssigned} = useSubjectsEnrollment();
+  const [deleteActive, setDeleteActive] = useState("");
   const dragSubject = useRef(0);
+  const [openDialogDelete, setOpenDialogDelete] = useState(false);
+  const [openDialogAccept, setOpenDialogAccept] = useState(false);
+  const [openAlert, setOpenAlert] = useState(false);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setOpenAlert(false);
+    }, 3000);
+  }, [openAlert]);
 
   return (
     <div className="w-full m-4 h-[85vh] min-h-[500px] min-w-[860px] mt-4 mb-3 bg-[#ffffff] rounded-bl-3xl rounded-tr-3xl">
@@ -138,10 +149,14 @@ export default function AcademicEnrollmentPage() {
               <div className="justify-start">
                 <Button
                   onClick={() => {
-                    return console.log(
-                      "Confirmar Matrícula: ",
-                      subjectsAssigned
-                    );
+                    if (!openDialogAccept && !openDialogDelete) {
+                      if(subjectsAssigned.length>0){
+                        setOpenDialogAccept(true);
+                        setOpenAlert(false);
+                      }else{
+                        setOpenAlert(true);
+                      }
+                    }
                   }}
                   endIcon={<GlobalIcon nameIcon="taskIcon" />}
                   className="w-full rounded-2xl bg-[#000066] text-[#ffffff] border border-[#F6F6F6] border-solid font-semibold font-sans text-sm py-2 px-4 mb-5 hover:border-b-2 hover:border-[#000066] hover:bg-[#ffffff] hover:text-[#000066]"
@@ -163,10 +178,28 @@ export default function AcademicEnrollmentPage() {
             subjectsAssigned={subjectsAssigned}
             setSubjectsAssigned={setSubjectsAssigned}
             deleteActive={deleteActive}
-            setdeleteActive={setdeleteActive}
+            setDeleteActive={setDeleteActive}
+            openDialogDelete={openDialogDelete}
+            setOpenDialogDelete={setOpenDialogDelete}
+            openDialogAccept={openDialogAccept}
           />
         </div>
       </Box>
+        <AcceptAssignmentDialog 
+          openDialogAccept={openDialogAccept} 
+          setOpenDialogAccept={setOpenDialogAccept} 
+          subjectsAssigned={subjectsAssigned} 
+        />
+        {
+          openAlert?
+            <Alert 
+              severity="warning"
+              className="w-[60vh] shadow-2xl bottom-4 justify-end right-0 absolute"
+            >
+              No se ha asignado ninguna de las materias disponibles
+            </Alert>
+          :null
+        }
     </div>
   );
 }

@@ -32,7 +32,10 @@ interface Props {
   subjectsAssigned: number[];
   setSubjectsAssigned: Dispatch<SetStateAction<number[]>>;
   deleteActive: string;
-  setdeleteActive: Dispatch<SetStateAction<string>>;
+  setDeleteActive: Dispatch<SetStateAction<string>>;
+  openDialogDelete: boolean;
+  setOpenDialogDelete: Dispatch<SetStateAction<boolean>>;
+  openDialogAccept: boolean;
 }
 
 export default function Schedule({
@@ -44,13 +47,15 @@ export default function Schedule({
   subjectsEnable,
   subjectsAssigned,
   deleteActive,
-  setdeleteActive
+  setDeleteActive,
+  openDialogDelete,
+  setOpenDialogDelete, 
+  openDialogAccept
 }: Props) {
   const dragMap = new Map();
   const spanDragMap = new Map();
   const selectMap = new Map();
   const spanSelectMap = new Map();
-  const [openDialog, setopenDialog] = useState(false);
 
   subjectsEnable
     .find((e) => e.id == dragSubject.current)
@@ -130,13 +135,13 @@ export default function Schedule({
                       rowSpan={sub[4]}
                       className={`h-full w-[110px] text-center border ${sub[3]}`}
                       onMouseOver={() => {
-                        if (!openDialog) {
-                          setdeleteActive(sub[0] + "-" + sub[4]);
+                        if (!openDialogDelete) {
+                          setDeleteActive(sub[0] + "-" + sub[4]);
                         }
                       }}
                       onMouseLeave={() => {
-                        if (!openDialog) {
-                          setdeleteActive("");
+                        if (!openDialogDelete) {
+                          setDeleteActive("");
                         }
                       }}
                     >
@@ -146,19 +151,19 @@ export default function Schedule({
                           <Button
                             className="h-full w-full text-[#ffffff]"
                             onClick={() => {
-                              if (!openDialog) {
-                                setopenDialog(true);
+                              if (!openDialogDelete && !openDialogAccept) {
+                                setOpenDialogDelete(true);
                               }
                             }}
                           >
                             <GlobalIcon nameIcon="deleteIcon" />
                           </Button>
                           <DeleteAssignmentDialog
-                            openDialog={openDialog}
+                            openDialogDelete={openDialogDelete}
                             subjectsAssigned={subjectsAssigned}
                             sub={sub}
-                            setDeleteActive={setdeleteActive}
-                            setOpenDialog={setopenDialog}
+                            setDeleteActive={setDeleteActive}
+                            setOpenDialogDelete={setOpenDialogDelete}
                           />
                         </div>
                       ) : (
