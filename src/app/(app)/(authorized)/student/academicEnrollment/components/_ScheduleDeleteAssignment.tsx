@@ -16,6 +16,8 @@ export default function DeleteAssignmentDialog({
   setOpenDialogDelete,
   setDeleteActive,
 }: Props) {
+  // setsubjectsEnabled((prevstate) => {return [...prevstate, initialValues.find((item) => item.id == idPorEliminar)]})
+
   return (
     <dialog
       open={openDialogDelete}

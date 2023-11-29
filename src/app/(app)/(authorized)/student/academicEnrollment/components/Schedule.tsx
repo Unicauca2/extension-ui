@@ -49,8 +49,8 @@ export default function Schedule({
   deleteActive,
   setDeleteActive,
   openDialogDelete,
-  setOpenDialogDelete, 
-  openDialogAccept
+  setOpenDialogDelete,
+  openDialogAccept,
 }: Props) {
   const dragMap = new Map();
   const spanDragMap = new Map();
@@ -95,6 +95,7 @@ export default function Schedule({
     e.preventDefault();
     setDragActive(false);
     subjectsAssigned.push(idS);
+    //setsubjectsenabled((prevstate) => {return prevstate.filter((item) => item.id ===idS)})
   }
 
   return (

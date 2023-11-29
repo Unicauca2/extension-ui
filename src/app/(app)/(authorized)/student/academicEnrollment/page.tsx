@@ -1,12 +1,13 @@
 "use client";
 
-import { Box, List, Button, Alert} from "@mui/material";
-import { useRef, useState, useEffect} from "react";
+import { Box, List, Button, Alert } from "@mui/material";
+import { useRef, useState, useEffect } from "react";
 import Schedule from "./components/Schedule";
 import ListSubjects from "./components/ListSubjects";
 import GlobalIcon from "@/components/GlobalIcon";
 import { useSubjectsEnrollment } from "./hooks/useSubjectsEnrollment";
 import AcceptAssignmentDialog from "./components/_ScheduleAcceptAssignment";
+import { subjectsEnable as subjectsEnableInitialValues } from "./models/subjectsEnableInitialValues";
 
 const days = [
   { id: 1, name: "Lunes" },
@@ -34,74 +35,30 @@ const hours = [
   { id: 15, content: "8:00 pm" },
 ];
 
-interface subjectsObj {
-  id: number;
-  name: string;
-  code?: string;
-  classroom?: string;
-  color: string;
-  slots: {
-    idDay: number;
-    idStart: number;
-    duration: number;
-  }[];
-}
-
-const subjectsEnable: subjectsObj[] = [
-  {
-    id: 1,
-    name: "Flauta I",
-    code: "FL2023I",
-    classroom: "Sala 315 - Hum",
-    color: "bg-[#c63d96]",
-    slots: [
-      { idDay: 1, idStart: 1, duration: 4 },
-      { idDay: 2, idStart: 5, duration: 2 },
-    ],
-  },
-  {
-    id: 2,
-    name: "Guitarra I",
-    code: "GT2023I",
-    classroom: "Salón 124 - FIC",
-    color: "bg-[#26c019]",
-    slots: [
-      { idDay: 1, idStart: 13, duration: 2 },
-      { idDay: 2, idStart: 1, duration: 4 },
-    ],
-  },
-  {
-    id: 3,
-    name: "Clarinete I",
-    code: "CR2023I",
-    classroom: "Sala 310 - FIET",
-    color: "bg-[#ffb200]",
-    slots: [
-      { idDay: 4, idStart: 12, duration: 4 },
-      { idDay: 5, idStart: 12, duration: 3 },
-    ],
-  },
-  {
-    id: 4,
-    name: "Violin I",
-    code: "VL2023I",
-    classroom: "Sala 220 - Hum",
-    color: "bg-[#092167]",
-    slots: [
-      { idDay: 6, idStart: 2, duration: 4 },
-      { idDay: 3, idStart: 5, duration: 2 },
-    ],
-  },
-];
+const LOCAL_STORAGE_KEY = "subjectsEnable";
 
 export default function AcademicEnrollmentPage() {
   const [dragActive, setDragActive] = useState<boolean>(false);
-  const {subjectsAssigned, setSubjectsAssigned} = useSubjectsEnrollment();
+  const { subjectsAssigned, setSubjectsAssigned } = useSubjectsEnrollment();
   const [deleteActive, setDeleteActive] = useState("");
   const dragSubject = useRef(0);
   const [openDialogDelete, setOpenDialogDelete] = useState(false);
   const [openDialogAccept, setOpenDialogAccept] = useState(false);
   const [openAlert, setOpenAlert] = useState(false);
+
+  const [subjectsEnable, setsubjectsEnable] = useState<
+    typeof subjectsEnableInitialValues
+  >(() => {
+    const isLocalStorageAvailable =
+      typeof window !== "undefined" && window.localStorage;
+
+    const savedSubjectsEnable = isLocalStorageAvailable
+      ? localStorage.getItem(LOCAL_STORAGE_KEY)
+      : null;
+    if (!savedSubjectsEnable) return subjectsEnableInitialValues;
+    let aux = JSON.parse(savedSubjectsEnable);
+    return aux;
+  });
 
   useEffect(() => {
     setTimeout(() => {
@@ -150,10 +107,10 @@ export default function AcademicEnrollmentPage() {
                 <Button
                   onClick={() => {
                     if (!openDialogAccept && !openDialogDelete) {
-                      if(subjectsAssigned.length>0){
+                      if (subjectsAssigned.length > 0) {
                         setOpenDialogAccept(true);
                         setOpenAlert(false);
-                      }else{
+                      } else {
                         setOpenAlert(true);
                       }
                     }
@@ -185,21 +142,19 @@ export default function AcademicEnrollmentPage() {
           />
         </div>
       </Box>
-        <AcceptAssignmentDialog 
-          openDialogAccept={openDialogAccept} 
-          setOpenDialogAccept={setOpenDialogAccept} 
-          subjectsAssigned={subjectsAssigned} 
-        />
-        {
-          openAlert?
-            <Alert 
-              severity="warning"
-              className="w-[60vh] shadow-2xl bottom-4 justify-end right-0 absolute"
-            >
-              No se ha asignado ninguna de las materias disponibles
-            </Alert>
-          :null
-        }
+      <AcceptAssignmentDialog
+        openDialogAccept={openDialogAccept}
+        setOpenDialogAccept={setOpenDialogAccept}
+        subjectsAssigned={subjectsAssigned}
+      />
+      {openAlert ? (
+        <Alert
+          severity="warning"
+          className="w-[60vh] shadow-2xl bottom-4 justify-end right-0 absolute"
+        >
+          No se ha asignado ninguna de las materias disponibles
+        </Alert>
+      ) : null}
     </div>
   );
 }
