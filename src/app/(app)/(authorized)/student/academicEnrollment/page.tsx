@@ -5,60 +5,18 @@ import { useRef, useState, useEffect } from "react";
 import Schedule from "./components/Schedule";
 import ListSubjects from "./components/ListSubjects";
 import GlobalIcon from "@/components/GlobalIcon";
-import { useSubjectsEnrollment } from "./hooks/useSubjectsEnrollment";
 import AcceptAssignmentDialog from "./components/_ScheduleAcceptAssignment";
-import { subjectsEnable as subjectsEnableInitialValues } from "./models/subjectsEnableInitialValues";
-
-const days = [
-  { id: 1, name: "Lunes" },
-  { id: 2, name: "Martes" },
-  { id: 3, name: "Miércoles" },
-  { id: 4, name: "Jueves" },
-  { id: 5, name: "Viernes" },
-  { id: 6, name: "Sábado" },
-];
-
-const hours = [
-  { id: 1, content: "7:00 am" },
-  { id: 2, content: "8:00 am" },
-  { id: 3, content: "9:00 am" },
-  { id: 4, content: "10:00 am" },
-  { id: 5, content: "11:00 am" },
-  { id: 6, content: "12:00 am" },
-  { id: 7, content: "1:00 pm" },
-  { id: 10, content: "2:00 pm" },
-  { id: 11, content: "3:00 pm" },
-  { id: 12, content: "4:00 pm" },
-  { id: 13, content: "5:00 pm" },
-  { id: 14, content: "6:00 pm" },
-  { id: 15, content: "7:00 pm" },
-  { id: 15, content: "8:00 pm" },
-];
-
-const LOCAL_STORAGE_KEY = "subjectsEnable";
+import { subjectsEnable} from "./models/subjectsEnableInitialValues";
+import { days, hours } from "./models/sheduleStaticValues";
 
 export default function AcademicEnrollmentPage() {
   const [dragActive, setDragActive] = useState<boolean>(false);
-  const { subjectsAssigned, setSubjectsAssigned } = useSubjectsEnrollment();
+  const [subjectsAssigned, setSubjectsAssigned]=useState<number[]>([]);
   const [deleteActive, setDeleteActive] = useState("");
   const dragSubject = useRef(0);
   const [openDialogDelete, setOpenDialogDelete] = useState(false);
   const [openDialogAccept, setOpenDialogAccept] = useState(false);
   const [openAlert, setOpenAlert] = useState(false);
-
-  const [subjectsEnable, setsubjectsEnable] = useState<
-    typeof subjectsEnableInitialValues
-  >(() => {
-    const isLocalStorageAvailable =
-      typeof window !== "undefined" && window.localStorage;
-
-    const savedSubjectsEnable = isLocalStorageAvailable
-      ? localStorage.getItem(LOCAL_STORAGE_KEY)
-      : null;
-    if (!savedSubjectsEnable) return subjectsEnableInitialValues;
-    let aux = JSON.parse(savedSubjectsEnable);
-    return aux;
-  });
 
   useEffect(() => {
     setTimeout(() => {
@@ -103,7 +61,7 @@ export default function AcademicEnrollmentPage() {
               <div className="h-7 m-0 px-2 py-0 text-white bg-[#0772B5] rounded-3xl font-bold">
                 2
               </div>
-              <div className="justify-start">
+              <div className="w-full justify-start">
                 <Button
                   onClick={() => {
                     if (!openDialogAccept && !openDialogDelete) {

@@ -31,7 +31,7 @@ export default function ListSubjects({
   setDragActive,
   dragSubject,
   subjectsEnable,
-  subjectsAssigned,
+  subjectsAssigned
 }: Props) {
   function handleOnDrag(e: React.DragEvent, item: any) {
     var dragImage = document.createElement("div");
@@ -43,13 +43,40 @@ export default function ListSubjects({
     setDragActive(true);
   }
 
+  function validateDragSubject(idSuject:number){
+    let resp=false;
+    let sheduleSubject: string[]=[];
+    let sheduleComparation: string[]=[];
+
+    subjectsEnable.find((e)=>(e.id==idSuject))?.slots.map(
+      (slotList)=>{
+        for (let i = 0; i < slotList.duration; i++) {
+          sheduleSubject.push(slotList.idDay + "-" + (slotList.idStart + i));
+      }})
+    subjectsAssigned.forEach(
+      (idAssigned)=>{
+        subjectsEnable.find((e)=>(e.id==idAssigned))?.slots.map(
+          (slotList)=>{
+            for (let i = 0; i < slotList.duration; i++) {
+              sheduleComparation.push(slotList.idDay + "-" + (slotList.idStart + i));
+      }})});
+    for(let i=0; i<sheduleSubject.length; i++){
+      if(sheduleComparation.find((e)=>(e==sheduleSubject[i]))){
+        resp=true;
+        break;
+      }}
+    return resp;
+  }
+
   return (
     <List className="w-full px-1">
       {subjectsEnable.map((item, index) =>
-        subjectsAssigned.find((e) => e == item.id) ? null : (
-          <ListItem
+        subjectsAssigned.find((e) => e == item.id) ? null : 
+        (
+          !validateDragSubject(item.id)?
+          (<ListItem
             key={index}
-            className={`p-0 m-1 rounded-xl ${item.color} disabled:opacity-75`}
+            className={`p-0 m-1 rounded-xl ${item.color}`}
             draggable
             onDragStart={(e) => handleOnDrag(e, item)}
             onDragEnd={() => setDragActive(false)}
@@ -60,7 +87,20 @@ export default function ListSubjects({
             <ListItemText className="text-white p-0.5 m-0">
               {item.name}
             </ListItemText>
-          </ListItem>
+          </ListItem>)
+          :
+          (<ListItem
+            key={index}
+            className={`p-0 m-1 rounded-xl ${item.color} disabled:opacity-75`}
+            disabled
+          >
+            <ListItemIcon className="text-white p-1 ml-2">
+              <GlobalIcon nameIcon={"listOutlined"} />
+            </ListItemIcon>
+            <ListItemText className="text-white p-0.5 m-0">
+              {item.name}
+            </ListItemText>
+          </ListItem>)
         )
       )}
     </List>

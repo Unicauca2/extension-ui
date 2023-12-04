@@ -31,7 +31,7 @@ export const subjectsEnable: subjectsObj[] = [
     color: "bg-[#26c019]",
     slots: [
       { idDay: 1, idStart: 13, duration: 2 },
-      { idDay: 2, idStart: 1, duration: 4 },
+      { idDay: 1, idStart: 1, duration: 4 },
     ],
   },
   {
@@ -42,7 +42,7 @@ export const subjectsEnable: subjectsObj[] = [
     color: "bg-[#ffb200]",
     slots: [
       { idDay: 4, idStart: 12, duration: 4 },
-      { idDay: 5, idStart: 12, duration: 3 },
+      { idDay: 6, idStart: 1, duration: 3 },
     ],
   },
   {
