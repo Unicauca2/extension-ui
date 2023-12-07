@@ -54,7 +54,6 @@ export default function _MainClient(types: TypeProps) {
 
   return (
     <Box component="form" className="w-full pb-10" sx={BoxStyles}>
-      <Snackbar />
       {formSteps ? (
         <StepsComponent
           activeStep={activeStep}
