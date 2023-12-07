@@ -1,8 +1,8 @@
 interface footerProps {
-  anyo: string,
-  entidad: string,
-  contacto: string,
-  version: string,
+  anyo: string;
+  entidad: string;
+  contacto: string;
+  version: string;
 }
 
 const Footer = ({ anyo, entidad, contacto, version }: footerProps) => {
