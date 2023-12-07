@@ -50,24 +50,6 @@ export class ConservatorioStrategy implements IStrategy {
         },
       },
       {
-        label: "Foto 3x4",
-        content: (person: ApplicantRegistry, _: TypeProps) => {
-          return [
-            {
-              type: "file",
-              label: "Foto perfil 3x4",
-              name: "applicant.photo",
-              value: person.applicant.photo,
-              multiple: false,
-              accepts: ".pdf, .jpg, .jpeg, .png",
-              className: "w-full my-2",
-            },
-          ] as FormElement[];
-        },
-        checker: (person: ApplicantRegistry) =>
-          person.applicant.photo != undefined || person.applicant.photo,
-      },
-      {
         label: "Información Residencia",
         content: (person: ApplicantRegistry, { types }: TypeProps) =>
           getResidencyElements({
