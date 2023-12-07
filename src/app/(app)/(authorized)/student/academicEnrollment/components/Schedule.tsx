@@ -50,7 +50,7 @@ export default function Schedule({
   setDeleteActive,
   openDialogDelete,
   setOpenDialogDelete,
-  openDialogAccept,
+  openDialogAccept
 }: Props) {
   const dragMap = new Map();
   const spanDragMap = new Map();
@@ -65,7 +65,7 @@ export default function Schedule({
         slot.duration,
       ]);
       for (let i = 1; i < slot.duration; i++) {
-        spanDragMap.set(slot.idDay + "-" + (slot.idStart + i), dragSubject);
+        spanDragMap.set(slot.idDay + "-" + (slot.idStart + i), dragSubject.current);
       }
     });
 
@@ -95,7 +95,6 @@ export default function Schedule({
     e.preventDefault();
     setDragActive(false);
     subjectsAssigned.push(idS);
-    //setsubjectsenabled((prevstate) => {return prevstate.filter((item) => item.id ===idS)})
   }
 
   return (
