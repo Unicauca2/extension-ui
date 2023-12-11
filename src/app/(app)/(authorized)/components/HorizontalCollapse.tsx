@@ -9,23 +9,27 @@ import {
   KeyboardDoubleArrowLeftOutlined,
   KeyboardDoubleArrowRightOutlined,
 } from "@mui/icons-material";
+import { optionsObj, menuOptions } from "../models/menuInitialValues";
 
-const listItems = [
-  {
-    title: "Estudiante",
-    icon: "studentIcon",
-    items: [
-      { label: "Notas" },
-      { label: "Faltas" },
-      { label: "Historia académica" },
-      { label: "Matricula Financiera" },
-      { label: "Pensum/Currículo" },
-    ],
-  },
-];
+interface Props {
+  roles:string[]
+}
 
-export default function HorizontalCollapse() {
+export default function HorizontalCollapse(
+  {roles}: Props
+) {
   const [collapsed, setCollapsed] = useState(false);
+
+  const listItems:optionsObj[] = [];
+  roles.forEach(
+    (rol)=>{
+      let options=menuOptions.find((e)=>(e.typeUser==rol));
+      if(options){
+        listItems.push(options);
+      }
+    }
+  );
+  
   const handleChange = () => {
     setCollapsed((prev) => !prev);
   };
@@ -62,6 +66,7 @@ export default function HorizontalCollapse() {
                 icon={item.icon}
                 items={item.items}
                 handleOpenInteraction={handleListOpen}
+                urlRoot={"/"+item.typeUser}
                 openM={index == 0 ? true : false}
               />
             </div>

@@ -34,7 +34,7 @@ export default function IconActionCard({ icon, label, to }: Props) {
           className="absolute font-semibold h-full card-content opacity-0 flex items-center justify-center"
           sx={{ overflowWrap: "break-word" }}
         >
-          <div>{label}</div>
+          <div className="text-[#000066] text-center">{label}</div>
         </CardContent>
       </Card>
     </Link>

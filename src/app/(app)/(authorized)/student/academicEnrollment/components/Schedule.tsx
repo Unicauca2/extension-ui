@@ -147,7 +147,7 @@ export default function Schedule({
                     >
                       {deleteActive != "" &&
                       deleteActive == sub[0] + "-" + sub[4] ? (
-                        <div>
+                        <div className="h-full w-full">
                           <Button
                             className="h-full w-full text-[#ffffff]"
                             onClick={() => {

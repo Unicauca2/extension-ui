@@ -3,7 +3,6 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { Button } from "@mui/material";
 
 const Login = () => {
   const router = useSearchParams();
@@ -36,10 +35,10 @@ const Login = () => {
   };
 
   return (
-    <div className="bg-[#F6F6F6] rounded-3xl text-center text-[#000066] h-full">
+    <div className="my-2 bg-[#F6F6F6] rounded-3xl text-center text-[#000066] h-full">
       <p className="pt-5  text-2xl font-bold">Iniciar Sesión</p>
       <p className="text-2xl font-bold">{program}</p>
-      <form className="mt-4">
+      <form className="mt-4 mb-6">
         <div className="flex mx-2 sm:mx-10  pb-5 ">
           <label className="w-full flex flex-col">
             <p className="text-left ml-4 text-base font-sans font-semibold mb-2">
@@ -68,25 +67,22 @@ const Login = () => {
         </div>
         <div className="m-2 p-4">
           <Link
-            href="/functionary"
-            className="w-1/2 rounded-2xl hover:bg-[#ffffff] bg-[#000066] hover:text-[#000066] text-[#ffffff] border border-[#000066] font-bold py-2 px-4 mb-2"
-          >
-            Funcionario
-          </Link>
-        </div>
-        <div className="m-2 p-4">
-          <Link
             href="/student"
-            className="w-2/5 rounded-2xl bg-[#000066] text-[#ffffff] border border-[#F6F6F6] border-solid font-bold py-2 px-4 mb-5 hover:border-b-2 hover:border-[#000066] hover:bg-[#ffffff] hover:text-[#000066]"
+            className="w-2/3 rounded-2xl hover:bg-[#ffffff] bg-[#000066] hover:text-[#000066] text-[#ffffff] border border-[#000066] font-bold py-2 px-8 mb-2"
           >
-            Estudiante
+            Ingresar
           </Link>
-        </div>
+        </div> 
       </form>
 
-      <p className="font-medium underline mt-2">¿Olvidaste tu contraseña?</p>
+      <Link
+        href="/functionary"
+        className="font-medium underline mt-2"
+      >
+        ¿Olvidaste tu contraseña?
+      </Link>
 
-      <p className="mt-10 sm:mt-16 mx-4">
+      <p className="mt-8 sm:mt-16 mx-4">
         ¿No tienes cuenta? Puedes registrarte utilizando el siguiente botón
       </p>
 

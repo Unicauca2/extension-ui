@@ -1,4 +1,4 @@
-import { List, ListItemButton, ListItemText, Collapse } from "@mui/material";
+import { List, ListItemButton, ListItemIcon, ListItemText, Collapse } from "@mui/material";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
 import { useState } from "react";
 import GlobalIcon from "@/components/GlobalIcon";
@@ -7,11 +7,13 @@ interface Props {
   title: string;
   icon: string;
   items: {
+    icon: string;
     label: string;
-    url?: string;
+    url: string;
   }[];
   collapsed?: boolean;
   handleOpenInteraction?: () => void;
+  urlRoot:string;
   openM: boolean;
 }
 
@@ -21,6 +23,7 @@ export default function NestedList({
   items,
   collapsed,
   handleOpenInteraction,
+  urlRoot,
   openM,
 }: Props) {
   const [open, setOpen] = useState(openM);
@@ -40,7 +43,7 @@ export default function NestedList({
       aria-labelledby="nested-list-subheader"
     >
       <ListItemButton onClick={handleClick}>
-        {icon && <GlobalIcon nameIcon={icon} />}
+        {icon && <ListItemIcon><GlobalIcon nameIcon={icon} className="text-[#000066] ml-1" /></ListItemIcon>}
         {!collapsed && (
           <ListItemText
             primary={title}
@@ -56,7 +59,7 @@ export default function NestedList({
       <Collapse in={open && !collapsed} timeout="auto" unmountOnExit>
         <List component="div" disablePadding className="overflow-auto">
           {items.map((item, index) => (
-            <ListItemButton key={index} className="pl-5 py-0">
+            <ListItemButton key={index} className="pl-5 py-0" href={urlRoot+item.url}>
               <ListItemText
                 primary={item.label}
                 className="text-[#000066] font-sans font-bold left-0"

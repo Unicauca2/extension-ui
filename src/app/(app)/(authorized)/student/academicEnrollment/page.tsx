@@ -8,6 +8,7 @@ import GlobalIcon from "@/components/GlobalIcon";
 import AcceptAssignmentDialog from "./components/_ScheduleAcceptAssignment";
 import { subjectsEnable} from "./models/subjectsEnableInitialValues";
 import { days, hours } from "./models/sheduleStaticValues";
+import AlertNotification from "@/components/AlertNotification";
 
 export default function AcademicEnrollmentPage() {
   const [dragActive, setDragActive] = useState<boolean>(false);
@@ -106,12 +107,7 @@ export default function AcademicEnrollmentPage() {
         subjectsAssigned={subjectsAssigned}
       />
       {openAlert ? (
-        <Alert
-          severity="warning"
-          className="w-[60vh] shadow-2xl bottom-4 justify-end right-0 absolute"
-        >
-          No se ha asignado ninguna de las materias disponibles
-        </Alert>
+        <AlertNotification typeAlert="warning" content="No se ha asignado ninguna de las materias disponibles"/>
       ) : null}
     </div>
   );

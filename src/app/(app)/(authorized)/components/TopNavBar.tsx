@@ -8,7 +8,7 @@ import GlobalIcon from "@/components/GlobalIcon";
 
 const user = {
   id: "1110101",
-  name: "Santiago",
+  name: "Username",
 };
 
 export default function TopNavBar() {

@@ -10,7 +10,7 @@ export default function RootLayout({
     <>
       <div className="flex-1 flex">
         <div className="bg-[#ffffff]">
-          <HorizontalCollapse />
+          <HorizontalCollapse roles={["student"]}/>
         </div>
         <div className="w-full">
           <TopNavBar />
