@@ -1,8 +1,9 @@
 "use client";
 
 import GlobalIcon from "@/components/GlobalIcon";
-import { List, ListItem, ListItemIcon, ListItemText } from "@mui/material";
+import { List, ListItem, ListItemIcon, ListItemText, Tooltip} from "@mui/material";
 import React from "react";
+import { subjectsObj } from "../models/subjectsEnableInitialValues" 
 
 interface Props {
   dragActive: any;
@@ -25,13 +26,15 @@ interface Props {
       duration: number;
     }[];
   }[];
+  subjectBlock:string[];
 }
 
 export default function ListSubjects({
   setDragActive,
   dragSubject,
   subjectsEnable,
-  subjectsAssigned
+  subjectsAssigned,
+  subjectBlock
 }: Props) {
   function handleOnDrag(e: React.DragEvent, item: any) {
     var dragImage = document.createElement("div");
@@ -44,52 +47,53 @@ export default function ListSubjects({
   }
 
   function validateDragSubject(idSuject:number){
-    let resp=false;
-    let sheduleSubject: string[]=[];
-    let sheduleComparation: string[]=[];
+    let resp:string="";
 
     subjectsEnable.find((e)=>(e.id==idSuject))?.slots.map(
       (slotList)=>{
         for (let i = 0; i < slotList.duration; i++) {
-          sheduleSubject.push(slotList.idDay + "-" + (slotList.idStart + i));
-      }})
-    subjectsAssigned.forEach(
-      (idAssigned)=>{
-        subjectsEnable.find((e)=>(e.id==idAssigned))?.slots.map(
-          (slotList)=>{
-            for (let i = 0; i < slotList.duration; i++) {
-              sheduleComparation.push(slotList.idDay + "-" + (slotList.idStart + i));
-      }})});
-    for(let i=0; i<sheduleSubject.length; i++){
-      if(sheduleComparation.find((e)=>(e==sheduleSubject[i]))){
-        resp=true;
-        break;
-      }}
-    return resp;
+          for (let j = 0; j < subjectBlock.length; j++) {
+            let block=subjectBlock[j].split("-");
+            if(parseInt(block[0])==slotList.idDay && 
+                parseInt(block[1])==(slotList.idStart + i) && 
+                parseInt(block[2])!=idSuject
+              ){
+                let subject=subjectsEnable.find((e)=>(e.id==parseInt(block[2])));
+                if(subject){
+                  resp=subject.name;
+                  break;
+                }}}
+          if(resp!=""){break;}
+        }});
+    return resp
   }
 
-  return (
-    <List className="w-full px-1">
-      {subjectsEnable.map((item, index) =>
-        subjectsAssigned.find((e) => e == item.id) ? null : 
-        (
-          !validateDragSubject(item.id)?
-          (<ListItem
-            key={index}
-            className={`p-0 m-1 rounded-xl ${item.color}`}
-            draggable
-            onDragStart={(e) => handleOnDrag(e, item)}
-            onDragEnd={() => setDragActive(false)}
-          >
-            <ListItemIcon className="text-white p-1 ml-2">
-              <GlobalIcon nameIcon={"listOutlined"} />
-            </ListItemIcon>
-            <ListItemText className="text-white p-0.5 m-0">
-              {item.name}
-            </ListItemText>
-          </ListItem>)
-          :
-          (<ListItem
+  function Lista(item:subjectsObj, index:number){
+    let validation:string=validateDragSubject(item.id);
+    if(validation==""){
+      return(
+        <ListItem
+          key={index}
+          className={`p-0 m-1 rounded-xl ${item.color}`}
+          draggable
+          onDragStart={(e) => handleOnDrag(e, item)}
+          onDragEnd={() => setDragActive(false)}
+        >
+          <ListItemIcon className="text-white p-1 ml-2">
+            <GlobalIcon nameIcon={"listOutlined"} />
+          </ListItemIcon>
+          <ListItemText className="text-white p-0.5 m-0">
+            {item.name}
+          </ListItemText>
+        </ListItem>
+      );
+    }else{
+      return(
+        <Tooltip 
+          title={"inhabilitado por "+validation}
+          placement="right"
+        >
+          <ListItem
             key={index}
             className={`p-0 m-1 rounded-xl ${item.color} disabled:opacity-75`}
             disabled
@@ -100,8 +104,16 @@ export default function ListSubjects({
             <ListItemText className="text-white p-0.5 m-0">
               {item.name}
             </ListItemText>
-          </ListItem>)
-        )
+          </ListItem>
+        </Tooltip>
+      )
+    }
+  }
+
+  return (
+    <List className="w-full px-1">
+      {subjectsEnable.map((item, index) =>
+        subjectsAssigned.find((e) => e == item.id) ? null : Lista(item,index)
       )}
     </List>
   );

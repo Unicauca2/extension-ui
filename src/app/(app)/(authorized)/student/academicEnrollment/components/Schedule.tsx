@@ -36,6 +36,7 @@ interface Props {
   openDialogDelete: boolean;
   setOpenDialogDelete: Dispatch<SetStateAction<boolean>>;
   openDialogAccept: boolean;
+  subjectBlock:string[];
 }
 
 export default function Schedule({
@@ -50,24 +51,14 @@ export default function Schedule({
   setDeleteActive,
   openDialogDelete,
   setOpenDialogDelete,
-  openDialogAccept
+  openDialogAccept,
+  subjectBlock
 }: Props) {
+
   const dragMap = new Map();
   const spanDragMap = new Map();
   const selectMap = new Map();
   const spanSelectMap = new Map();
-
-  subjectsEnable
-    .find((e) => e.id == dragSubject.current)
-    ?.slots.map((slot) => {
-      dragMap.set(slot.idDay + "-" + slot.idStart, [
-        dragSubject.current,
-        slot.duration,
-      ]);
-      for (let i = 1; i < slot.duration; i++) {
-        spanDragMap.set(slot.idDay + "-" + (slot.idStart + i), dragSubject.current);
-      }
-    });
 
   subjectsAssigned?.forEach((idAsigned) => {
     let subjectAux = subjectsEnable.find((e) => e.id == idAsigned);
@@ -80,12 +71,30 @@ export default function Schedule({
           subjectAux?.color,
           slot.duration,
         ]);
+        subjectBlock.find((e)=>e==slot.idDay + "-" + slot.idStart + "-" + idAsigned)?
+        null:
+        subjectBlock.push(slot.idDay + "-" + slot.idStart + "-" + idAsigned);
         for (let i = 1; i < slot.duration; i++) {
           spanSelectMap.set(slot.idDay + "-" + (slot.idStart + i), idAsigned);
+          subjectBlock.find((e)=>e==slot.idDay + "-" + (slot.idStart + i) + "-" + idAsigned)?
+          null:
+          subjectBlock.push(slot.idDay + "-" + (slot.idStart + i) + "-" + idAsigned);
         }
       });
     }
-  });
+  });  
+
+  subjectsEnable
+    .find((e) => e.id == dragSubject.current)
+    ?.slots.map((slot) => {
+      dragMap.set(slot.idDay + "-" + slot.idStart, [
+        dragSubject.current,
+        slot.duration,
+      ]);
+      for (let i = 1; i < slot.duration; i++) {
+        spanDragMap.set(slot.idDay + "-" + (slot.idStart + i), dragSubject.current);
+      }
+    });
 
   function handleDragOver(e: React.DragEvent) {
     e.preventDefault();
@@ -114,10 +123,9 @@ export default function Schedule({
           ))}
         </tr>
         {hours.map((itemH, indexH) =>
-          indexH.valueOf() != 6 && indexH.valueOf() < hours.length - 1 ? (
+          indexH.valueOf() < hours.length - 1 ? (
             <tr key={"h" + indexH} className="w-full">
-              {(indexH % 2 == 0 && indexH < 6) ||
-              (indexH % 2 != 0 && indexH > 6) ? (
+              {(indexH % 2 == 0)?(
                 <td
                   key={"hour-" + indexH}
                   rowSpan={2}
@@ -133,7 +141,7 @@ export default function Schedule({
                     <td
                       key={indexD + "-" + indexH}
                       rowSpan={sub[4]}
-                      className={`h-full w-[110px] text-center border ${sub[3]}`}
+                      className={`w-[110px] text-center border ${sub[3]}`}
                       onMouseOver={() => {
                         if (!openDialogDelete) {
                           setDeleteActive(sub[0] + "-" + sub[4]);
@@ -164,6 +172,7 @@ export default function Schedule({
                             sub={sub}
                             setDeleteActive={setDeleteActive}
                             setOpenDialogDelete={setOpenDialogDelete}
+                            subjectBlock={subjectBlock}
                           />
                         </div>
                       ) : (

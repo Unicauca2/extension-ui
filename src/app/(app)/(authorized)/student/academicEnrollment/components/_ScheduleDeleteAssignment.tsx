@@ -8,6 +8,7 @@ interface Props {
   sub: any;
   setOpenDialogDelete: Dispatch<SetStateAction<boolean>>;
   setDeleteActive: Dispatch<SetStateAction<string>>;
+  subjectBlock:string[];
 }
 export default function DeleteAssignmentDialog({
   openDialogDelete,
@@ -15,6 +16,7 @@ export default function DeleteAssignmentDialog({
   sub,
   setOpenDialogDelete,
   setDeleteActive,
+  subjectBlock
 }: Props) {
   return (
     <dialog
@@ -49,6 +51,13 @@ export default function DeleteAssignmentDialog({
               subjectsAssigned.findIndex((e) => e == sub[0]),
               1
             );
+            let indices:number[]=[];
+            subjectBlock.find((e, index)=>{
+              if((e.split("-")[2]==sub[0])){
+                indices.push(index);
+              }
+            });
+            subjectBlock.splice(indices[0],indices.length);
             setOpenDialogDelete(false);
             setDeleteActive("");
           }}

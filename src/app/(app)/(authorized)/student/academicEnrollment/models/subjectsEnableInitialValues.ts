@@ -1,4 +1,4 @@
-interface subjectsObj {
+export interface subjectsObj {
   id: number;
   name: string;
   code?: string;
@@ -19,8 +19,8 @@ export const subjectsEnable: subjectsObj[] = [
     classroom: "Sala 315 - Hum",
     color: "bg-[#c63d96]",
     slots: [
-      { idDay: 1, idStart: 1, duration: 4 },
-      { idDay: 2, idStart: 5, duration: 2 },
+      { idDay: 1, idStart: 6, duration: 1 },
+      { idDay: 2, idStart: 4, duration: 2 },
     ],
   },
   {
@@ -30,7 +30,7 @@ export const subjectsEnable: subjectsObj[] = [
     classroom: "Salón 124 - FIC",
     color: "bg-[#26c019]",
     slots: [
-      { idDay: 1, idStart: 13, duration: 2 },
+      { idDay: 1, idStart: 5, duration: 2 },
       { idDay: 1, idStart: 1, duration: 4 },
     ],
   },
@@ -41,7 +41,7 @@ export const subjectsEnable: subjectsObj[] = [
     classroom: "Sala 310 - FIET",
     color: "bg-[#ffb200]",
     slots: [
-      { idDay: 4, idStart: 12, duration: 4 },
+      { idDay: 4, idStart: 5, duration: 1 },
       { idDay: 6, idStart: 1, duration: 3 },
     ],
   },
@@ -53,7 +53,7 @@ export const subjectsEnable: subjectsObj[] = [
     color: "bg-[#092167]",
     slots: [
       { idDay: 6, idStart: 2, duration: 4 },
-      { idDay: 3, idStart: 5, duration: 2 },
+      { idDay: 3, idStart: 5, duration: 1 },
     ],
   },
 ];

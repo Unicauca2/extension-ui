@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, List, Button, Alert } from "@mui/material";
+import { Box, List, Button} from "@mui/material";
 import { useRef, useState, useEffect } from "react";
 import Schedule from "./components/Schedule";
 import ListSubjects from "./components/ListSubjects";
@@ -18,6 +18,7 @@ export default function AcademicEnrollmentPage() {
   const [openDialogDelete, setOpenDialogDelete] = useState(false);
   const [openDialogAccept, setOpenDialogAccept] = useState(false);
   const [openAlert, setOpenAlert] = useState(false);
+  const [subjectBlock, setSubjectsBlock]=useState<string[]>([]);
 
   useEffect(() => {
     setTimeout(() => {
@@ -55,6 +56,7 @@ export default function AcademicEnrollmentPage() {
                   hours={hours}
                   subjectsEnable={subjectsEnable}
                   subjectsAssigned={subjectsAssigned}
+                  subjectBlock={subjectBlock}
                 />
               </div>
             </Box>
@@ -98,6 +100,7 @@ export default function AcademicEnrollmentPage() {
             openDialogDelete={openDialogDelete}
             setOpenDialogDelete={setOpenDialogDelete}
             openDialogAccept={openDialogAccept}
+            subjectBlock={subjectBlock}
           />
         </div>
       </Box>
