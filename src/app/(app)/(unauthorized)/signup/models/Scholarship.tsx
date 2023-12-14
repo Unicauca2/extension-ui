@@ -40,7 +40,7 @@ const getScholarFormation = (scholarship: Scholarship): FormElement[] => {
     },
     {
       type: "text",
-      label: "Dirección de residencia",
+      label: "Institución educativa",
       name: "scholarship.institution",
       value: scholarship.institution,
       className: "w-full my-2",
