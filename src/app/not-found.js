@@ -19,20 +19,28 @@ export default function NotFound() {
         <div 
           className='w-full flex flex-col md:flex-row items-center justify-center py-6'
         >
-          <Image
-            className='justify-center mx-4'
-            src={"/conservatorio/logo.png"}
-            width={250}
-            height={250}
-            alt="Conservatorio"
-          />
+          <Link
+            href={{pathname:`/home`}}
+          > 
             <Image
-            className='justify-center mx-4'
-            width={250}
-            height={250}
-            src={"/unilingua/logo.png"}
-            alt="Unilingua"
-          />
+              className='justify-center mx-4'
+              src={"/conservatorio/logo.png"}
+              width={250}
+              height={250}
+              alt="Conservatorio"
+            />
+          </Link>
+          <Link
+            href={{pathname:`/home`}}
+          > 
+            <Image
+              className='justify-center mx-4'
+              width={250}
+              height={250}
+              src={"/unilingua/logo.png"}
+              alt="Unilingua"
+            />
+          </Link>
         </div>
         <h2 className='text-[#000066] font-bold'>¡ Página no encontrada !</h2>
         <Link className="text-[#000066] underline font-semibold" href={{ pathname: `/home` }}>¿Desea regresar a la página principal?</Link>

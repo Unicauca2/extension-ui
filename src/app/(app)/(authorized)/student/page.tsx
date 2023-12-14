@@ -6,7 +6,7 @@ const options:itemsObj[]|undefined = menuOptions.find((menuType)=>(menuType.type
 
 export default function Home() {
   return (
-    <section className="m-4 pb-10 bg-[#ffffff] w-full min-h-[88vh] rounded-3xl">
+    <section className="m-4 pb-10 bg-[#ffffff] w-full min-w-[300px] min-h-[88vh] rounded-3xl">
       <div className="flex justify-center items-center mt-10 font-bold text-2xl">
         Estudiante
       </div>
