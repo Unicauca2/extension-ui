@@ -22,12 +22,16 @@
     "@mui/x-date-pickers": "^6.16.0",
     "dayjs": "^1.11.10",
     "next": "^13.5.5",
+    "papaparse": "^5.4.1",
     "react": "latest",
+    "react-csv": "^2.2.2",
     "react-dom": "latest"
   },
   "devDependencies": {
     "@types/node": "latest",
+    "@types/papaparse": "^5.3.14",
     "@types/react": "latest",
+    "@types/react-csv": "^1.1.10",
     "@types/react-dom": "latest",
     "autoprefixer": "latest",
     "eslint": "latest",

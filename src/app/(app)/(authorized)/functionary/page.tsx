@@ -11,6 +11,11 @@ const options = [
     label: "Gestionar matriculas",
     to: "/studentEnrollment",
   },
+  {
+    icon: "sheet",
+    label: "Gestionar oferta academica",
+    to: "/academicOffer",
+  },
 ];
 
 const currentPeriod = "2022";

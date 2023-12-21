@@ -31,7 +31,7 @@ export default function IconActionCard({ icon, label, to }: Props) {
           <GlobalIcon nameIcon={icon} />
         </div>
         <CardContent
-          className="absolute font-semibold h-full card-content opacity-0 flex items-center justify-center"
+          className="absolute font-semibold h-full card-content opacity-0 flex items-center text-center justify-center"
           sx={{ overflowWrap: "break-word" }}
         >
           <div>{label}</div>
