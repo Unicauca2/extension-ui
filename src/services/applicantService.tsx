@@ -1,4 +1,4 @@
-import { ApplicantRegistry } from "@/app/signup/models/ApplicantRegistry";
+import { ApplicantRegistry } from "@unauthorized/signup/models/ApplicantRegistry";
 
 export async function record(
   applicantRegistry: ApplicantRegistry,

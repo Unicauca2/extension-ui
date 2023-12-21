@@ -16,7 +16,6 @@ import { UnilinguaStrategy } from "@unauthorized/signup/strategies/signUpSteps/U
 import { BoxStyles } from "./_MainClient.styles";
 import StepsComponent from "./_Steps";
 import { record } from "@/services/applicantService";
-import Snackbar from "@/components/Snackbar";
 import GlobalIcon from "@/components/GlobalIcon";
 
 const StrategyList = {
@@ -37,7 +36,7 @@ export default function _MainClient(types: TypeProps) {
   };
 
   const handleSubmit = async () => {
-    const aux = await record(person, program?.record as string);
+    const aux = await record(person, program?.recordApplicantURL as string);
     console.log(aux);
   };
 
