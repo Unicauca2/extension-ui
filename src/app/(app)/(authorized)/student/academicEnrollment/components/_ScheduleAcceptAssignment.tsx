@@ -39,10 +39,6 @@ export default function AcceptAssignmentDialog({
         <Button
           className="w-2/5 ml-4 rounded-2xl bg-[#000066] text-[#ffffff] border border-[#F6F6F6] border-solid font-bold py-2 px-4 mb-5 hover:border-b-2 hover:border-[#000066] hover:bg-[#ffffff] hover:text-[#000066]"
           onClick={() => {
-            console.log(
-              "Confirmar Matrícula: ",
-              subjectsAssigned
-            );            
             setOpenDialogAccept(false);
           }}
         >

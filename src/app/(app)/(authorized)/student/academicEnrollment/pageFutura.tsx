@@ -1,7 +1,7 @@
 "use client";
 
 import { Box, List, Button } from "@mui/material";
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, SetStateAction } from "react";
 import Schedule from "./components/Schedule";
 import ListSubjects from "./components/ListSubjects";
 import GlobalIcon from "@/components/GlobalIcon";
@@ -21,8 +21,6 @@ export default function AcademicEnrollmentPage() {
   const [subjectBlock, setSubjectsBlock] = useState<string[]>([]);
 
   const { data } = useSession();
-
-  console.log(data);
 
   useEffect(() => {
     setTimeout(() => {
@@ -103,12 +101,17 @@ export default function AcademicEnrollmentPage() {
             setOpenDialogDelete={setOpenDialogDelete}
             openDialogAccept={openDialogAccept}
             subjectBlock={subjectBlock}
+            deleteActive={""}
+            setDeleteActive={function (value: SetStateAction<string>): void {
+              throw new Error("Function not implemented.");
+            }}
           />
         </div>
       </Box>
       <AcceptAssignmentDialog
         openDialogAccept={openDialogAccept}
         setOpenDialogAccept={setOpenDialogAccept}
+        subjectsAssigned={[]}
       />
       {openAlert ? (
         <AlertNotification

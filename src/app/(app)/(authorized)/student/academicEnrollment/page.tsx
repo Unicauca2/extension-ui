@@ -5,6 +5,7 @@ import GlobalIcon from "@/components/GlobalIcon";
 import { Box, Button, List } from "@mui/material";
 import { useSession } from "next-auth/react";
 import {
+  IAcceptPreEnrollment,
   acceptPreEnrollment,
   getPreEnrollment,
 } from "../services/studentService";
@@ -23,32 +24,47 @@ type PreEnrollment = {
     };
   };
 };
+
 export default function AcademicEnrollment() {
   const { data } = useSession() as unknown as {
-    data: { user: { students: [{ id: number; program: number }] } };
+    data: {
+      user: {
+        person: {
+          idPerson: number;
+        };
+        students: [{ id: number; program: number }];
+      };
+    };
   };
   const { program } = useAppContext();
-  const [idStudent, setIdStudent] = useState<number>(0);
+  const [objAcceptPreEnrollment, setObjAcceptPreEnrollment] = useState<
+    IAcceptPreEnrollment | undefined
+  >();
   const [preEnrollment, setPreEnrollment] = useState<
     PreEnrollment | undefined
   >();
+  const [correctlyDelivered, setCorrectlyDelivered] = useState(false);
 
   useEffect(() => {
-    setIdStudent(
-      data?.user?.students?.filter(
+    setObjAcceptPreEnrollment({
+      idProgram: program?.id as number,
+      idPeriod: 204,
+      idStudent: data?.user?.students?.filter(
         (student: { program: number }) => student.program === program?.id
-      )[0].id
-    );
+      )[0].id,
+      idPerson: data?.user?.person?.idPerson,
+    });
   }, [data, program]);
 
   useEffect(() => {
     async function getData() {
-      const response = await getPreEnrollment(idStudent);
-      console.log(response);
+      const response = await getPreEnrollment(
+        objAcceptPreEnrollment?.idStudent as number
+      );
       setPreEnrollment(response as PreEnrollment);
     }
     getData();
-  }, [idStudent]);
+  }, [objAcceptPreEnrollment]);
 
   return (
     <div className="w-full m-4 h-[85vh] min-h-[500px] min-w-[300px] overflow-x-auto mt-4 mb-3 bg-[#ffffff] rounded-bl-3xl rounded-tr-3xl">
@@ -80,15 +96,21 @@ export default function AcademicEnrollment() {
           <div className="w-full px-4 mt-10">
             <Button
               onClick={async () => {
-                const aux = await acceptPreEnrollment(idStudent);
-                if (!aux) {
-                  alert("Error al aceptar la matrícula");
+                const aux = await acceptPreEnrollment(
+                  objAcceptPreEnrollment as IAcceptPreEnrollment
+                );
+                if (!aux.success) {
+                  alert("ERROR: " + aux.message);
                 } else {
-                  alert("Matrícula aceptada");
+                  setCorrectlyDelivered(true);
+                  alert(aux.result.message);
                 }
               }}
+              disabled={correctlyDelivered}
               endIcon={<GlobalIcon nameIcon="taskIcon" />}
-              className="w-full rounded-2xl bg-[#000066] text-[#ffffff] border border-[#F6F6F6] border-solid font-semibold font-sans text-sm py-2 px-4 mb-5 hover:border-b-2 hover:border-[#000066] hover:bg-[#ffffff] hover:text-[#000066]"
+              className={`w-full rounded-2xl ${
+                correctlyDelivered ? "bg-[#000066c5]" : "bg-[#000066]"
+              } text-[#ffffff] border border-[#F6F6F6] border-solid font-semibold font-sans text-sm py-2 px-4 mb-5 hover:border-b-2 hover:border-[#000066] hover:bg-[#ffffff] hover:text-[#000066]`}
             >
               CONFIRMAR MATRÍCULA
             </Button>
