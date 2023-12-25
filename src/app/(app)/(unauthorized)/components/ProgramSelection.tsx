@@ -1,11 +1,17 @@
 "use client";
 
-import { Fragment } from "react";
+import { Fragment, useEffect } from "react";
 import ActionAreaCard from "@/components/ActionAreaCard";
 import { useAppContext } from "../../../context/AppContext";
+import { signOut } from "next-auth/react";
 
 export default function ProgramSelection() {
   const { programList, handleProgramSelected } = useAppContext();
+
+  useEffect(() => {
+    signOut({ redirect: false });
+  }, []);
+
   return (
     <Fragment>
       {Object.values(programList).map((program) => (

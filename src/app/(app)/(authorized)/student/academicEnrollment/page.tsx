@@ -1,30 +1,54 @@
 "use client";
 
-import { Box, List, Button} from "@mui/material";
-import { useRef, useState, useEffect } from "react";
-import Schedule from "./components/Schedule";
-import ListSubjects from "./components/ListSubjects";
+import { useAppContext } from "@/app/context/AppContext";
 import GlobalIcon from "@/components/GlobalIcon";
-import AcceptAssignmentDialog from "./components/_ScheduleAcceptAssignment";
-import { subjectsEnable} from "./models/subjectsEnableInitialValues";
-import { days, hours } from "./models/sheduleStaticValues";
-import AlertNotification from "@/components/AlertNotification";
+import { Box, Button, List } from "@mui/material";
+import { useSession } from "next-auth/react";
+import {
+  acceptPreEnrollment,
+  getPreEnrollment,
+} from "../services/studentService";
+import { useEffect, useState } from "react";
 
-export default function AcademicEnrollmentPage() {
-  const [dragActive, setDragActive] = useState<boolean>(false);
-  const [subjectsAssigned, setSubjectsAssigned]=useState<number[]>([]);
-  const [deleteActive, setDeleteActive] = useState("");
-  const dragSubject = useRef(0);
-  const [openDialogDelete, setOpenDialogDelete] = useState(false);
-  const [openDialogAccept, setOpenDialogAccept] = useState(false);
-  const [openAlert, setOpenAlert] = useState(false);
-  const [subjectBlock, setSubjectsBlock]=useState<string[]>([]);
+type PreEnrollment = {
+  success: boolean;
+  response: {
+    result: {
+      asignatures: [
+        {
+          id: number;
+          label: string;
+        }
+      ];
+    };
+  };
+};
+export default function AcademicEnrollment() {
+  const { data } = useSession() as unknown as {
+    data: { user: { students: [{ id: number; program: number }] } };
+  };
+  const { program } = useAppContext();
+  const [idStudent, setIdStudent] = useState<number>(0);
+  const [preEnrollment, setPreEnrollment] = useState<
+    PreEnrollment | undefined
+  >();
 
   useEffect(() => {
-    setTimeout(() => {
-      setOpenAlert(false);
-    }, 3000);
-  }, [openAlert]);
+    setIdStudent(
+      data?.user?.students?.filter(
+        (student: { program: number }) => student.program === program?.id
+      )[0].id
+    );
+  }, [data, program]);
+
+  useEffect(() => {
+    async function getData() {
+      const response = await getPreEnrollment(idStudent);
+      console.log(response);
+      setPreEnrollment(response as PreEnrollment);
+    }
+    getData();
+  }, [idStudent]);
 
   return (
     <div className="w-full m-4 h-[85vh] min-h-[500px] min-w-[300px] overflow-x-auto mt-4 mb-3 bg-[#ffffff] rounded-bl-3xl rounded-tr-3xl">
@@ -33,85 +57,60 @@ export default function AcademicEnrollmentPage() {
           Matrícula Académica
         </p>
       </div>
-      <Box className="w-9/10 h-5/6 m-2 flex">
+      <Box className="w-9/10 h-5/6 p-4 flex">
         <div className="w-1/3 flex-1 h-full mr-2 border-[#000066] border-2 rounded-bl-3xl text-center">
-          <p className="my-4 font-bold font-sans text-base text-[#000066]">
-            Aquí podras realizar tu matrícula académica
+          <p className="my-4 p-4 font-bold font-sans text-base text-[#000066]">
+            Aquí podras aceptar tu matrícula académica y generar tu recibo de
+            pago
           </p>
-
-          <List className="h-[55vh] min-h-[300px] m-0 p-1 overflow-auto">
-            <Box className="w-full px-0 pt-0 pb-2 align-top flex">
-              <div className="h-7 m-0 px-2 py-0 text-white bg-[#0772B5] rounded-3xl font-bold">
-                1
-              </div>
-              <div className="justify-start">
-                <p className="my-0 mx-full font-semibold font-sans text-base text-[#000066]">
-                  Puedes arrastrar y soltar en el horario una de las materias
-                  disponibles para ti:{" "}
-                </p>
-                <ListSubjects
-                  dragActive={dragActive}
-                  setDragActive={setDragActive}
-                  dragSubject={dragSubject}
-                  hours={hours}
-                  subjectsEnable={subjectsEnable}
-                  subjectsAssigned={subjectsAssigned}
-                  subjectBlock={subjectBlock}
-                />
-              </div>
-            </Box>
-            <Box className="w-full px-0 pt-0 pb-2 align-top flex">
-              <div className="h-7 m-0 px-2 py-0 text-white bg-[#0772B5] rounded-3xl font-bold">
-                2
-              </div>
-              <div className="w-full justify-start">
-                <Button
-                  onClick={() => {
-                    if (!openDialogAccept && !openDialogDelete) {
-                      if (subjectsAssigned.length > 0) {
-                        setOpenDialogAccept(true);
-                        setOpenAlert(false);
-                      } else {
-                        setOpenAlert(true);
-                      }
-                    }
-                  }}
-                  endIcon={<GlobalIcon nameIcon="taskIcon" />}
-                  className="w-full rounded-2xl bg-[#000066] text-[#ffffff] border border-[#F6F6F6] border-solid font-semibold font-sans text-sm py-2 px-4 mb-5 hover:border-b-2 hover:border-[#000066] hover:bg-[#ffffff] hover:text-[#000066]"
-                >
-                  CONFIRMAR MATRÍCULA
-                </Button>
-              </div>
-            </Box>
-          </List>
+          <div className="px-10">
+            <div className="flex">
+              <p className="font-bold ml-2 text-md">Materias asignadas:</p>
+            </div>
+            <div className="mx-auto">
+              {preEnrollment?.response?.result?.asignatures.map(
+                (asignature: { id: number; label: string }, index) => (
+                  <ul key={index} className="border-b-2 font-bold">
+                    - {asignature.label}
+                  </ul>
+                )
+              )}
+            </div>
+          </div>
+          <div className="w-full px-4 mt-10">
+            <Button
+              onClick={async () => {
+                const aux = await acceptPreEnrollment(idStudent);
+                if (!aux) {
+                  alert("Error al aceptar la matrícula");
+                } else {
+                  alert("Matrícula aceptada");
+                }
+              }}
+              endIcon={<GlobalIcon nameIcon="taskIcon" />}
+              className="w-full rounded-2xl bg-[#000066] text-[#ffffff] border border-[#F6F6F6] border-solid font-semibold font-sans text-sm py-2 px-4 mb-5 hover:border-b-2 hover:border-[#000066] hover:bg-[#ffffff] hover:text-[#000066]"
+            >
+              CONFIRMAR MATRÍCULA
+            </Button>
+          </div>
         </div>
-        <div className="w-3/4">
-          <Schedule
-            dragActive={dragActive}
-            setDragActive={setDragActive}
-            dragSubject={dragSubject}
-            days={days}
-            hours={hours}
-            subjectsEnable={subjectsEnable}
-            subjectsAssigned={subjectsAssigned}
-            setSubjectsAssigned={setSubjectsAssigned}
-            deleteActive={deleteActive}
-            setDeleteActive={setDeleteActive}
-            openDialogDelete={openDialogDelete}
-            setOpenDialogDelete={setOpenDialogDelete}
-            openDialogAccept={openDialogAccept}
-            subjectBlock={subjectBlock}
-          />
+        <div className="w-2/3 mx-8">
+          <table className="w-full">
+            <thead className="border-4">
+              <tr className="flex">
+                <th className="grow">HORA</th>
+                <th className="grow">LUNES</th>
+                <th className="grow">MARTES</th>
+                <th className="grow">MIERCOLES</th>
+                <th className="grow">JUEVES</th>
+                <th className="grow">VIERNES</th>
+              </tr>
+            </thead>
+            <tbody className="text-center"></tbody>
+          </table>
+          Sin información sobre horarios
         </div>
       </Box>
-      <AcceptAssignmentDialog
-        openDialogAccept={openDialogAccept}
-        setOpenDialogAccept={setOpenDialogAccept}
-        subjectsAssigned={subjectsAssigned}
-      />
-      {openAlert ? (
-        <AlertNotification typeAlert="warning" content="No se ha asignado ninguna de las materias disponibles"/>
-      ) : null}
     </div>
   );
 }

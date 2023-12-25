@@ -4,7 +4,7 @@ import { itemsObj } from "../models/items";
 
 const options:itemsObj[]|undefined = menuOptions.find((menuType)=>(menuType.typeUser=="coordinator"))?.items;
 
-const currentPeriod = "2022";
+const currentPeriod = "2024-1";
 
 export default function Home() {
   return (

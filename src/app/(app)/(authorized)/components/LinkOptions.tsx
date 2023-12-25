@@ -12,7 +12,6 @@ export default function LinkOptions({ options }: Props) {
   const headPathName = pathname.slice(0, pathname.lastIndexOf("/"));
   const tailPathname = pathname.slice(pathname.lastIndexOf("/") + 1);
   const active = options.find((option) => option.link === tailPathname);
-  console.log(pathname.split("/")[1]);
   return (
     <>
       <div className="absolute float-left flex m-4">

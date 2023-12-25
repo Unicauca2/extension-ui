@@ -6,7 +6,6 @@ import { useState } from "react";
 
 export default function ApplicantList() {
   const [cellSelected, setCellSelected] = useState<any>(null);
-  console.log(cellSelected);
   return (
     <>
       <div className="w-2/3">

@@ -21,7 +21,7 @@ interface Props {
 export default function GlobalIcon({ nameIcon, className }: Props) {
   switch (nameIcon) {
     case "studentIcon":
-      return <SchoolIcon className={className} />
+      return <SchoolIcon className={className} />;
     case "candidateIcon":
       return <HowToRegOutlined className={className} />;
     case "teacherIcon":
@@ -29,7 +29,7 @@ export default function GlobalIcon({ nameIcon, className }: Props) {
     case "coordinatorIcon":
       return <InsertChartOutlined className={className} />;
     case "deleteIcon":
-      return <DeleteIcon className={className}/>;
+      return <DeleteIcon className={className} />;
     case "warningIcon":
       return <WarningAmberIcon className={className} />;
     case "accountCircleOutlined":
@@ -62,6 +62,8 @@ export default function GlobalIcon({ nameIcon, className }: Props) {
       return <img src="/app/back.svg" alt="back" />;
     case "sheet":
       return <img src="/app/sheet.svg" alt="sheet" />;
+    case "google-color":
+      return <img src="/app/google-color.svg" alt="google-color" />;
     default:
       return <SendIcon className={className} />;
   }

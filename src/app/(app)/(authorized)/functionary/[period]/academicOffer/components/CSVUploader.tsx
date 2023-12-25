@@ -78,18 +78,27 @@ const FileUploader: React.FC = () => {
       recordUrl: program.uploadAcademicOfferURL,
       programId: program.id,
     });
-    console.log(result);
+    if (result.success) alert("Oferta academica subida");
+    else alert(result.message);
   };
 
   return (
     <div>
-      <input type="file" accept=".csv" onChange={handleFileUpload} />
+      <div className="flex justify-center mt-10">
+        <input type="file" accept=".csv" onChange={handleFileUpload} />
+      </div>
+
       {csvData.data.length > 0 && (
         <>
-          <CSVLink data={csvData.data} filename="data.csv">
-            Descargar CSV
-          </CSVLink>
-          <Button onClick={handleDefineAcademicOffer}> Cositas </Button>
+          <div className="flex justify-center ">
+            <Button
+              variant="outlined"
+              className="my-4 text-[#ffffff] bg-[#092167] hover:text-[#092167]"
+              onClick={handleDefineAcademicOffer}
+            >
+              Subir Oferta Prematrícula
+            </Button>
+          </div>
           <div className="mx-8">
             <table className="w-full">
               <thead className="border-4">

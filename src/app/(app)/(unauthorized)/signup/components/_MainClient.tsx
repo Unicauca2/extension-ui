@@ -17,6 +17,7 @@ import { BoxStyles } from "./_MainClient.styles";
 import StepsComponent from "./_Steps";
 import { record } from "@/services/applicantService";
 import GlobalIcon from "@/components/GlobalIcon";
+import { useSearchParams, redirect } from "next/navigation";
 
 const StrategyList = {
   "10": new ConservatorioStrategy(),
@@ -30,6 +31,9 @@ export default function _MainClient(types: TypeProps) {
   const [activeStep, setActiveStep] = useState(0);
   const [formSteps, setFormSteps] = useState<Steps | undefined>(undefined);
 
+  const email = useSearchParams().get("email");
+  if (!email) redirect("/");
+
   const handleFormStepsInitialization = (strategy: IStrategy) => {
     const context = new SignUpStepsContext(strategy);
     setFormSteps(context.getSignUpSteps());
@@ -37,7 +41,6 @@ export default function _MainClient(types: TypeProps) {
 
   const handleSubmit = async () => {
     const aux = await record(person, program?.recordApplicantURL as string);
-    console.log(aux);
   };
 
   const handleNext = () => {
@@ -52,44 +55,50 @@ export default function _MainClient(types: TypeProps) {
   }, [program]);
 
   return (
-    <Box component="form" className="w-full pb-10" sx={BoxStyles}>
-      {formSteps ? (
-        <StepsComponent
-          activeStep={activeStep}
-          formSteps={formSteps}
-          handleBack={handleBack}
-          handleInputChange={handleInputChange}
-          handleNext={handleNext}
-          person={person}
-          types={types}
-        />
-      ) : (
-        <>
-          <Skeleton
-            variant="circular"
-            width={40}
-            height={40}
-            className="my-4"
+    <>
+      <div className="mb-4">
+        Su ingreso a la plataforma durante su etapa de aspirante se llevará a
+        cabo a través del correo: <strong>{email}</strong>
+      </div>
+      <Box component="form" className="w-full pb-10" sx={BoxStyles}>
+        {formSteps ? (
+          <StepsComponent
+            activeStep={activeStep}
+            formSteps={formSteps}
+            handleBack={handleBack}
+            handleInputChange={handleInputChange}
+            handleNext={handleNext}
+            person={person}
+            types={types}
           />
-          <Skeleton variant="rectangular" width={"100%"} height={60} />
-        </>
-      )}
-      {formSteps && activeStep === formSteps.length && (
-        <Paper square elevation={0} sx={{ p: 3 }}>
-          <Typography></Typography>
-          <Button
-            className="rounded-3xl bg-[#000066] hover:bg-[#FFFFFF] text-[#ffffff] hover:text-[#000066] hover:border-[#000066] border font-semibold "
-            variant="outlined"
-            endIcon={<GlobalIcon nameIcon="sendIcon" />}
-            onClick={handleSubmit}
-          >
-            Completar registro
-          </Button>
-          <Button onClick={handleBack} sx={{ mt: 1, mr: 1 }}>
-            Atrás
-          </Button>
-        </Paper>
-      )}
-    </Box>
+        ) : (
+          <>
+            <Skeleton
+              variant="circular"
+              width={40}
+              height={40}
+              className="my-4"
+            />
+            <Skeleton variant="rectangular" width={"100%"} height={60} />
+          </>
+        )}
+        {formSteps && activeStep === formSteps.length && (
+          <Paper square elevation={0} sx={{ p: 3 }}>
+            <Typography></Typography>
+            <Button
+              className="rounded-3xl bg-[#000066] hover:bg-[#FFFFFF] text-[#ffffff] hover:text-[#000066] hover:border-[#000066] border font-semibold "
+              variant="outlined"
+              endIcon={<GlobalIcon nameIcon="sendIcon" />}
+              onClick={handleSubmit}
+            >
+              Completar registro
+            </Button>
+            <Button onClick={handleBack} sx={{ mt: 1, mr: 1 }}>
+              Atrás
+            </Button>
+          </Paper>
+        )}
+      </Box>
+    </>
   );
 }

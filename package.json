@@ -1,43 +1,192 @@
 {
-  "name": "extension-ui",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
-  },
-  "dependencies": {
-    "@emotion/react": "^11.11.1",
-    "@emotion/styled": "^11.11.0",
-    "@fortawesome/fontawesome-free": "^6.4.2",
-    "@fortawesome/free-solid-svg-icons": "^6.4.2",
-    "@fortawesome/react-fontawesome": "^0.2.0",
-    "@mui/icons-material": "^5.14.11",
-    "@mui/joy": "^5.0.0-beta.8",
-    "@mui/lab": "^5.0.0-alpha.146",
-    "@mui/material": "^5.14.11",
-    "@mui/x-data-grid": "^6.18.2",
-    "@mui/x-date-pickers": "^6.16.0",
-    "dayjs": "^1.11.10",
-    "next": "^13.5.5",
-    "papaparse": "^5.4.1",
-    "react": "latest",
-    "react-csv": "^2.2.2",
-    "react-dom": "latest"
-  },
-  "devDependencies": {
-    "@types/node": "latest",
-    "@types/papaparse": "^5.3.14",
-    "@types/react": "latest",
-    "@types/react-csv": "^1.1.10",
-    "@types/react-dom": "latest",
-    "autoprefixer": "latest",
-    "eslint": "latest",
-    "eslint-config-next": "latest",
-    "postcss": "latest",
-    "tailwindcss": "latest",
-    "typescript": "latest"
-  }
+	"name": "extension-ui",
+	"version": "0.1.0",
+	"private": true,
+	"scripts": {
+		"dev": "next dev",
+		"build": "next build",
+		"start": "next start",
+		"lint": "next lint"
+	},
+	"dependencies": {
+		"@emotion/react": "^11.11.1",
+		"@emotion/styled": "^11.11.0",
+		"@fortawesome/fontawesome-free": "^6.4.2",
+		"@fortawesome/free-solid-svg-icons": "^6.4.2",
+		"@fortawesome/react-fontawesome": "^0.2.0",
+		"@mui/icons-material": "^5.14.11",
+		"@mui/joy": "^5.0.0-beta.8",
+		"@mui/lab": "^5.0.0-alpha.146",
+		"@mui/material": "^5.14.11",
+		"@mui/x-data-grid": "^6.18.2",
+		"@mui/x-date-pickers": "^6.16.0",
+		"dayjs": "^1.11.10",
+		"next": "^13.5.5",
+		"next-auth": "^4.24.5",
+		"papaparse": "^5.4.1",
+		"react": "latest",
+		"react-csv": "^2.2.2",
+		"react-dom": "latest"
+	},
+	"devDependencies": {
+		"@types/node": "latest",
+		"@types/papaparse": "^5.3.14",
+		"@types/react": "latest",
+		"@types/react-csv": "^1.1.10",
+		"@types/react-dom": "latest",
+		"autoprefixer": "latest",
+		"eslint": "latest",
+		"eslint-config-next": "latest",
+		"postcss": "latest",
+		"tailwindcss": "latest",
+		"typescript": "latest"
+	},
+	"Transform": "AWS::Serverless-2016-10-31",
+	"Resources": {
+		"Api": {
+			"Type": "AWS::Serverless::Api",
+			"Properties": {
+				"Name": {
+					"Fn::Sub": [
+						"${ResourceName} From Stack ${AWS::StackName}",
+						{
+							"ResourceName": "Api"
+						}
+					]
+				},
+				"StageName": "Prod",
+				"DefinitionBody": {
+					"openapi": "3.0",
+					"info": {},
+					"paths": {
+						"/": {
+							"get": {
+								"responses": {}
+							}
+						}
+					}
+				},
+				"EndpointConfiguration": "REGIONAL",
+				"TracingEnabled": true,
+				"Auth": {
+					"Authorizers": {
+						"a": {
+							"UserPoolArn": {
+								"Fn::Sub": "arn:${AWS::Partition}:cognito-idp:${AWS::Region}:${AWS::AccountId}:userpool/placeholder"
+							}
+						}
+					}
+				},
+				"Cors": {
+					"MaxAge": 5
+				}
+			}
+		},
+		"UserPool": {
+			"Type": "AWS::Cognito::UserPool",
+			"Properties": {
+				"AdminCreateUserConfig": {
+					"AllowAdminCreateUserOnly": false
+				},
+				"AliasAttributes": [
+					"email",
+					"preferred_username"
+				],
+				"UserPoolName": {
+					"Fn::Sub": "${AWS::StackName}-UserPool"
+				}
+			}
+		},
+		"Table": {
+			"Type": "AWS::DynamoDB::Table",
+			"Properties": {
+				"AttributeDefinitions": [
+					{
+						"AttributeName": "id",
+						"AttributeType": "S"
+					}
+				],
+				"BillingMode": "PAY_PER_REQUEST",
+				"KeySchema": [
+					{
+						"AttributeName": "id",
+						"KeyType": "HASH"
+					}
+				],
+				"StreamSpecification": {
+					"StreamViewType": "NEW_AND_OLD_IMAGES"
+				}
+			}
+		},
+		"Bucket": {
+			"Type": "AWS::S3::Bucket",
+			"Properties": {
+				"BucketName": {
+					"Fn::Sub": "${AWS::StackName}-bucket-${AWS::AccountId}"
+				},
+				"BucketEncryption": {
+					"ServerSideEncryptionConfiguration": [
+						{
+							"ServerSideEncryptionByDefault": {
+								"SSEAlgorithm": "aws:kms",
+								"KMSMasterKeyID": "alias/aws/s3"
+							}
+						}
+					]
+				},
+				"PublicAccessBlockConfiguration": {
+					"IgnorePublicAcls": true,
+					"RestrictPublicBuckets": true
+				}
+			}
+		},
+		"BucketBucketPolicy": {
+			"Type": "AWS::S3::BucketPolicy",
+			"Properties": {
+				"Bucket": {
+					"Ref": "Bucket"
+				},
+				"PolicyDocument": {
+					"Id": "RequireEncryptionInTransit",
+					"Version": "2012-10-17",
+					"Statement": [
+						{
+							"Principal": "*",
+							"Action": "*",
+							"Effect": "Deny",
+							"Resource": [
+								{
+									"Fn::GetAtt": [
+										"Bucket",
+										"Arn"
+									]
+								},
+								{
+									"Fn::Sub": "${Bucket.Arn}/*"
+								}
+							],
+							"Condition": {
+								"Bool": {
+									"aws:SecureTransport": "false"
+								}
+							}
+						}
+					]
+				}
+			}
+		}
+	},
+	"Metadata": {
+		"AWS::Composer::Groups": {
+			"Group": {
+				"Label": "Group",
+				"Members": [
+					"Api",
+					"UserPool",
+					"Table",
+					"Bucket"
+				]
+			}
+		}
+	}
 }
