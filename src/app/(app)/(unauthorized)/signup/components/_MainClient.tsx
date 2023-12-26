@@ -18,6 +18,7 @@ import StepsComponent from "./_Steps";
 import { record } from "@/services/applicantService";
 import GlobalIcon from "@/components/GlobalIcon";
 import { useSearchParams, redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 const StrategyList = {
   "10": new ConservatorioStrategy(),
@@ -27,9 +28,11 @@ const StrategyList = {
 export default function _MainClient(types: TypeProps) {
   const { person, handleInputChange } = usePersonRegister();
   const { program } = useAppContext();
+  const router = useRouter();
 
   const [activeStep, setActiveStep] = useState(0);
   const [formSteps, setFormSteps] = useState<Steps | undefined>(undefined);
+  const [accepted, setAccepted] = useState(false);
 
   const email = useSearchParams().get("email");
   if (!email) redirect("/");
@@ -41,6 +44,11 @@ export default function _MainClient(types: TypeProps) {
 
   const handleSubmit = async () => {
     const aux = await record(person, program?.recordApplicantURL as string);
+    if (aux.success) {
+      setAccepted(true);
+      alert("Registro aceptado!");
+      router.push("/home");
+    } else alert("Ocurrio un error: " + aux.result);
   };
 
   const handleNext = () => {
@@ -90,6 +98,7 @@ export default function _MainClient(types: TypeProps) {
               variant="outlined"
               endIcon={<GlobalIcon nameIcon="sendIcon" />}
               onClick={handleSubmit}
+              disabled={accepted}
             >
               Completar registro
             </Button>

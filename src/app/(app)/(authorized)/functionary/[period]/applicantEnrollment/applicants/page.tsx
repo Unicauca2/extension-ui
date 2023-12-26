@@ -22,6 +22,7 @@ export default function ApplicantList() {
   const [cellSelected, setCellSelected] = useState<any>(null);
   const { program } = useAppContext();
   const [rawData, setRawData] = useState<ApiResponse | null>(null);
+  const [file, setFile] = useState<File | null>(null);
 
   useEffect(() => {
     const setData = async () => {
@@ -53,6 +54,23 @@ export default function ApplicantList() {
     }
   };
 
+  useEffect(() => {
+    async function getfile() {
+      const response = await fetch(
+        "http://localhost:8080/api/v1/file/get?fileName=" +
+          cellSelected.document
+      );
+      const data = await response.blob();
+      console.log(data);
+      const file = new File([data], cellSelected?.document, {
+        type: data.type,
+      });
+      console.log(file);
+      setFile(file);
+    }
+    if (cellSelected !== null) getfile();
+  }, [cellSelected]);
+
   if (rawData !== null)
     return (
       <>
@@ -64,7 +82,12 @@ export default function ApplicantList() {
           />
         </div>
         <div className="w-1/3">
-          {cellSelected && <FileRendered src="/app/cedula.jpg" type="jpg" />}
+          {cellSelected && (
+            <FileRendered
+              src={URL.createObjectURL(file as File)}
+              type={file?.type as string}
+            />
+          )}
         </div>
       </>
     );

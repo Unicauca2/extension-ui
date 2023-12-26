@@ -1,7 +1,7 @@
 interface IdentityDocumentFile {
   id: number;
   name: string;
-  file: any; // Puedes ajustar el tipo según el tipo real de archivo que esperas aquí
+  file: { id: number }; // Puedes ajustar el tipo según el tipo real de archivo que esperas aquí
 }
 
 interface ScholarshipType {

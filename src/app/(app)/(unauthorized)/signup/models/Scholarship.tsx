@@ -32,7 +32,7 @@ const getScholarFormation = (scholarship: Scholarship): FormElement[] => {
   return [
     {
       type: "select",
-      label: "Semestre",
+      label: "Grado",
       name: "scholarship.semester",
       value: scholarship.semester,
       options: getScholarGrades(),

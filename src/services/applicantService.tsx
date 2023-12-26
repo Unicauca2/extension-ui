@@ -22,7 +22,8 @@ export async function record(
       const result = await response.json();
       return { success: true, result };
     }
-    return { success: false };
+    const message = await response.text();
+    return { success: false, result: message };
   }
   const result = await SubmitData(formData);
   return result;

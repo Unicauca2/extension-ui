@@ -9,6 +9,11 @@ import { getResidencyElements } from "@unauthorized/signup/models/Residency";
 import { TypeProps } from "@unauthorized/signup/models/TypeProps";
 import { IStrategy, Steps } from "./IStrategy";
 import { getApplicantConservatorioElements } from "@unauthorized/signup/models/Applicant";
+import dayjs, { Dayjs } from "dayjs";
+import {
+  getScholarShipElements,
+  getScholarShipChecker,
+} from "../../models/Scholarship";
 
 export class ConservatorioStrategy implements IStrategy {
   getSignUpSteps(): Steps {
@@ -25,7 +30,12 @@ export class ConservatorioStrategy implements IStrategy {
             person.applicant,
             personInitialValues.applicant
           );
-          return check !== false || check;
+
+          const check2 = dayjs(person.applicant.birthDate).isAfter(
+            dayjs().subtract(11, "year")
+          );
+
+          return (check && check2) === true;
         },
       },
       {
@@ -61,6 +71,19 @@ export class ConservatorioStrategy implements IStrategy {
             person.residency,
             personInitialValues.residency
           ),
+      },
+      {
+        label: "Información escolar",
+        content: (person: ApplicantRegistry, { types }: TypeProps) =>
+          getScholarShipElements({
+            birthDate: person.applicant.birthDate || dayjs(),
+            scholarship: person.scholarship,
+          }),
+        checker: (person: ApplicantRegistry) =>
+          getScholarShipChecker({
+            birthDate: person.applicant.birthDate || dayjs(),
+            scholarship: person.scholarship,
+          }),
       },
       {
         label: "Información Acudiente",

@@ -87,6 +87,7 @@ function getRowData(data: ApiResponse) {
   const rows: IRows = [];
   for (let entry in data.result) {
     const aux = data.result[entry];
+    const fileDocument = aux.enrollmentP?.applicant?.identityDocumentFile;
     rows.push({
       id: aux.id,
       fullName:
@@ -100,6 +101,10 @@ function getRowData(data: ApiResponse) {
       identification: aux.enrollmentP?.applicant?.identification,
       birthDate: aux.enrollmentP?.applicant?.birthDate.split("T")[0],
       state: aux.enrollmentP?.state,
+      document:
+        fileDocument?.file?.id +
+        "." +
+        fileDocument?.name.split(".")[fileDocument?.name.split(".").length - 1],
     });
   }
   return rows;
@@ -131,6 +136,7 @@ export type IRows = {
   identification: string;
   state: number;
   birthDate: string;
+  document: string;
 }[];
 interface Props {
   onCellClick: (rowData: any) => void;
