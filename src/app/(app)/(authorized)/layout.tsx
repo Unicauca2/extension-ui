@@ -10,11 +10,13 @@ export default function RootLayout({
     <>
       <div className="flex-1 flex">
         <div className="bg-[#ffffff]">
-          <HorizontalCollapse roles={["student"]}/>
+          <HorizontalCollapse roles={[""]} />
         </div>
         <div className="w-full">
           <TopNavBar />
-          <main className="flex justify-center content-center min-w-[310px]">{children}</main>
+          <main className="flex justify-center content-center min-w-[310px]">
+            {children}
+          </main>
         </div>
       </div>
       <footer></footer>

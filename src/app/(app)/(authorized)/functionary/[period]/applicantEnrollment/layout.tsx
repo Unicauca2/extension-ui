@@ -5,10 +5,10 @@ const linkOptions = [
     label: "Inscritos",
     link: "applicants",
   },
-  {
-    label: "Inscripciones canceladas",
-    link: "deniedApplicants",
-  },
+  // {
+  //   label: "Inscripciones canceladas",
+  //   link: "deniedApplicants",
+  // },
 ];
 
 export default function RootLayout({

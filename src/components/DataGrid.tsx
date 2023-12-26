@@ -5,253 +5,148 @@ import Button from "@mui/material/Button";
 import CheckIcon from "@mui/icons-material/Check";
 import CloseIcon from "@mui/icons-material/Close";
 import WarningIcon from "@mui/icons-material/Warning";
+import { ApiResponse } from "@/models/PROVISIONALEnrollmentFetch";
 
-const columns: GridColDef[] = [
-  { field: "id", headerName: "ID", width: 30 },
-  {
-    field: "primerNombre",
-    headerName: "Primer Nombre",
-    width: 150,
-    editable: true,
-  },
-  {
-    field: "segundoNombre",
-    headerName: "Segundo Nombre",
-    width: 150,
-    editable: true,
-  },
-  {
-    field: "primerApellido",
-    headerName: "Primer Apellido",
-    width: 150,
-    editable: true,
-  },
-  {
-    field: "segundoApellido",
-    headerName: "Segundo Apellido",
-    width: 150,
-    editable: true,
-  },
-  {
-    field: "edad",
-    headerName: "Edad",
-    type: "number",
-    width: 50,
-    editable: true,
-  },
-  {
-    field: "estado",
-    headerName: "Estado",
-    width: 70,
-    renderCell: (params: GridCellParams) => {
-      const isApproved = params.row.estado === "aprobado";
-
-      if (isApproved) {
-        return <CheckIcon style={{ color: "green" }} />;
-      } else if (params.row.estado === "desaprobado") {
-        return <CloseIcon style={{ color: "red" }} />;
-      } else {
-        return <WarningIcon style={{ color: "#CE8534" }} />;
-      }
+function getColumnData(
+  rows: IRows,
+  setRowData: React.Dispatch<React.SetStateAction<IRows>>
+) {
+  const columns: GridColDef[] = [
+    {
+      field: "fullName",
+      headerName: "Nombre completo",
+      width: 300,
     },
-  },
-  {
-    field: "actions",
-    headerName: "Acciones",
-    width: 250,
-    renderCell: (params: GridCellParams) => (
-      <div>
-        <Button
-          className="bg-[#52A847] text-[#fff] hover:bg-[#52A847]/80  mr-1"
-          onClick={() => handleApproveClick(params.id as number)}
-        >
-          Aceptar
-        </Button>
-        <Button
-          className="bg-[#C11818] text-[#fff] hover:bg-[#C11818]/80"
-          onClick={() => handleDisapproveClick(params.id as number)}
-        >
-          Rechazar
-        </Button>
-      </div>
-    ),
-  },
-];
-
-let rows = [
-  {
-    id: 1,
-    primerNombre: "Jon",
-    segundoNombre: "Jon",
-    primerApellido: "Snow",
-    segundoApellido: "Snow",
-    edad: 35,
-  },
-  {
-    id: 2,
-    primerNombre: "Cersei",
-    segundoNombre: "Cersei",
-    primerApellido: "Lannister",
-    segundoApellido: "Lannister",
-    edad: 42,
-  },
-  {
-    id: 3,
-    primerNombre: "Jaime",
-    segundoNombre: "Jaime",
-    primerApellido: "Lannister",
-    segundoApellido: "Lannister",
-    edad: 45,
-  },
-  {
-    id: 4,
-    primerNombre: "Arya",
-    segundoNombre: "Arya",
-    primerApellido: "Stark",
-    segundoApellido: "Stark",
-    edad: 16,
-  },
-  {
-    id: 5,
-    primerNombre: "Daenerys",
-    segundoNombre: "Daenerys",
-    primerApellido: "Targaryen",
-    segundoApellido: "Targaryen",
-    edad: null,
-  },
-  {
-    id: 6,
-    primerNombre: null,
-    segundoNombre: null,
-    primerApellido: "Melisandre",
-    segundoApellido: "Melisandre",
-    edad: 150,
-  },
-  {
-    id: 7,
-    primerNombre: "Ferrara",
-    segundoNombre: "Ferrara",
-    primerApellido: "Clifford",
-    segundoApellido: "Clifford",
-    edad: 44,
-  },
-  {
-    id: 8,
-    primerNombre: "Rossini",
-    segundoNombre: "Rossini",
-    primerApellido: "Frances",
-    segundoApellido: "Frances",
-    edad: 36,
-  },
-  {
-    id: 9,
-    primerNombre: "Harvey",
-    segundoNombre: "Harvey",
-    primerApellido: "Roxie",
-    segundoApellido: "Roxie",
-    edad: 65,
-  },
-  {
-    id: 11,
-    primerNombre: "Jon",
-    segundoNombre: "Jon",
-    primerApellido: "Snow",
-    segundoApellido: "Snow",
-    edad: 35,
-  },
-  {
-    id: 12,
-    primerNombre: "Cersei",
-    segundoNombre: "Cersei",
-    primerApellido: "Lannister",
-    segundoApellido: "Lannister",
-    edad: 42,
-  },
-  {
-    id: 13,
-    primerNombre: "Jaime",
-    segundoNombre: "Jaime",
-    primerApellido: "Lannister",
-    segundoApellido: "Lannister",
-    edad: 45,
-  },
-  {
-    id: 14,
-    primerNombre: "Arya",
-    segundoNombre: "Arya",
-    primerApellido: "Stark",
-    segundoApellido: "Stark",
-    edad: 16,
-  },
-  {
-    id: 15,
-    primerNombre: "Daenerys",
-    segundoNombre: "Daenerys",
-    primerApellido: "Targaryen",
-    segundoApellido: "Targaryen",
-    edad: null,
-  },
-  {
-    id: 16,
-    primerNombre: null,
-    segundoNombre: null,
-    primerApellido: "Melisandre",
-    segundoApellido: "Melisandre",
-    edad: 150,
-  },
-  {
-    id: 17,
-    primerNombre: "Ferrara",
-    segundoNombre: "Ferrara",
-    primerApellido: "Clifford",
-    segundoApellido: "Clifford",
-    edad: 44,
-  },
-  {
-    id: 18,
-    primerNombre: "Rossini",
-    segundoNombre: "Rossini",
-    primerApellido: "Frances",
-    segundoApellido: "Frances",
-    edad: 36,
-  },
-  {
-    id: 19,
-    primerNombre: "Harvey",
-    segundoNombre: "Harvey",
-    primerApellido: "Roxie",
-    segundoApellido: "Roxie",
-    edad: 65,
-  },
-];
-
-const handleApproveClick = (id: number) => {
-  // Encuentra la fila con el ID dado y establece su estado como "aprobado"
-  const updatedRows = rows.map((row) =>
-    row.id === id ? { ...row, estado: "aprobado" } : row
-  );
-  // Actualiza las filas
-  rows = updatedRows;
-};
-
-const handleDisapproveClick = (id: number) => {
-  // Encuentra la fila con el ID dado y establece su estado como "desaprobado"
-  const updatedRows = rows.map((row) =>
-    row.id === id ? { ...row, estado: "desaprobado" } : row
-  );
-  // Actualiza las filas
-  rows = updatedRows;
-};
-
-interface Props {
-  onCellClick: (rowData: any) => void;
+    {
+      field: "identification",
+      headerName: "Identificacion",
+      width: 100,
+    },
+    {
+      field: "birthDate",
+      headerName: "Nacimiento",
+      width: 100,
+    },
+    {
+      field: "state",
+      headerName: "Estado",
+      width: 70,
+      renderCell: (params: GridCellParams) => {
+        const isApproved = params.row.state & 16;
+        if (isApproved) {
+          return <CheckIcon style={{ color: "green" }} />;
+        } else if (params.row.state & 1048576) {
+          return <CloseIcon style={{ color: "red" }} />;
+        } else {
+          return <WarningIcon style={{ color: "#CE8534" }} />;
+        }
+      },
+    },
+    {
+      field: "actions",
+      headerName: "Acciones",
+      width: 220,
+      renderCell: (params: GridCellParams) => (
+        <div>
+          <Button
+            className="bg-[#52A847] text-[#fff] hover:bg-[#52A847]/80  mr-1"
+            onClick={() =>
+              handleReview(
+                params.id as number,
+                rows,
+                16 /** Inscripcion calificada */,
+                1048576,
+                setRowData
+              )
+            }
+          >
+            Aceptar
+          </Button>
+          <Button
+            className="bg-[#C11818] text-[#fff] hover:bg-[#C11818]/80"
+            onClick={() =>
+              handleReview(
+                params.id as number,
+                rows,
+                1048576 /** Inscripcion inconsistencia */,
+                16,
+                setRowData
+              )
+            }
+          >
+            Rechazar
+          </Button>
+        </div>
+      ),
+    },
+  ];
+  return columns;
 }
 
-export default function DataGridDemo({ onCellClick }: Props) {
+function getRowData(data: ApiResponse) {
+  const rows: IRows = [];
+  for (let entry in data.result) {
+    const aux = data.result[entry];
+    rows.push({
+      id: aux.id,
+      fullName:
+        aux.enrollmentP.applicant.firstName +
+        " " +
+        aux.enrollmentP.applicant.secondName +
+        " " +
+        aux.enrollmentP.applicant.firstLastName +
+        " " +
+        aux.enrollmentP.applicant.secondLastName,
+      identification: aux.enrollmentP?.applicant?.identification,
+      birthDate: aux.enrollmentP?.applicant?.birthDate.split("T")[0],
+      state: aux.enrollmentP?.state,
+    });
+  }
+  return rows;
+}
+
+const handleReview = (
+  id: number,
+  rows: IRows,
+  newState: number,
+  counterState: number,
+  setRowData: React.Dispatch<React.SetStateAction<IRows>>
+) => {
+  const updatedRows = rows.map((row) => {
+    if (row.id === id) {
+      let calc = row.state;
+      if (calc & counterState) {
+        calc -= counterState;
+      }
+      return { ...row, state: calc + newState };
+    }
+    return row;
+  });
+  setRowData(updatedRows);
+};
+
+export type IRows = {
+  id: number;
+  fullName: string;
+  identification: string;
+  state: number;
+  birthDate: string;
+}[];
+interface Props {
+  onCellClick: (rowData: any) => void;
+  rawData: ApiResponse;
+  handleSubmit: (data: IRows) => void;
+}
+export default function DataGridDemo({
+  onCellClick,
+  rawData,
+  handleSubmit,
+}: Props) {
   const [selectionModel, setSelectionModel] = useState<number[]>([]);
+  const [rowData, setRowData] = useState<IRows>(getRowData(rawData));
 
   const handleCellClick = (params: GridCellParams) => {
-    if (selectionModel.length === 1 && selectionModel[0] === params.id) {
+    if (selectionModel?.length === 1 && selectionModel[0] === params.id) {
       setSelectionModel([]);
       onCellClick(null);
     } else {
@@ -259,6 +154,10 @@ export default function DataGridDemo({ onCellClick }: Props) {
       onCellClick(params.row);
     }
   };
+
+  function confirmTableFilled() {
+    return rowData.some((item) => item.state === 1);
+  }
 
   return (
     <Box>
@@ -275,12 +174,18 @@ export default function DataGridDemo({ onCellClick }: Props) {
             },
           },
         }}
-        rows={rows}
-        columns={columns}
+        rows={rowData}
+        columns={getColumnData(rowData, setRowData)}
         checkboxSelection
         onCellClick={handleCellClick}
         rowSelectionModel={selectionModel}
       />
+      <Button
+        onClick={() => handleSubmit(rowData)}
+        disabled={confirmTableFilled()}
+      >
+        Confirmar cambios
+      </Button>
     </Box>
   );
 }
