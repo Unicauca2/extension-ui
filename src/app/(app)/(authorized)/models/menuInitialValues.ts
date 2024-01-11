@@ -111,11 +111,11 @@ export const menuOptions: optionsObj[] = [
       //   label: "Periodos",
       //   url: "",
       // },
-      // {
-      //   icon: "people",
-      //   label: "Inscripciones",
-      //   url: "",
-      // },
+      {
+        icon: "people",
+        label: "Crear grupos",
+        url: "classGroups",
+      },
       {
         icon: "sheetCheck",
         label: "Inscripciones",

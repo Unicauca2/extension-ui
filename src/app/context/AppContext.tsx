@@ -12,7 +12,6 @@ interface ProgramData {
   name: string;
   logo: string;
   recordApplicantURL: string;
-  uploadAcademicOfferURL: string;
 }
 
 const programList = {
@@ -21,14 +20,12 @@ const programList = {
     name: "Conservatorio",
     logo: "./conservatorio/logo.png",
     recordApplicantURL: "/v1/applicant/conservatorio/record",
-    uploadAcademicOfferURL: "/v1/functionary/conservatorio/uploadAcademicOffer",
   },
   "85": {
     id: 85,
     name: "Unilingua",
     logo: "./unilingua/logo.png",
     recordApplicantURL: "/v1/applicant/unilingua/record",
-    uploadAcademicOfferURL: "/v1/functionary/unilingua/uploadAcademicOffer",
   },
 } as { [key: string]: ProgramData };
 
