@@ -53,7 +53,7 @@ export default function RegistrySteps({
                     disabled={!step.checker(person)}
                     sx={{ mt: 1, mr: 1 }}
                   >
-                    {index === formSteps.length - 1 ? "Finish" : "Continue"}
+                    {index === formSteps.length - 1 ? "Finalizar" : "Continuar"}
                   </Button>
 
                   <Button

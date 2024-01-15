@@ -134,9 +134,7 @@ export default function TableMain({ students, assignatures }: ITableMain) {
                     <td>{row.semester}</td>
                     <td>
                       <DynamicSelectItems
-                        assignatures={assignatures.filter(
-                          (aux) => +aux.semester === +row.semester
-                        )}
+                        assignatures={assignatures}
                         index={index}
                         handleChange={handleSelectItemsChange}
                       />
