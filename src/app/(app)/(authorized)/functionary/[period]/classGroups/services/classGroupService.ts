@@ -11,11 +11,11 @@ interface IRecord {
     quota: number;
     assignature: number;
     idStudents: number[];
+    idTeachers: number[];
   }[];
 }
 export async function record({ data }: IRecord) {
   const aux = { groups: data };
-  console.log(aux);
   async function SubmitData() {
     const response = await fetch(
       process.env.NEXT_PUBLIC_API + APIUrls.postClassGroups,

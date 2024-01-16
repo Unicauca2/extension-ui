@@ -9,31 +9,13 @@ import {
 } from "../services/CSVUploaderFunctions";
 import DinamycInputItems from "./DinamycInputItems";
 import DynamicSelectItems from "./DynamicSelectItems";
+import { CSVRawData, CSVRow, ITableMainProps } from "../model/TableTypes";
 
-interface CSVRow {
-  code: string;
-  quota: string;
-  teacher: string;
-  assignatureLabel: string;
-  section: string;
-  semester: string;
-  assignature: number;
-  idStudents: number[];
-}
-interface CSVRawData {
-  CODIGO: string;
-  CUPO: string;
-  DOCENTE: string;
-  MATERIA: string;
-  SECCION: string;
-  SEMESTRE: string;
-}
-
-interface ITableMain {
-  students: { id: number; code: string }[];
-  assignatures: { id: number; label: string; semester: string; code: string }[];
-}
-export default function TableMain({ students, assignatures }: ITableMain) {
+export default function TableMain({
+  students,
+  assignatures,
+  teachers,
+}: ITableMainProps) {
   const [csvData, setCsvData] = useState<ParseResult<CSVRawData>>({
     data: [],
     errors: [],
@@ -55,7 +37,15 @@ export default function TableMain({ students, assignatures }: ITableMain) {
     });
   };
 
-  const handleInputItemsChange = (value: number[], index: number) => {
+  const handleTeachersChange = (value: number[], index: number) => {
+    setTableData((prevData) => {
+      const newData = [...prevData];
+      newData[index].idTeachers = value;
+      return newData;
+    });
+  };
+
+  const handleStudentsChange = (value: number[], index: number) => {
     setTableData((prevData) => {
       const newData = [...prevData];
       newData[index].idStudents = value;
@@ -70,8 +60,6 @@ export default function TableMain({ students, assignatures }: ITableMain) {
       return newData;
     });
   };
-
-  console.log(tableData);
 
   return (
     <div>
@@ -114,10 +102,10 @@ export default function TableMain({ students, assignatures }: ITableMain) {
                   <th>ID</th>
                   <th>CODIGO</th>
                   <th>CUPO</th>
-                  <th>PROFESOR</th>
                   <th>MATERIA</th>
                   <th>SECCION</th>
                   <th>SEMESTRE</th>
+                  <th>PROFESORES</th>
                   <th>MATERIA</th>
                   <th>ESTUDIANTES</th>
                 </tr>
@@ -128,10 +116,19 @@ export default function TableMain({ students, assignatures }: ITableMain) {
                     <td>{index + 1}</td>
                     <td>{row.code}</td>
                     <td>{row.quota}</td>
-                    <td>{row.teacher}</td>
                     <td>{row.assignatureLabel}</td>
                     <td>{row.section}</td>
                     <td>{row.semester}</td>
+                    <td>
+                      <DinamycInputItems
+                        maxItems={2}
+                        placeholder="Seleccione los docentes"
+                        index={index}
+                        handleChange={handleTeachersChange}
+                        handleRemoveItem={handleRemoveItem}
+                        rawOptions={teachers}
+                      />
+                    </td>
                     <td>
                       <DynamicSelectItems
                         assignatures={assignatures}
@@ -144,9 +141,9 @@ export default function TableMain({ students, assignatures }: ITableMain) {
                         maxItems={+row.quota}
                         placeholder="Ingrese los codigos de estudiante"
                         index={index}
-                        handleChange={handleInputItemsChange}
+                        handleChange={handleStudentsChange}
                         handleRemoveItem={handleRemoveItem}
-                        students={students}
+                        rawOptions={students}
                       />
                     </td>
                   </tr>

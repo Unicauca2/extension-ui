@@ -42,8 +42,6 @@ export async function postEnrollmentAcceptation({
   idProgram,
   enrollmentsReviewed,
 }: IPostEnrollmentAcceptation) {
-  console.log(enrollmentsReviewed);
-
   async function SubmitData() {
     const response = await fetch(
       process.env.NEXT_PUBLIC_API +

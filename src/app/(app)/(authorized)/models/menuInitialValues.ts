@@ -112,7 +112,7 @@ export const menuOptions: optionsObj[] = [
       //   url: "",
       // },
       {
-        icon: "people",
+        icon: "sheet",
         label: "Crear grupos",
         url: "classGroups",
       },
@@ -120,11 +120,6 @@ export const menuOptions: optionsObj[] = [
         icon: "sheetCheck",
         label: "Inscripciones",
         url: "/applicantEnrollment",
-      },
-      {
-        icon: "sheet",
-        label: "Gestionar oferta academica",
-        url: "/academicOffer",
       },
       // {
       //   icon: "student",

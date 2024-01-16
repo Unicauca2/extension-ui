@@ -1,26 +1,8 @@
 import Papa, { ParseResult } from "papaparse";
 import { Dispatch, SetStateAction } from "react";
 import { record } from "./classGroupService";
-
-interface CSVRawData {
-  CODIGO: string;
-  CUPO: string;
-  DOCENTE: string;
-  MATERIA: string;
-  SECCION: string;
-  SEMESTRE: string;
-}
-
-interface CSVRow {
-  code: string;
-  quota: string;
-  teacher: string;
-  assignatureLabel: string;
-  section: string;
-  semester: string;
-  assignature: number;
-  idStudents: number[];
-}
+import { CSVRawData, CSVRow } from "../model/TableTypes";
+import { redirect } from "next/navigation";
 
 const handleDefineAcademicOffer = async ({
   params,
@@ -35,20 +17,41 @@ const handleDefineAcademicOffer = async ({
   };
   tableData: CSVRow[];
 }) => {
-  const adapted = tableData.map((row) => {
+  const adapted = adaptData(params, tableData);
+  const validate = validateAdaptedData(adapted);
+  if (validate) {
+    alert("Datos incompletos");
+    return;
+  }
+  const result = await record({
+    data: adapted,
+  });
+  if (result.success) {
+    alert("Grupos creados");
+    redirect("/functionary");
+  } else alert(result.message);
+};
+const validateAdaptedData = (
+  data: { assignature: number; idStudents: number[]; idTeachers: number[] }[]
+) => {
+  return data.some((row) => {
+    if (row.assignature === 0) return true;
+    if (row.idStudents.length === 0) return true;
+    if (row.idTeachers.length === 0) return true;
+    return false;
+  });
+};
+const adaptData = (params: any, data: any) => {
+  return data.map((row: any) => {
     return {
       ...params,
       section: row.section,
       quota: +row.quota,
       assignature: +row.assignature,
       idStudents: row.idStudents,
+      idTeachers: row.idTeachers,
     };
   });
-  const result = await record({
-    data: adapted,
-  });
-  if (result.success) alert("Grupos creados");
-  else alert(result.message);
 };
 
 const handleFileUpload = ({
@@ -86,6 +89,7 @@ const processTableData = (data: CSVRawData[]): CSVRow[] => {
       semester: row.SEMESTRE,
       assignature: 0,
       idStudents: [],
+      idTeachers: [],
     };
   });
 };

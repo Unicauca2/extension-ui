@@ -61,11 +61,9 @@ export default function ApplicantList() {
           cellSelected.document
       );
       const data = await response.blob();
-      console.log(data);
       const file = new File([data], cellSelected?.document, {
         type: data.type,
       });
-      console.log(file);
       setFile(file);
     }
     if (cellSelected !== null) getfile();

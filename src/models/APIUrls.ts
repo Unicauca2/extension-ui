@@ -7,6 +7,7 @@ const APIUrls = {
   getPensumsList: "/v1/functionary/pensums?idProgram=",
   getStudentsList: "/v1/functionary/students?idProgram=",
   getAssignatureList: "/v1/functionary/assignatures?idPensum=",
+  getTeachersList: "/v1/functionary/teachers?idProgram=",
   postClassGroups: "/v1/functionary/classGroupCreation",
 };
 

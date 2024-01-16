@@ -1,9 +1,5 @@
 import React, { useState } from "react";
-
-interface Option {
-  id: number;
-  code: string;
-}
+import { Option } from "../model/TableTypes";
 
 interface EmailInputProps {
   maxItems: number;
@@ -11,7 +7,7 @@ interface EmailInputProps {
   index: number;
   handleChange: (value: number[], index: number) => void;
   handleRemoveItem: (index: number) => void;
-  students: { id: number; code: string }[];
+  rawOptions: { id: number; label: string }[];
 }
 const DinamycInputItems: React.FC<EmailInputProps> = ({
   maxItems,
@@ -19,11 +15,12 @@ const DinamycInputItems: React.FC<EmailInputProps> = ({
   index,
   handleChange,
   handleRemoveItem,
-  students,
+  rawOptions,
 }) => {
   const [items, setItems] = useState<number[]>([]);
+  const [selectedLabels, setSelectedLabels] = useState<string[]>([]);
   const [inputSearch, setInputSearch] = useState<string>("");
-  const [options, setOptions] = useState<Option[]>([]);
+  const [options, setOptions] = useState<Option[]>(rawOptions);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newText = event.target.value;
@@ -32,12 +29,12 @@ const DinamycInputItems: React.FC<EmailInputProps> = ({
     setOptions(newOptions);
   };
 
-  const generateOptions = (text: string): Option[] => {
+  const generateOptions = (text: string) => {
     if (text.trim() === "") {
       return [];
     }
-    return students.filter((student) => {
-      if (student.code.toLowerCase().includes(text.toLowerCase())) {
+    return rawOptions.filter((option) => {
+      if (option.label.toLowerCase().includes(text.toLowerCase())) {
         return true;
       }
       return false;
@@ -64,7 +61,6 @@ const DinamycInputItems: React.FC<EmailInputProps> = ({
   };
 
   const handleSelect = (value: number, index: number) => {
-    console.log(value);
     handleChange([...items, value], index);
     setItems([...items, value]);
   };
@@ -94,7 +90,7 @@ const DinamycInputItems: React.FC<EmailInputProps> = ({
             </option>
             {options.map((option) => (
               <option key={option.id} value={option.id}>
-                {option.code}
+                {option.label}
               </option>
             ))}
           </select>
@@ -102,7 +98,7 @@ const DinamycInputItems: React.FC<EmailInputProps> = ({
       )}
 
       <div>
-        {items.map((email, index) => (
+        {items.map((selected, index) => (
           <div
             key={index}
             style={{
@@ -113,7 +109,7 @@ const DinamycInputItems: React.FC<EmailInputProps> = ({
               borderRadius: "8px",
             }}
           >
-            {email}
+            {selected}
             <span
               style={{
                 marginLeft: "4px",
