@@ -7,6 +7,7 @@ import { redirect } from "next/navigation";
 const handleDefineAcademicOffer = async ({
   params,
   tableData,
+  setPostResult,
 }: {
   params: {
     user: string;
@@ -16,6 +17,7 @@ const handleDefineAcademicOffer = async ({
     program: number;
   };
   tableData: CSVRow[];
+  setPostResult: Dispatch<SetStateAction<boolean>>;
 }) => {
   const adapted = adaptData(params, tableData);
   const validate = validateAdaptedData(adapted);
@@ -28,7 +30,7 @@ const handleDefineAcademicOffer = async ({
   });
   if (result.success) {
     alert("Grupos creados");
-    redirect("/functionary");
+    setPostResult(true);
   } else alert(result.message);
 };
 const validateAdaptedData = (

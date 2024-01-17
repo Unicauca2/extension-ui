@@ -2,7 +2,7 @@
 
 import { Button } from "@mui/material";
 import { ParseResult } from "papaparse";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   handleDefineAcademicOffer,
   handleFileUpload,
@@ -10,6 +10,7 @@ import {
 import DinamycInputItems from "./DinamycInputItems";
 import DynamicSelectItems from "./DynamicSelectItems";
 import { CSVRawData, CSVRow, ITableMainProps } from "../model/TableTypes";
+import { redirect } from "next/navigation";
 
 export default function TableMain({
   students,
@@ -28,6 +29,11 @@ export default function TableMain({
     },
   });
   const [tableData, setTableData] = useState<CSVRow[]>([]);
+  const [postResult, setPostResult] = useState(false);
+
+  useEffect(() => {
+    if (postResult) redirect("/functionary");
+  }, [postResult]);
 
   const handleSelectItemsChange = (value: number, index: number) => {
     setTableData((prevData) => {
@@ -89,6 +95,7 @@ export default function TableMain({
                     user: "inesguerrero",
                   },
                   tableData,
+                  setPostResult,
                 })
               }
             >
