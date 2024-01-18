@@ -34,15 +34,9 @@ function getColumnData(
       renderCell: (params: GridCellParams) => {
         const isApproved = params.row.state & 2;
         return isApproved ? (
-          <>
-            <CheckIcon style={{ color: "green" }} />
-            <p className="hidden">a</p>
-          </>
+          <CheckIcon style={{ color: "green" }} />
         ) : (
-          <>
-            <CloseIcon style={{ color: "red" }} />
-            <p className="hidden">b</p>
-          </>
+          <CloseIcon style={{ color: "red" }} />
         );
       },
       sortingOrder: ["desc", "asc"],
@@ -57,7 +51,9 @@ function getColumnData(
       headerName: "Admitido",
       width: 70,
       renderCell: (params: GridCellParams) => {
-        const isApproved = params.row.state & 32;
+        if ((params.row.state & 2) !== 2) return <></>;
+
+        const isApproved = (params.row.state & 32) === 32;
         console.log(params.row.state);
         if (isApproved) {
           return <CheckIcon style={{ color: "green" }} />;
@@ -193,7 +189,7 @@ export default function DataGridDemo({
   };
 
   function confirmTableFilled() {
-    return rowData.some((item) => item.state === 1);
+    return rowData.some((item) => item.state === 1 && (item.state & 2) === 2);
   }
 
   return (

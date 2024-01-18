@@ -9,9 +9,14 @@ export async function record(
   if (applicantRegistry.applicant.document) {
     formData.append("document", applicantRegistry.applicant.document);
   }
-  if (applicantRegistry.applicant.photo) {
-    formData.append("photo", applicantRegistry.applicant.photo);
-  }
+  formData.append(
+    "enrollmentInfo",
+    JSON.stringify({
+      idPeriod: process.env.NEXT_PUBLIC_PERIOD,
+      idProcess: process.env.NEXT_PUBLIC_PROCESS,
+      payLimit: process.env.NEXT_PUBLIC_PAYMENT_LIMIT,
+    })
+  );
 
   async function SubmitData(formData: FormData) {
     const response = await fetch(process.env.NEXT_PUBLIC_API + submitUrl, {
