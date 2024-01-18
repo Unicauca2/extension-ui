@@ -88,9 +88,8 @@ export default function ApplicantList() {
             handleSubmit={handleSubmit}
           />
         </div>
-
         {cellSelected && file && (
-          <div className="border">
+          <div className="border mx-auto w-full">
             <FileRendered
               src={URL.createObjectURL(file as File)}
               type={file?.type as string}

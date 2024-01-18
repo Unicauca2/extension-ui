@@ -10,14 +10,18 @@ const FileRendered = ({ src, type }: Props) => {
     <Fragment>
       {type == "application/pdf" ? (
         <embed
-          className="px-4"
+          className="px-4 w-full min-h-[75vh]"
           src={src}
           type="application/pdf"
           width="100%"
-          height="600px"
+          height="100%"
         />
       ) : (
-        <img src={src} alt="Uploaded content" />
+        <img
+          src={src}
+          className="max-h-[75vh] mx-auto"
+          alt="Uploaded content"
+        />
       )}
     </Fragment>
   );

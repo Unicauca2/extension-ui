@@ -17,9 +17,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <section className="m-4 pb-10 bg-[#ffffff] w-full rounded-3xl">
+    <section className="m-4 pb-10 bg-[#ffffff] w-full rounded-3xl ">
       <LinkOptions options={linkOptions} />
-      <div className="m-4 flex flex-wrap ">{children}</div>
+      <div className="m-4 ">{children}</div>
     </section>
   );
 }
