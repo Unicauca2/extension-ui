@@ -33,7 +33,7 @@ async function acceptPreEnrollment(props: IAcceptPreEnrollment) {
   }
   async function SubmitData() {
     const response = await fetch(
-      process.env.NEXT_PUBLIC_API + APIUrls.acceptPreEnrollmentURL,
+      process.env.NEXT_PUBLIC_API + APIUrls.postAcceptPreEnrollmentURL,
       {
         method: "POST",
         headers: {

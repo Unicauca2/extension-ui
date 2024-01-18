@@ -2,14 +2,14 @@
 
 import { useAppContext } from "@/app/context/AppContext";
 import GlobalIcon from "@/components/GlobalIcon";
-import { Box, Button, List } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { useSession } from "next-auth/react";
+import { useEffect, useState } from "react";
 import {
   IAcceptPreEnrollment,
   acceptPreEnrollment,
   getPreEnrollment,
 } from "../services/studentService";
-import { useEffect, useState } from "react";
 
 type PreEnrollment = {
   success: boolean;
@@ -48,7 +48,7 @@ export default function AcademicEnrollment() {
   useEffect(() => {
     setObjAcceptPreEnrollment({
       idProgram: program?.id as number,
-      idPeriod: 204,
+      idPeriod: +(process.env.NEXT_PUBLIC_PERIOD as string),
       idStudent: data?.user?.students?.filter(
         (student: { program: number }) => student.program === program?.id
       )[0].id,

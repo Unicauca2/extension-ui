@@ -89,7 +89,7 @@ export default function TableMain({
                 handleDefineAcademicOffer({
                   params: {
                     classroom: 0,
-                    period: 204,
+                    period: +(process.env.NEXT_PUBLIC_PERIOD as string),
                     program: 10,
                     state: 2,
                     user: "inesguerrero",

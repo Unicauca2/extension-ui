@@ -15,24 +15,50 @@ function getColumnData(
     {
       field: "fullName",
       headerName: "Nombre completo",
-      width: 300,
+      width: 250,
     },
     {
       field: "identification",
       headerName: "Identificacion",
-      width: 100,
+      width: 150,
     },
     {
       field: "birthDate",
       headerName: "Nacimiento",
-      width: 100,
+      width: 130,
     },
     {
       field: "state",
-      headerName: "Estado",
+      headerName: "Inscripción Pagada",
+      width: 170,
+      renderCell: (params: GridCellParams) => {
+        const isApproved = params.row.state & 2;
+        return isApproved ? (
+          <>
+            <CheckIcon style={{ color: "green" }} />
+            <p className="hidden">a</p>
+          </>
+        ) : (
+          <>
+            <CloseIcon style={{ color: "red" }} />
+            <p className="hidden">b</p>
+          </>
+        );
+      },
+      sortingOrder: ["desc", "asc"],
+      sortComparator: (v1, v2) => {
+        const a = v1 & 2;
+        const b = v2 & 2;
+        return a - b;
+      },
+    },
+    {
+      field: "admitted",
+      headerName: "Admitido",
       width: 70,
       renderCell: (params: GridCellParams) => {
-        const isApproved = params.row.state & 16;
+        const isApproved = params.row.state & 32;
+        console.log(params.row.state);
         if (isApproved) {
           return <CheckIcon style={{ color: "green" }} />;
         } else if (params.row.state & 1048576) {
@@ -46,38 +72,43 @@ function getColumnData(
       field: "actions",
       headerName: "Acciones",
       width: 220,
-      renderCell: (params: GridCellParams) => (
-        <div>
-          <Button
-            className="bg-[#52A847] text-[#fff] hover:bg-[#52A847]/80  mr-1"
-            onClick={() =>
-              handleReview(
-                params.id as number,
-                rows,
-                16 /** Inscripcion calificada */,
-                1048576,
-                setRowData
-              )
-            }
-          >
-            Aceptar
-          </Button>
-          <Button
-            className="bg-[#C11818] text-[#fff] hover:bg-[#C11818]/80"
-            onClick={() =>
-              handleReview(
-                params.id as number,
-                rows,
-                1048576 /** Inscripcion inconsistencia */,
-                16,
-                setRowData
-              )
-            }
-          >
-            Rechazar
-          </Button>
-        </div>
-      ),
+      renderCell: (params: GridCellParams) => {
+        if (params.row.state & 2)
+          return (
+            <div>
+              <Button
+                className="bg-[#52A847] text-[#fff] hover:bg-[#52A847]/80  mr-1"
+                disabled={(params.row.state & 32) === 32}
+                onClick={() =>
+                  handleReview(
+                    params.id as number,
+                    rows,
+                    32 /** Inscripcion calificada */,
+                    1048576,
+                    setRowData
+                  )
+                }
+              >
+                Aceptar
+              </Button>
+              <Button
+                className="bg-[#C11818] text-[#fff] hover:bg-[#C11818]/80"
+                disabled={(params.row.state & 1048576) === 1048576}
+                onClick={() =>
+                  handleReview(
+                    params.id as number,
+                    rows,
+                    1048576 /** Inscripcion inconsistencia */,
+                    32,
+                    setRowData
+                  )
+                }
+              >
+                Rechazar
+              </Button>
+            </div>
+          );
+      },
     },
   ];
   return columns;

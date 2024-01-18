@@ -1,4 +1,3 @@
-import { IRows } from "@/components/DataGrid";
 import APIUrls from "@/models/APIUrls";
 
 interface IGetEnrollmentList {
@@ -30,32 +29,29 @@ export async function getEnrollmentList({
 }
 
 interface IPostEnrollmentAcceptation {
-  idPeriod: number;
-  idProgram: number;
-  enrollmentsReviewed: {
+  reviewedEnrollments: {
     id: number;
     state: number;
   }[];
+  invoicesData: {
+    paymentLimit: string;
+    idPeriod: number;
+    idProgram: number;
+  };
 }
 export async function postEnrollmentAcceptation({
-  idPeriod,
-  idProgram,
-  enrollmentsReviewed,
+  reviewedEnrollments,
+  invoicesData,
 }: IPostEnrollmentAcceptation) {
   async function SubmitData() {
     const response = await fetch(
-      process.env.NEXT_PUBLIC_API +
-        APIUrls.postEnrollmentAcceptation +
-        "idPeriod=" +
-        idPeriod +
-        "&idProgram=" +
-        idProgram,
+      process.env.NEXT_PUBLIC_API + APIUrls.postEnrollmentAcceptation,
       {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(enrollmentsReviewed),
+        body: JSON.stringify({ reviewedEnrollments, invoicesData }),
       }
     );
     if (response.ok) {
