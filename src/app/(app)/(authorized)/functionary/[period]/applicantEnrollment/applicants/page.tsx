@@ -32,7 +32,7 @@ export default function ApplicantList() {
       setRawData(aux.result);
     };
     setData();
-  }, []);
+  }, [program?.id]);
 
   useEffect(() => {
     if (postResult) redirect("/functionary");

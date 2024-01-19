@@ -13,16 +13,15 @@ interface Props {
   handleInputChange: (propsPath: string[], value: any) => void;
 }
 
-const FileUploadField: FC<Props> = memo(
-  ({
-    name,
-    label,
-    document,
-    className,
-    multiple,
-    accepts,
-    handleInputChange,
-  }) => {
+const FileUploadField: FC<Props> = ({
+  name,
+  label,
+  document,
+  className,
+  multiple,
+  accepts,
+  handleInputChange,
+}) => {
     const fileUrl = document ? URL.createObjectURL(document) : null;
     return (
       <Fragment>
@@ -55,6 +54,5 @@ const FileUploadField: FC<Props> = memo(
       </Fragment>
     );
   }
-);
 
 export default FileUploadField;

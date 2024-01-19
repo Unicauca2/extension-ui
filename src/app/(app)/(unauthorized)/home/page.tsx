@@ -5,13 +5,6 @@ import Main from "@/app/(app)/(unauthorized)/components/Main";
 export default function Home() {
   return (
     <>
-      <header>
-        <Header
-          src={"./unicauca/logo_blanco.png"}
-          title={"PROGRAMAS DE EXTENSIÓN"}
-          label={"UNIVERSIDAD DEL CAUCA"}
-        />
-      </header>
       <main className="flex-1 mx-auto">
         <Main />
       </main>

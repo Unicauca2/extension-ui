@@ -14,7 +14,7 @@ export default function Home() {
     };
 
     redirectToParent();
-  }, [router]);
+  }, [router, pathname]);
 
   return <></>;
 }

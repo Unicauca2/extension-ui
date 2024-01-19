@@ -1,4 +1,5 @@
 import { Fragment } from "react";
+import Image from "next/image";
 
 interface Props {
   src: string;
@@ -17,10 +18,12 @@ const FileRendered = ({ src, type }: Props) => {
           height="100%"
         />
       ) : (
-        <img
+        <Image
           src={src}
           className="max-h-[75vh] mx-auto"
           alt="Uploaded content"
+          height={100}
+          width={100}
         />
       )}
     </Fragment>

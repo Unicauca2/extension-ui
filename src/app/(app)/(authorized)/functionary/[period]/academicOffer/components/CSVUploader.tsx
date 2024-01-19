@@ -6,6 +6,7 @@ import { CSVLink } from "react-csv";
 import { Button } from "@mui/material";
 import { record } from "../services/academicOfferService";
 import { useAppContext } from "@/app/context/AppContext";
+import APIUrls from "@/models/APIUrls";
 
 interface CSVRow {
   CODESTUDIANTE: string;
@@ -75,7 +76,7 @@ const FileUploader: React.FC = () => {
     });
     const result = await record({
       data,
-      recordUrl: program.uploadAcademicOfferURL,
+      recordUrl: APIUrls.postAcademicOfferURL,
       programId: program.id,
     });
     if (result.success) alert("Oferta academica subida");

@@ -12,6 +12,7 @@ import {
     InsertChartOutlined,
     NoteOutlined
    } from "@mui/icons-material";
+import Image from "next/image";
 
 interface Props {
   nameIcon: string;
@@ -43,27 +44,27 @@ export default function GlobalIcon({ nameIcon, className }: Props) {
     case "sendIcon":
       return <SendIcon className={className} />;
     case "people":
-      return <img src="/app/people.svg" alt="people" />;
+      return <Image width={100} height={100} src="/app/people.svg" alt="people" />;
     case "sheetCheck":
-      return <img src="/app/sheetCheck.svg" alt="sheetCheck" />;
+      return <Image width={100} height={100} src="/app/sheetCheck.svg" alt="sheetCheck" />;
     case "book":
-      return <img src="/app/book.svg" alt="book" />;
+      return <Image width={100} height={100} src="/app/book.svg" alt="book" />;
     case "period":
-      return <img src="/app/period.svg" alt="period" />;
+      return <Image width={100} height={100} src="/app/period.svg" alt="period" />;
     case "student":
-      return <img src="/app/student.svg" alt="student" />;
+      return <Image width={100} height={100} src="/app/student.svg" alt="student" />;
     case "subject":
-      return <img src="/app/subject.svg" alt="subject" />;
+      return <Image width={100} height={100} src="/app/subject.svg" alt="subject" />;
     case "teacher":
-      return <img src="/app/teacher.svg" alt="teacher" />;
+      return <Image width={100} height={100} src="/app/teacher.svg" alt="teacher" />;
     case "report":
-      return <img src="/app/report.svg" alt="report" />;
+      return <Image width={100} height={100} src="/app/report.svg" alt="report" />;
     case "back":
-      return <img src="/app/back.svg" alt="back" />;
+      return <Image width={100} height={100} src="/app/back.svg" alt="back" />;
     case "sheet":
-      return <img src="/app/sheet.svg" alt="sheet" />;
+      return <Image width={100} height={100} src="/app/sheet.svg" alt="sheet" />;
     case "google-color":
-      return <img src="/app/google-color.svg" alt="google-color" />;
+      return <Image width={100} height={100} src="/app/google-color.svg" alt="google-color" />;
     default:
       return <SendIcon className={className} />;
   }

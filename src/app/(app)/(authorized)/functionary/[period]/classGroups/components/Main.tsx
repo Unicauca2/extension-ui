@@ -9,7 +9,6 @@ interface IParametrizer {
   user: string | undefined | null;
 }
 export default function Main({ idProgram }: IParametrizer) {
-  if (!idProgram) return <>Cargando</>;
   const pensumSelected = "139";
   const [assignatures, setAssignatures] = useState([]);
   const [students, setStudents] = useState([]);
@@ -26,7 +25,9 @@ export default function Main({ idProgram }: IParametrizer) {
       setTeachers(data.teachers);
     }
     fetchPageData();
-  }, [pensumSelected]);
+  }, [idProgram, pensumSelected]);
+  
+  if (!idProgram) return <>Cargando</>;
 
   return (
     <>
