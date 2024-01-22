@@ -22,8 +22,8 @@ const FileRendered = ({ src, type }: Props) => {
           src={src}
           className="max-h-[75vh] mx-auto"
           alt="Uploaded content"
-          height={100}
-          width={100}
+          width={500}
+          height={1000}
         />
       )}
     </Fragment>

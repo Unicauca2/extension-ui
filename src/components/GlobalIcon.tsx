@@ -60,7 +60,7 @@ export default function GlobalIcon({ nameIcon, className }: Props) {
     case "report":
       return <Image width={100} height={100} src="/app/report.svg" alt="report" />;
     case "back":
-      return <Image width={100} height={100} src="/app/back.svg" alt="back" />;
+      return <Image width={40} height={40} src="/app/back.svg" alt="back" />;
     case "sheet":
       return <Image width={100} height={100} src="/app/sheet.svg" alt="sheet" />;
     case "google-color":
