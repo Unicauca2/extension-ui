@@ -34,7 +34,7 @@ jobs:
       - name: Obtener Tag
         id: obtener_tag
         run: |
-          TAG=$(cat .env | grep PAM_APP_VERSION | awk -F '=' '{print $2}')
+          TAG=$(grep -oP '"version": "\K([^"]*)' package.json)
           echo "TAG=$TAG" >> $GITHUB_ENV
           echo $TAG
             
