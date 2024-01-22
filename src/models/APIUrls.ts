@@ -1,5 +1,5 @@
 const APIUrls = {
-  getAcamidOfferURL: "/v1/student/academicOffer?idStudent=",
+  getAcamidOfferURL: "/v1/student/academicOffer?",
   getEnrollmentList: "/v1/functionary/getEnrollments?",
   getPensumsList: "/v1/functionary/pensums?idProgram=",
   getStudentsList: "/v1/functionary/students?idProgram=",

@@ -40,7 +40,6 @@ export default function ApplicantList() {
 
   useEffect(() => {
     async function getfile() {
-      console.log(cellSelected.document);
       const response = await fetch(
         process.env.NEXT_PUBLIC_API +
           APIUrls.getFileFromServer +

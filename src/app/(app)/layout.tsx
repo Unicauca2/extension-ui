@@ -1,5 +1,3 @@
-import Header from "./(unauthorized)/components/Header";
-
 export default function RootLayout({
   children,
 }: {
@@ -10,18 +8,9 @@ export default function RootLayout({
       className="min-h-screen w-full flex flex-col"
       style={{
         background:
-          // "url('/app/bg.svg') fixed, #00136d",
-          //   backgroundSize: "contain",
           "linear-gradient(90deg, rgba(2,2,75,1) 0%, rgba(157,3,17,1) 50%, rgba(2,2,75,1) 100%)",
       }}
     >
-      <header>
-        <Header
-          src={"/unicauca/logo_blanco.png"}
-          title={"PROGRAMAS DE EXTENSIÓN"}
-          label={"UNIVERSIDAD DEL CAUCA"}
-        />
-      </header>
       {children}
     </body>
   );

@@ -15,12 +15,7 @@ type PreEnrollment = {
   success: boolean;
   response: {
     result: {
-      asignatures: [
-        {
-          id: number;
-          label: string;
-        }
-      ];
+      assignatures: string[];
     };
   };
 };
@@ -84,10 +79,10 @@ export default function AcademicEnrollment() {
               <p className="font-bold ml-2 text-md">Materias asignadas:</p>
             </div>
             <div className="mx-auto">
-              {preEnrollment?.response?.result?.asignatures.map(
-                (asignature: { id: number; label: string }, index) => (
+              {preEnrollment?.response?.result?.assignatures?.map(
+                (asignature: string, index: number) => (
                   <ul key={index} className="border-b-2 font-bold">
-                    - {asignature.label}
+                    - {asignature}
                   </ul>
                 )
               )}

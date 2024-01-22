@@ -54,7 +54,6 @@ function getColumnData(
         if ((params.row.state & 2) !== 2) return <></>;
 
         const isApproved = (params.row.state & 32) === 32;
-        console.log(params.row.state);
         if (isApproved) {
           return <CheckIcon style={{ color: "green" }} />;
         } else if (params.row.state & 1048576) {

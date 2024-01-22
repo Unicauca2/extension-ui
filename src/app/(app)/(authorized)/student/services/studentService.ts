@@ -4,7 +4,12 @@ async function getPreEnrollment(idStudent: number) {
   if (idStudent === 0 || idStudent === undefined) return false;
   async function SubmitData() {
     const response = await fetch(
-      process.env.NEXT_PUBLIC_API + APIUrls.getAcamidOfferURL + idStudent
+      process.env.NEXT_PUBLIC_API +
+        APIUrls.getAcamidOfferURL +
+        "idStudent=" +
+        idStudent +
+        "&idPeriod=" +
+        (process.env.NEXT_PUBLIC_PERIOD as string)
     );
     if (response.ok) {
       const result = await response.json();
