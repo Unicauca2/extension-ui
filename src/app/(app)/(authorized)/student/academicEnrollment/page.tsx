@@ -49,7 +49,7 @@ export default function AcademicEnrollment() {
       )[0].id,
       idPerson: data?.user?.person?.idPerson,
     });
-  }, [data, program]);
+  }, [data, program, appParams?.idPeriod]);
 
   useEffect(() => {
     async function getData() {
@@ -60,7 +60,7 @@ export default function AcademicEnrollment() {
       setPreEnrollment(response as PreEnrollment);
     }
     getData();
-  }, [objAcceptPreEnrollment]);
+  }, [objAcceptPreEnrollment, appParams?.idPeriod]);
 
   return (
     <div className="w-full m-4 h-[85vh] min-h-[500px] min-w-[300px] overflow-x-auto mt-4 mb-3 bg-[#ffffff] rounded-bl-3xl rounded-tr-3xl">

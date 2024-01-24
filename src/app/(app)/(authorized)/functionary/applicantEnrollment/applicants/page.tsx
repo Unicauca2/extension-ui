@@ -29,7 +29,7 @@ export default function ApplicantList() {
       setRawData(aux.result);
     };
     setData();
-  }, [program?.id]);
+  }, [program?.id, appParams?.idPeriod]);
 
   useEffect(() => {
     if (postResult) redirect("/functionary");
