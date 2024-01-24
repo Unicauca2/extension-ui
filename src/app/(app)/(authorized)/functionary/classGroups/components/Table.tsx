@@ -11,12 +11,15 @@ import DinamycInputItems from "./DinamycInputItems";
 import DynamicSelectItems from "./DynamicSelectItems";
 import { CSVRawData, CSVRow, ITableMainProps } from "../model/TableTypes";
 import { redirect } from "next/navigation";
+import { useAppContext } from "@/app/context/AppContext";
 
 export default function TableMain({
   students,
   assignatures,
   teachers,
 }: ITableMainProps) {
+  const { appParams } = useAppContext();
+
   const [csvData, setCsvData] = useState<ParseResult<CSVRawData>>({
     data: [],
     errors: [],
@@ -89,7 +92,7 @@ export default function TableMain({
                 handleDefineAcademicOffer({
                   params: {
                     classroom: 0,
-                    period: +(process.env.NEXT_PUBLIC_PERIOD as string),
+                    period: appParams?.idPeriod as number,
                     program: 10,
                     state: 2,
                     user: "inesguerrero",

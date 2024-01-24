@@ -1,17 +1,24 @@
 "use client";
 
+import APIUrls from "@/models/APIUrls";
 import {
+  ReactNode,
   createContext,
-  useState,
   useContext,
   useEffect,
-  ReactNode,
+  useState,
 } from "react";
 interface ProgramData {
   id: number;
   name: string;
   logo: string;
   recordApplicantURL: string;
+}
+interface AppParams {
+  id: number;
+  idPeriod: number;
+  payDayLimit: Date;
+  idProcess: number;
 }
 
 const programList = {
@@ -33,6 +40,7 @@ interface AppContextProps {
   handleProgramSelected: (id: number) => void;
   programList: { [key: string]: ProgramData };
   program: ProgramData | undefined;
+  appParams: AppParams | undefined;
 }
 
 const LOCAL_STORAGE_KEY = "appState";
@@ -51,11 +59,9 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({
       : null;
     return savedProgram ? JSON.parse(savedProgram) : undefined;
   });
-
   const handleProgramSelected = (id: number) => {
     setProgram(programList[id]);
   };
-
   useEffect(() => {
     const isLocalStorageAvailable =
       typeof window !== "undefined" && window.localStorage;
@@ -64,12 +70,36 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({
     }
   }, [program]);
 
+  const [appParams, setAppParams] = useState<AppParams>();
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(
+          process.env.NEXT_PUBLIC_API + APIUrls.getAppParams,
+          {
+            next: { revalidate: 86400 },
+          }
+        );
+        if (!response.ok) {
+          setAppParams(undefined);
+        }
+        const data = await response.json();
+        console.log(data);
+        setAppParams(data.result);
+      } catch (error) {
+        setAppParams(undefined);
+      }
+    };
+    fetchData();
+  }, []);
+
   return (
     <AppContext.Provider
       value={{
         handleProgramSelected,
         programList,
         program,
+        appParams,
       }}
     >
       {children}

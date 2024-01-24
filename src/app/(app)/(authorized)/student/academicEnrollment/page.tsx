@@ -31,7 +31,7 @@ export default function AcademicEnrollment() {
       };
     };
   };
-  const { program } = useAppContext();
+  const { program, appParams } = useAppContext();
   const [objAcceptPreEnrollment, setObjAcceptPreEnrollment] = useState<
     IAcceptPreEnrollment | undefined
   >();
@@ -43,7 +43,7 @@ export default function AcademicEnrollment() {
   useEffect(() => {
     setObjAcceptPreEnrollment({
       idProgram: program?.id as number,
-      idPeriod: +(process.env.NEXT_PUBLIC_PERIOD as string),
+      idPeriod: appParams?.idPeriod as number,
       idStudent: data?.user?.students?.filter(
         (student: { program: number }) => student.program === program?.id
       )[0].id,
@@ -54,7 +54,8 @@ export default function AcademicEnrollment() {
   useEffect(() => {
     async function getData() {
       const response = await getPreEnrollment(
-        objAcceptPreEnrollment?.idStudent as number
+        objAcceptPreEnrollment?.idStudent as number,
+        appParams?.idPeriod as number
       );
       setPreEnrollment(response as PreEnrollment);
     }

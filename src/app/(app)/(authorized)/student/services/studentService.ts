@@ -1,15 +1,12 @@
 import APIUrls from "@/models/APIUrls";
 
-async function getPreEnrollment(idStudent: number) {
+async function getPreEnrollment(idStudent: number, idPeriod: number) {
   if (idStudent === 0 || idStudent === undefined) return false;
   async function SubmitData() {
     const response = await fetch(
       process.env.NEXT_PUBLIC_API +
         APIUrls.getAcamidOfferURL +
-        "idStudent=" +
-        idStudent +
-        "&idPeriod=" +
-        (process.env.NEXT_PUBLIC_PERIOD as string)
+        `idStudent=${idStudent}&idPeriod=${idPeriod}`
     );
     if (response.ok) {
       const result = await response.json();

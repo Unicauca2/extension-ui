@@ -27,7 +27,7 @@ const StrategyList = {
 
 export default function _MainClient(types: TypeProps) {
   const { person, handleInputChange } = usePersonRegister();
-  const { program } = useAppContext();
+  const { program, appParams } = useAppContext();
   const router = useRouter();
 
   const [activeStep, setActiveStep] = useState(0);
@@ -43,7 +43,11 @@ export default function _MainClient(types: TypeProps) {
   };
 
   const handleSubmit = async () => {
-    const aux = await record(person, program?.recordApplicantURL as string);
+    const aux = await record(
+      person,
+      program?.recordApplicantURL as string,
+      appParams?.idPeriod as number
+    );
     if (aux.success) {
       setAccepted(true);
       alert("Registro aceptado!");

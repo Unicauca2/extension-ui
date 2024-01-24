@@ -1,7 +1,9 @@
+import APIUrls from "@/models/APIUrls";
+
 export async function getTypes() {
-  try{
+  try {
     const types = await fetch(
-      process.env.BASE_URL_EXTENSION_API + "/v1/domain/allTypes",
+      process.env.BASE_URL_EXTENSION_API + APIUrls.getAppTypes,
       {
         next: { revalidate: 3600 },
       }
@@ -9,7 +11,7 @@ export async function getTypes() {
     if (types.ok) {
       return await types.json();
     }
-  }catch(error){
+  } catch (error) {
     return {};
   }
 }

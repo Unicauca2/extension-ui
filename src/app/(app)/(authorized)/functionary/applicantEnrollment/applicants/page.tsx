@@ -3,22 +3,19 @@
 import { useAppContext } from "@/app/context/AppContext";
 import DataGridDemo, { IRows } from "@/components/DataGrid";
 import FileRendered from "@/components/FileRendered";
+import APIUrls from "@/models/APIUrls";
+import { ApiResponse } from "@/models/PROVISIONALEnrollmentFetch";
+import { redirect } from "next/navigation";
 import { useEffect, useState } from "react";
 import {
   getEnrollmentList,
   postEnrollmentAcceptation,
 } from "../services/enrollmentService";
-import { ApiResponse } from "@/models/PROVISIONALEnrollmentFetch";
-import APIUrls from "@/models/APIUrls";
-import { redirect } from "next/navigation";
 
-interface IGetData {
-  idPeriod: number;
-  idProgram: number;
-}
 export default function ApplicantList() {
+  const { program, appParams } = useAppContext();
+
   const [cellSelected, setCellSelected] = useState<any>(null);
-  const { program } = useAppContext();
   const [rawData, setRawData] = useState<ApiResponse | null>(null);
   const [file, setFile] = useState<File | null>(null);
   const [postResult, setPostResult] = useState<boolean>();
@@ -26,7 +23,7 @@ export default function ApplicantList() {
   useEffect(() => {
     const setData = async () => {
       const aux = await getEnrollmentList({
-        idPeriod: +(process.env.NEXT_PUBLIC_PERIOD as string),
+        idPeriod: appParams?.idPeriod as number,
         idProgram: program?.id as number,
       });
       setRawData(aux.result);
@@ -65,7 +62,7 @@ export default function ApplicantList() {
       }),
       invoicesData: {
         paymentLimit: process.env.NEXT_PUBLIC_PAYMENT_LIMIT as string,
-        idPeriod: +(process.env.NEXT_PUBLIC_PERIOD as string),
+        idPeriod: appParams?.idPeriod as number,
         idProgram: program?.id as number,
       },
     });

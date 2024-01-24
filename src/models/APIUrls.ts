@@ -1,4 +1,6 @@
 const APIUrls = {
+  getAppParams: "/v1/domain/appParams",
+  getAppTypes: "/v1/domain/allTypes",
   getAcamidOfferURL: "/v1/student/academicOffer?",
   getEnrollmentList: "/v1/functionary/getEnrollments?",
   getPensumsList: "/v1/functionary/pensums?idProgram=",
