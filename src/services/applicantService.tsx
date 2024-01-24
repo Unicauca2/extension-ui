@@ -3,7 +3,8 @@ import { ApplicantRegistry } from "@unauthorized/signup/models/ApplicantRegistry
 export async function record(
   applicantRegistry: ApplicantRegistry,
   submitUrl: string,
-  idPeriod: number
+  idPeriod: number,
+  payLimit: string
 ) {
   const formData = new FormData();
   formData.append("applicantRegistry", JSON.stringify(applicantRegistry));
@@ -15,7 +16,7 @@ export async function record(
     JSON.stringify({
       idPeriod,
       idProcess: process.env.NEXT_PUBLIC_PROCESS,
-      payLimit: process.env.NEXT_PUBLIC_PAYMENT_LIMIT,
+      payLimit,
     })
   );
 

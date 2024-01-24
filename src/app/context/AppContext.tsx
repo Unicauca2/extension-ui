@@ -17,7 +17,7 @@ interface ProgramData {
 interface AppParams {
   id: number;
   idPeriod: number;
-  payDayLimit: Date;
+  payDayLimit: string;
   idProcess: number;
 }
 

@@ -46,7 +46,8 @@ export default function _MainClient(types: TypeProps) {
     const aux = await record(
       person,
       program?.recordApplicantURL as string,
-      appParams?.idPeriod as number
+      appParams?.idPeriod as number,
+      appParams?.payDayLimit as string
     );
     if (aux.success) {
       setAccepted(true);

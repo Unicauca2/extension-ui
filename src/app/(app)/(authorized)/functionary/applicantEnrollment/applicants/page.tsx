@@ -61,7 +61,7 @@ export default function ApplicantList() {
         return { id: item.id, state: item.state };
       }),
       invoicesData: {
-        paymentLimit: process.env.NEXT_PUBLIC_PAYMENT_LIMIT as string,
+        paymentLimit: appParams?.payDayLimit as string,
         idPeriod: appParams?.idPeriod as number,
         idProgram: program?.id as number,
       },
