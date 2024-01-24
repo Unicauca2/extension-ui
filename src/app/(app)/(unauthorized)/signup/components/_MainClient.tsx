@@ -47,7 +47,8 @@ export default function _MainClient(types: TypeProps) {
       person,
       program?.recordApplicantURL as string,
       appParams?.idPeriod as number,
-      appParams?.payDayLimit as string
+      appParams?.payDayLimit as string,
+      appParams?.idProcess as number
     );
     if (aux.success) {
       setAccepted(true);

@@ -4,7 +4,8 @@ export async function record(
   applicantRegistry: ApplicantRegistry,
   submitUrl: string,
   idPeriod: number,
-  payLimit: string
+  payLimit: string,
+  idProcess: number
 ) {
   const formData = new FormData();
   formData.append("applicantRegistry", JSON.stringify(applicantRegistry));
@@ -15,7 +16,7 @@ export async function record(
     "enrollmentInfo",
     JSON.stringify({
       idPeriod,
-      idProcess: process.env.NEXT_PUBLIC_PROCESS,
+      idProcess,
       payLimit,
     })
   );
