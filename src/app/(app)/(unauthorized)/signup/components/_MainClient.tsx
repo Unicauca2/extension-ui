@@ -15,7 +15,7 @@ import { ConservatorioStrategy } from "@unauthorized/signup/strategies/signUpSte
 import { UnilinguaStrategy } from "@unauthorized/signup/strategies/signUpSteps/UnilinguaStrategy";
 import { BoxStyles } from "./_MainClient.styles";
 import StepsComponent from "./_Steps";
-import { record } from "@/services/applicantService";
+import { record } from "../services/applicantService";
 import GlobalIcon from "@/components/GlobalIcon";
 import { useSearchParams, redirect } from "next/navigation";
 import { useRouter } from "next/navigation";
