@@ -2,19 +2,19 @@ import APIUrls from "@/models/APIUrls";
 
 async function getAssignatures({ idPensum }: { idPensum: string }) {
   const res = await fetch(
-    process.env.NEXT_PUBLIC_API + APIUrls.getAssignatureList + idPensum
+    process.env.API_URL + APIUrls.getAssignatureList + idPensum
   );
   return res.json();
 }
 async function getStudents({ idProgram }: { idProgram: number }) {
   const res = await fetch(
-    process.env.NEXT_PUBLIC_API + APIUrls.getStudentsList + idProgram
+    process.env.API_URL + APIUrls.getStudentsList + idProgram
   );
   return res.json();
 }
 async function getTeachers({ idProgram }: { idProgram: number }) {
   const res = await fetch(
-    process.env.NEXT_PUBLIC_API + APIUrls.getTeachersList + idProgram
+    process.env.API_URL + APIUrls.getTeachersList + idProgram
   );
   return res.json();
 }

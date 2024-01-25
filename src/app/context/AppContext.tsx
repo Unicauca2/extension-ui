@@ -75,7 +75,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({
     const fetchData = async () => {
       try {
         const response = await fetch(
-          process.env.NEXT_PUBLIC_API + APIUrls.getAppParams,
+          process.env.API_URL + APIUrls.getAppParams,
           {
             next: { revalidate: 86400 },
           }

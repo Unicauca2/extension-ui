@@ -4,7 +4,7 @@ interface IGetUserData {
 export async function getUserData({ email }: IGetUserData) {
   try {
     const data = await fetch(
-      process.env.NEXT_PUBLIC_API +
+      process.env.API_URL +
         "/v1/user/data?username=" +
         email.split("@")[0]
     );

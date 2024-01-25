@@ -10,7 +10,7 @@ export async function getEnrollmentList({
 }: IGetEnrollmentList) {
   async function SubmitData() {
     const response = await fetch(
-      process.env.NEXT_PUBLIC_API +
+      process.env.API_URL +
         APIUrls.getEnrollmentList +
         "idPeriod=" +
         idPeriod +
@@ -45,7 +45,7 @@ export async function postEnrollmentAcceptation({
 }: IPostEnrollmentAcceptation) {
   async function SubmitData() {
     const response = await fetch(
-      process.env.NEXT_PUBLIC_API + APIUrls.postEnrollmentAcceptation,
+      process.env.API_URL + APIUrls.postEnrollmentAcceptation,
       {
         method: "POST",
         headers: {

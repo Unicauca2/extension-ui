@@ -18,7 +18,7 @@ export async function record({ data }: IRecord) {
   const aux = { groups: data };
   async function SubmitData() {
     const response = await fetch(
-      process.env.NEXT_PUBLIC_API + APIUrls.postClassGroups,
+      process.env.API_URL + APIUrls.postClassGroups,
       {
         method: "POST",
         headers: {

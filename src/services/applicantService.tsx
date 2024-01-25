@@ -22,7 +22,7 @@ export async function record(
   );
 
   async function SubmitData(formData: FormData) {
-    const response = await fetch(process.env.NEXT_PUBLIC_API + submitUrl, {
+    const response = await fetch(process.env.API_URL + submitUrl, {
       method: "POST",
       body: formData,
     });

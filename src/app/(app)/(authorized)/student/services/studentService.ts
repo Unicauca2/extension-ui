@@ -4,7 +4,7 @@ async function getPreEnrollment(idStudent: number, idPeriod: number) {
   if (idStudent === 0 || idStudent === undefined) return false;
   async function SubmitData() {
     const response = await fetch(
-      process.env.NEXT_PUBLIC_API +
+      process.env.API_URL +
         APIUrls.getAcamidOfferURL +
         `idStudent=${idStudent}&idPeriod=${idPeriod}`
     );
@@ -35,7 +35,7 @@ async function acceptPreEnrollment(props: IAcceptPreEnrollment) {
   }
   async function SubmitData() {
     const response = await fetch(
-      process.env.NEXT_PUBLIC_API + APIUrls.postAcceptPreEnrollmentURL,
+      process.env.API_URL + APIUrls.postAcceptPreEnrollmentURL,
       {
         method: "POST",
         headers: {
