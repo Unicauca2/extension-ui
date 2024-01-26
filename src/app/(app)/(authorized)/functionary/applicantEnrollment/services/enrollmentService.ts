@@ -1,31 +1,14 @@
+import { IGet } from "@/app/api/functionary/enrollment/route";
 import APIUrls from "@/models/APIUrls";
 
-interface IGetEnrollmentList {
-  idPeriod: number;
-  idProgram: number;
-}
-export async function getEnrollmentList({
-  idPeriod,
-  idProgram,
-}: IGetEnrollmentList) {
-  async function SubmitData() {
-    const response = await fetch(
-      process.env.API_URL +
-        APIUrls.getEnrollmentList +
-        "idPeriod=" +
-        idPeriod +
-        "&idProgram=" +
-        idProgram
-    );
-    if (response.ok) {
-      const result = await response.json();
-      return { success: true, result };
-    }
-    const message = await response.text();
-    return { success: false, result: message };
+export async function getEnrollmentList({ idPeriod, idProgram }: IGet) {
+  const response = await fetch(
+    `/api/functionary/enrollment?idPeriod=${idPeriod}&idProgram=${idProgram}`
+  );
+  if (response.ok) {
+    return { success: true, result: await response.json() };
   }
-  const result = await SubmitData();
-  return result;
+  return { success: false, result: await response.text() };
 }
 
 interface IPostEnrollmentAcceptation {
@@ -45,6 +28,7 @@ export async function postEnrollmentAcceptation({
 }: IPostEnrollmentAcceptation) {
   async function SubmitData() {
     const response = await fetch(
+      //process.env.BASE_URL_EXTENSION_API
       process.env.API_URL + APIUrls.postEnrollmentAcceptation,
       {
         method: "POST",
