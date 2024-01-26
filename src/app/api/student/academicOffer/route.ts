@@ -14,7 +14,7 @@ async function get({ idStudent, idPeriod }: IGet) {
   );
   if (response.ok) {
     const data = await response.json();
-    return { success: data.result, result: data.result };
+    return { success: true, result: data.result };
   }
   return { success: false, message: "Error retrieving data" };
 }
