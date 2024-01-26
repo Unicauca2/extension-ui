@@ -38,10 +38,9 @@ export default function ApplicantList() {
   useEffect(() => {
     async function getfile() {
       const response = await fetch(
-        process.env.API_URL +
-          APIUrls.getFileFromServer +
-          cellSelected.document
+        "/api/file?fileName=" + cellSelected.document
       );
+      if (!response.ok) return setFile(null);
       const data = await response.blob();
       const file = new File([data], cellSelected?.document, {
         type: data.type,
