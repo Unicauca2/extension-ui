@@ -1,12 +1,12 @@
 "use client";
 
+import { IPost } from "@/app/api/student/academicOffer/route";
 import { useAppContext } from "@/app/context/AppContext";
 import GlobalIcon from "@/components/GlobalIcon";
 import { Box, Button } from "@mui/material";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import {
-  IAcceptPreEnrollment,
   acceptPreEnrollment,
   getPreEnrollment,
 } from "../services/studentService";
@@ -33,7 +33,7 @@ export default function AcademicEnrollment() {
   };
   const { program, appParams } = useAppContext();
   const [objAcceptPreEnrollment, setObjAcceptPreEnrollment] = useState<
-    IAcceptPreEnrollment | undefined
+    IPost | undefined
   >();
   const [preEnrollment, setPreEnrollment] = useState<
     PreEnrollment | undefined
@@ -93,13 +93,13 @@ export default function AcademicEnrollment() {
             <Button
               onClick={async () => {
                 const aux = await acceptPreEnrollment(
-                  objAcceptPreEnrollment as IAcceptPreEnrollment
+                  objAcceptPreEnrollment as IPost
                 );
                 if (!aux.success) {
-                  alert("ERROR: " + aux.message);
+                  alert("ERROR: " + aux.message || aux.result);
                 } else {
                   setCorrectlyDelivered(true);
-                  alert(aux.result.message);
+                  alert(aux.result.result);
                 }
               }}
               disabled={correctlyDelivered}
