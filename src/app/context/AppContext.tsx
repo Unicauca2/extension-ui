@@ -1,6 +1,5 @@
 "use client";
 
-import APIUrls from "@/models/APIUrls";
 import {
   ReactNode,
   createContext,
@@ -73,22 +72,15 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({
   const [appParams, setAppParams] = useState<AppParams>();
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        const response = await fetch(
-          process.env.API_URL + APIUrls.getAppParams,
-          {
-            next: { revalidate: 86400 },
-          }
-        );
-        if (!response.ok) {
-          setAppParams(undefined);
-        }
-        const data = await response.json();
-        console.log(data);
-        setAppParams(data.result);
-      } catch (error) {
-        setAppParams(undefined);
+      const response = await fetch("/api/params", {
+        method: "GET",
+        next: { revalidate: 86400 },
+      });
+      if (!response.ok) {
+        return setAppParams(undefined);
       }
+      const data = await response.json();
+      setAppParams(data.result);
     };
     fetchData();
   }, []);

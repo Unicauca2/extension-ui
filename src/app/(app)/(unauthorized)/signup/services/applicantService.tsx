@@ -23,7 +23,7 @@ export async function record(
   formData.append("submitUrl", submitUrl);
 
   async function SubmitData(formData: FormData) {
-    const response = await fetch("applicant", {
+    const response = await fetch("/api/applicant", {
       method: "POST",
       body: formData,
     });
