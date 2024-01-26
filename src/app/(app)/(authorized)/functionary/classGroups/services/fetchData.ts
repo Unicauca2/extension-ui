@@ -1,21 +1,13 @@
-import APIUrls from "@/models/APIUrls";
-
 async function getAssignatures({ idPensum }: { idPensum: string }) {
-  const res = await fetch(
-    process.env.API_URL + APIUrls.getAssignatureList + idPensum
-  );
+  const res = await fetch("/api/assignature?idPensum=" + idPensum);
   return res.json();
 }
 async function getStudents({ idProgram }: { idProgram: number }) {
-  const res = await fetch(
-    process.env.API_URL + APIUrls.getStudentsList + idProgram
-  );
+  const res = await fetch("/api/student?idProgram=" + idProgram);
   return res.json();
 }
 async function getTeachers({ idProgram }: { idProgram: number }) {
-  const res = await fetch(
-    process.env.API_URL + APIUrls.getTeachersList + idProgram
-  );
+  const res = await fetch("/api/teacher?idProgram=" + idProgram);
   return res.json();
 }
 
