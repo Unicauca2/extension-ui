@@ -8,10 +8,16 @@ export default function LayoutFunctionary({
 }: {
   children: React.ReactNode;
 }) {
-  const { data } = useSession() as any;
+  const { status, data } = useSession() as any;
+  if (status === "loading") {
+    return <div>Loading...</div>;
+  }
+  if (status === "unauthenticated") {
+    redirect("/");
+  }
   if (data?.user?.coordinator?.id == undefined) {
     signOut();
-    redirect("/login");
+    redirect("/");
   }
   return <>{children}</>;
 }
