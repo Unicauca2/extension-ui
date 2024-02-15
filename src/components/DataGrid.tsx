@@ -71,36 +71,40 @@ function getColumnData(
         if (params.row.state & 2)
           return (
             <div>
-              <Button
-                className="bg-[#52A847] text-[#fff] hover:bg-[#52A847]/80  mr-1"
-                disabled={(params.row.state & 32) === 32}
-                onClick={() =>
-                  handleReview(
-                    params.id as number,
-                    rows,
-                    32 /** Inscripcion calificada */,
-                    1048576,
-                    setRowData
-                  )
-                }
-              >
-                Aceptar
-              </Button>
-              <Button
-                className="bg-[#C11818] text-[#fff] hover:bg-[#C11818]/80"
-                disabled={(params.row.state & 1048576) === 1048576}
-                onClick={() =>
-                  handleReview(
-                    params.id as number,
-                    rows,
-                    1048576 /** Inscripcion inconsistencia */,
-                    32,
-                    setRowData
-                  )
-                }
-              >
-                Rechazar
-              </Button>
+              {(params.row.state & 32) !== 32 && (
+                <Button
+                  className="bg-[#52A847] text-[#fff] hover:bg-[#52A847]/80  mr-1"
+                  disabled={(params.row.state & 32) === 32}
+                  onClick={() =>
+                    handleReview(
+                      params.id as number,
+                      rows,
+                      32 /** Inscripcion calificada */,
+                      1048576,
+                      setRowData
+                    )
+                  }
+                >
+                  Aceptar
+                </Button>
+              )}
+              {(params.row.state & 1048576) !== 1048576 && (
+                <Button
+                  className="bg-[#C11818] text-[#fff] hover:bg-[#C11818]/80"
+                  disabled={(params.row.state & 1048576) === 1048576}
+                  onClick={() =>
+                    handleReview(
+                      params.id as number,
+                      rows,
+                      1048576 /** Inscripcion inconsistencia */,
+                      32,
+                      setRowData
+                    )
+                  }
+                >
+                  Rechazar
+                </Button>
+              )}
             </div>
           );
       },
@@ -117,13 +121,13 @@ function getRowData(data: ApiResponse) {
     rows.push({
       id: aux.id,
       fullName:
-        aux.enrollmentP.applicant.firstName +
+        aux.enrollmentP?.applicant?.firstName +
         " " +
-        aux.enrollmentP.applicant.secondName +
+        aux.enrollmentP?.applicant?.secondName +
         " " +
-        aux.enrollmentP.applicant.firstLastName +
+        aux.enrollmentP?.applicant?.firstLastName +
         " " +
-        aux.enrollmentP.applicant.secondLastName,
+        aux.enrollmentP?.applicant?.secondLastName,
       identification: aux.enrollmentP?.applicant?.identification,
       birthDate: aux.enrollmentP?.applicant?.birthDate.split("T")[0],
       state: aux.enrollmentP?.state,

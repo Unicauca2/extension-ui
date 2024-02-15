@@ -8,13 +8,10 @@ export default function RootLayout({
 }) {
   return (
     <>
-      <div className="flex-1 flex">
-        <div className="bg-[#ffffff]">
-          <HorizontalCollapse roles={[""]} />
-        </div>
+      <div className="flex-1">
         <div className="w-full">
           <TopNavBar />
-          <main className="flex justify-center content-center min-w-[310px]">
+          <main className="flex justify-center content-center">
             {children}
           </main>
         </div>

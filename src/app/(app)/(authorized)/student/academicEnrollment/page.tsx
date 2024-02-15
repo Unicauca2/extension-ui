@@ -46,7 +46,7 @@ export default function AcademicEnrollment() {
       idPeriod: appParams?.idPeriod as number,
       idStudent: data?.user?.students?.filter(
         (student: { program: number }) => student.program === program?.id
-      )[0].id,
+      )[0]?.id,
       idPerson: data?.user?.person?.idPerson,
     });
   }, [data, program, appParams?.idPeriod]);
