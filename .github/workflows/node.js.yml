@@ -2,18 +2,16 @@ name: Build, Test, and Publish
 
 on:
   push:
-    branches:
-      - main
-      - dev
-  pull_request:
-    branches:
-      - main
+    tags:
+      - '**'
   workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
+    permissions:
+      contents: read
+      packages: write
     strategy:
       matrix:
         node-version: [18.18]
@@ -30,19 +28,15 @@ jobs:
       - run: npm ci
       - run: npm install
       - run: npm run build --if-present
-
-      - name: Obtener Tag
-        id: obtener_tag
-        run: |
-          TAG=$(grep -oP '"version": "\K([^"]*)' package.json)
-          echo "TAG=$TAG" >> $GITHUB_ENV
-          echo $TAG
-            
+      
+      - name: Set repository name to lowercase
+        run: echo "REPO_NAME=$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
+         
       - name: Docker meta
         id: docker_meta
         uses: docker/metadata-action@v5.0.0
         with:
-          images: ghcr.io/${{github.repository}}-${{ env.TAG }}
+          images: ghcr.io/${{ env.REPO_NAME }}:${{ github.ref_name }}
           
         #logear a GitHub Container Registry
       - name: Login to GHCR 
@@ -59,5 +53,7 @@ jobs:
           DOCKER_BUILDKIT: 1
         with:
           push: true
-          tags: ${{ steps.docker_meta.outputs.tags }}-${{ env.TAG }}
+          tags: |
+            ghcr.io/${{ env.REPO_NAME }}:latest
+            ghcr.io/${{ env.REPO_NAME }}:${{ github.ref_name }}
           labels: ${{ steps.docker_meta.outputs.labels }}
