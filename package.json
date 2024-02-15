@@ -26,7 +26,8 @@
 		"papaparse": "^5.4.1",
 		"react": "latest",
 		"react-csv": "^2.2.2",
-		"react-dom": "latest"
+		"react-dom": "latest",
+		"sharp": "^0.33.2"
 	},
 	"devDependencies": {
 		"@types/node": "latest",
